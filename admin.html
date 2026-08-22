@@ -6,6 +6,8 @@
 <title>Manhwa Rose — Admin</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
     margin:0;
     min-height:100vh;
@@ -13,43 +15,69 @@ body{
     justify-content:center;
     align-items:center;
     background:#070910;
-    color:white;
+    color:#fff;
     font-family:Tahoma,Arial,sans-serif;
 }
 
 .box{
-    width:min(90%,380px);
-    padding:30px;
+    width:min(90%,390px);
+    padding:32px;
     background:#121722;
     border:1px solid #30384c;
-    border-radius:20px;
-    text-align:center;
+    border-radius:22px;
+    box-shadow:0 20px 60px #0008;
 }
 
-h1{
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
     color:#6c9aff;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#929bad;
+    margin-bottom:25px;
 }
 
 input{
     width:100%;
-    padding:13px;
-    margin:10px 0;
-    box-sizing:border-box;
-    border-radius:10px;
+    padding:14px;
+    margin:8px 0;
+    border-radius:11px;
     border:1px solid #30384c;
     background:#080c15;
     color:white;
+    outline:none;
+}
+
+input:focus{
+    border-color:#638fff;
 }
 
 button{
     width:100%;
-    padding:13px;
-    margin-top:10px;
+    padding:14px;
+    margin-top:12px;
     border:0;
-    border-radius:10px;
+    border-radius:11px;
     background:#5889ff;
     color:white;
     font-weight:bold;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.6;
+}
+
+#message{
+    margin-top:15px;
+    text-align:center;
+    min-height:20px;
+    color:#ff8b8b;
 }
 </style>
 </head>
@@ -58,25 +86,81 @@ button{
 
 <div class="box">
 
-<h1>🌹 Manhwa Rose</h1>
+<div class="logo">🌹 MANHWA ROSE</div>
 
-<p>پنل مدیریت</p>
+<div class="subtitle">پنل مدیریت</div>
+
+<form id="loginForm">
 
 <input
-type="text"
-placeholder="نام کاربری"
+    id="username"
+    type="text"
+    placeholder="نام کاربری"
+    autocomplete="username"
+    required
 >
 
 <input
-type="password"
-placeholder="رمز عبور"
+    id="password"
+    type="password"
+    placeholder="رمز عبور"
+    autocomplete="current-password"
+    required
 >
 
-<button>
-ورود
+<button id="loginButton" type="submit">
+ورود به پنل
 </button>
 
+</form>
+
+<div id="message"></div>
+
 </div>
+
+<script>
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+const button = document.getElementById("loginButton");
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    message.textContent = "";
+    button.disabled = true;
+    button.textContent = "در حال بررسی...";
+
+    try {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            window.location.href = "/admin-panel.html";
+        } else {
+            message.textContent =
+                result.message || "ورود ناموفق بود.";
+        }
+
+    } catch (error) {
+        message.textContent =
+            "ارتباط با سرور برقرار نشد.";
+    }
+
+    button.disabled = false;
+    button.textContent = "ورود به پنل";
+});
+</script>
 
 </body>
 </html>
