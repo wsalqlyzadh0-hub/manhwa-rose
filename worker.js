@@ -97,7 +97,12 @@ function getCookie(request) {
 export default {
   async fetch(request, env) {
 
-    const url = new URL(request.url);
+    const url = new URL(request.url);if (url.pathname === "/api/test-secret") {
+  return Response.json({
+    username: Boolean(env.ADMIN_USERNAME),
+    password: Boolean(env.ADMIN_PASSWORD)
+  });
+    }
 
     // ورود
     if (
