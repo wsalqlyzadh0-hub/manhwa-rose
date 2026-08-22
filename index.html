@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manhwa Rose</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#070910;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:14px 5%;
+    background:rgba(10,13,22,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #252b3b;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#638fff;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:#fff;
+}
+
+nav{
+    display:flex;
+    gap:18px;
+}
+
+nav a{
+    color:#aeb5c5;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+nav a:hover{
+    color:#719cff;
+}
+
+.search{
+    margin-right:auto;
+    width:270px;
+    padding:11px 15px;
+    border-radius:12px;
+    border:1px solid #30384c;
+    background:#151a27;
+    color:#fff;
+    outline:none;
+}
+
+/* HERO */
+
+.hero{
+    width:92%;
+    max-width:1200px;
+    margin:35px auto;
+    min-height:350px;
+    display:flex;
+    align-items:center;
+    border-radius:28px;
+    padding:50px;
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle at 80% 30%,
+        #304d9c55,
+        transparent 35%
+    ),
+    linear-gradient(
+        135deg,
+        #111a34,
+        #190f20
+    );
+
+    border:1px solid #303b5a;
+}
+
+.hero h1{
+    margin:0;
+    font-size:55px;
+    color:#6c9aff;
+}
+
+.hero h2{
+    font-size:25px;
+}
+
+.hero p{
+    color:#aab3c5;
+    line-height:2;
+    max-width:600px;
+}
+
+.btn{
+    border:0;
+    padding:12px 20px;
+    border-radius:12px;
+    background:#5889ff;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn:hover{
+    opacity:.85;
+}
+
+/* CONTENT */
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.sectionTitle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:30px 0 18px;
+}
+
+.sectionTitle h2{
+    margin:0;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:
+    repeat(
+        auto-fill,
+        minmax(170px,1fr)
+    );
+
+    gap:18px;
+}
+
+.card{
+    overflow:hidden;
+    border-radius:16px;
+    background:#121722;
+    border:1px solid #252d40;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:#5d8fff;
+    box-shadow:
+    0 15px 35px #0008;
+}
+
+.cover{
+    width:100%;
+    aspect-ratio:2/3;
+    object-fit:cover;
+    background:#171c29;
+}
+
+.cardInfo{
+    padding:13px;
+}
+
+.cardTitle{
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.tag{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    background:#202a43;
+    color:#87aaff;
+    font-size:11px;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:70px;
+    padding:35px;
+    text-align:center;
+    color:#737c91;
+    border-top:1px solid #202637;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    header{
+        flex-wrap:wrap;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .search{
+        order:5;
+        width:100%;
+    }
+
+    .hero{
+        padding:30px;
+        min-height:300px;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+🌹 MANHWA <span>ROSE</span>
+</div>
+
+<nav>
+<a>خانه</a>
+<a>مانهواها</a>
+<a>ژانرها</a>
+<a>محبوب‌ترین‌ها</a>
+</nav>
+
+<input
+class="search"
+placeholder="🔎 جستجوی مانهوا..."
+>
+
+</header>
+
+
+<section class="hero">
+
+<div>
+
+<h1>
+MANHWA ROSE 🌹
+</h1>
+
+<h2>
+دنیای مانهوا در دستان تو
+</h2>
+
+<p>
+مانهواهای مورد علاقه‌ات را پیدا کن،
+فصل‌ها را آنلاین بخوان و داستان‌های جدید
+را کشف کن.
+</p>
+
+<button class="btn">
+📚 مشاهده کتابخانه
+</button>
+
+</div>
+
+</section>
+
+
+<main class="container">
+
+<div class="sectionTitle">
+
+<h2>
+🔥 محبوب‌ترین مانهواها
+</h2>
+
+<span class="tag">
+همین الان
+</span>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<div
+class="cover"
+style="
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+background:linear-gradient(
+135deg,
+#172a55,
+#35152d
+);
+">
+
+🌹
+
+</div>
+
+<div class="cardInfo">
+
+<div class="cardTitle">
+Manhwa Rose
+</div>
+
+<span class="tag">
+فانتزی
+</span>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div
+class="cover"
+style="
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+background:linear-gradient(
+135deg,
+#182d42,
+#29152d
+);
+">
+
+⚔️
+
+</div>
+
+<div class="cardInfo">
+
+<div class="cardTitle">
+Coming Soon
+</div>
+
+<span class="tag">
+اکشن
+</span>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div
+class="cover"
+style="
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+background:linear-gradient(
+135deg,
+#25193d,
+#15284b
+);
+">
+
+🌙
+
+</div>
+
+<div class="cardInfo">
+
+<div class="cardTitle">
+Coming Soon
+</div>
+
+<span class="tag">
+دارک
+</span>
+
+</div>
+
+</div>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+🌹 MANHWA ROSE
+
+<br><br>
+
+دنیای داستان‌ها، یک فصل در هر لحظه.
+
+</footer>
+
+</body>
+  </html>
