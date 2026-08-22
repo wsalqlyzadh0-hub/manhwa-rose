@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,51 +7,106 @@
   <title>Manhwa Rose</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       min-height: 100vh;
 
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
 
-      font-family: Tahoma, Arial, sans-serif;
-
-      background:
-        radial-gradient(
-          circle at top,
-          #5b1938,
-          #160914 45%,
-          #080509
-        );
-
+      background: #100711;
       color: white;
+
+      font-family: Arial, Tahoma, sans-serif;
     }
 
     .box {
-      width: 90%;
-      max-width: 380px;
-
-      padding: 35px 25px;
-
-      border-radius: 22px;
+      width: 320px;
+      padding: 35px;
 
       text-align: center;
 
-      background: rgba(255,255,255,0.08);
+      border-radius: 25px;
 
-      border: 1px solid rgba(255,255,255,0.12);
+      background: #21101d;
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.5);
-
-      backdrop-filter: blur(15px);
+        0 0 50px rgba(255, 40, 100, 0.35);
     }
 
     .rose {
-      font-size: 55px;
-      margin
+      font-size: 70px;
+    }
+
+    h1 {
+      margin: 15px 0 8px;
+    }
+
+    p {
+      color: #c9b7c1;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+
+      margin-top: 10px;
+
+      box-sizing: border-box;
+
+      border: 1px solid #563044;
+      border-radius: 10px;
+
+      background: #120b11;
+      color: white;
+
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+
+      margin-top: 15px;
+
+      border: 0;
+      border-radius: 10px;
+
+      background: #e34f82;
+      color: white;
+
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <div class="rose">🌹</div>
+
+    <h1>Manhwa Rose</h1>
+
+    <p>پنل مدیریت</p>
+
+    <input
+      type="text"
+      placeholder="نام کاربری"
+    >
+
+    <input
+      type="password"
+      placeholder="رمز عبور"
+    >
+
+    <button>
+      ورود 🌹
+    </button>
+
+  </div>
+
+</body>
+</html>
