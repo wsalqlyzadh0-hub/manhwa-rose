@@ -1,10 +1,11 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>🌹 Manhwa Rose</title>
+  <title>Manhwa Rose</title>
 
   <style>
     * {
@@ -15,197 +16,43 @@
       margin: 0;
       min-height: 100vh;
 
-      font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      color: white;
+      font-family: Tahoma, Arial, sans-serif;
 
       background:
         radial-gradient(
-          circle at 20% 20%,
-          rgba(255, 80, 140, .25),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 80% 80%,
-          rgba(150, 50, 255, .20),
-          transparent 30%
-        ),
-        linear-gradient(
-          135deg,
-          #160914,
-          #09060d,
-          #120712
+          circle at top,
+          #5b1938,
+          #160914 45%,
+          #080509
         );
 
-      overflow-x: hidden;
+      color: white;
     }
 
-    /* نورهای پس‌زمینه */
+    .box {
+      width: 90%;
+      max-width: 380px;
 
-    .light {
-      position: fixed;
+      padding: 35px 25px;
 
-      width: 180px;
-      height: 180px;
-
-      border-radius: 50%;
-
-      filter: blur(70px);
-
-      opacity: .35;
-
-      pointer-events: none;
-
-      animation: float 7s infinite alternate ease-in-out;
-    }
-
-    .light.one {
-      background: #ff397b;
-
-      top: -50px;
-      left: -50px;
-    }
-
-    .light.two {
-      background: #9b4dff;
-
-      right: -60px;
-      bottom: -50px;
-
-      animation-delay: 2s;
-    }
-
-    @keyframes float {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(35px, -25px);
-      }
-    }
-
-    /* ---------- Login ---------- */
-
-    #loginScreen {
-
-      min-height: 100vh;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-
-    }
-
-    .login-box {
-
-      width: min(92%, 410px);
-
-      padding: 38px 30px;
-
-      border-radius: 30px;
+      border-radius: 22px;
 
       text-align: center;
 
-      background:
-        rgba(255,255,255,.08);
+      background: rgba(255,255,255,0.08);
 
-      border:
-        1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,0.12);
 
       box-shadow:
-        0 25px 80px rgba(0,0,0,.55);
+        0 20px 60px rgba(0,0,0,0.5);
 
-      backdrop-filter:
-        blur(20px);
-
-      animation:
-        appear .7s ease;
-
-    }
-
-    @keyframes appear {
-
-      from {
-        opacity: 0;
-        transform: translateY(25px) scale(.96);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-
+      backdrop-filter: blur(15px);
     }
 
     .rose {
-
-      font-size: 65px;
-
-      display: inline-block;
-
-      animation:
-        roseFloat 3s ease-in-out infinite;
-
-      filter:
-        drop-shadow(
-          0 0 18px
-          rgba(255,70,120,.55)
-        );
-
-    }
-
-    @keyframes roseFloat {
-
-      0%,100% {
-        transform: translateY(0) rotate(-3deg);
-      }
-
-      50% {
-        transform: translateY(-8px) rotate(3deg);
-      }
-
-    }
-
-    h1 {
-
-      margin:
-        10px 0 5px;
-
-      font-size: 30px;
-
-    }
-
-    .subtitle {
-
-      color: #cbbbc4;
-
-      margin-bottom: 28px;
-
-      font-size: 14px;
-
-    }
-
-    /* ---------- Inputs ---------- */
-
-    .input {
-
-      width: 100%;
-
-      padding: 15px 17px;
-
-      margin-bottom: 14px;
-
-      border-radius: 15px;
-
-      border:
-        1px solid rgba(255,255,255,.12);
-
-      outline
+      font-size: 55px;
+      margin
