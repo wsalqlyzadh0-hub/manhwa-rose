@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ورود | Manhwa Rose</title>
+  <title>Manhwa Rose | مدیریت</title>
 
   <style>
     * {
@@ -14,56 +14,62 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
       font-family: Tahoma, Arial, sans-serif;
-
       background:
-        radial-gradient(circle at 50% 20%, #3b1628 0%, transparent 45%),
-        linear-gradient(135deg, #120b10, #08080a);
-
+        radial-gradient(circle at 50% 10%, #4b172f 0%, transparent 45%),
+        linear-gradient(135deg, #10090d, #070709);
       color: #fff;
     }
 
-    .login-box {
-      width: min(90%, 390px);
-      padding: 38px 30px;
+    .hidden {
+      display: none !important;
+    }
 
+    /* ---------- Login ---------- */
+
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: min(92%, 390px);
+      padding: 38px 30px;
       border-radius: 24px;
+      text-align: center;
 
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.12);
 
-      box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.45);
-
       backdrop-filter: blur(18px);
 
-      text-align: center;
+      box-shadow:
+        0 25px 70px rgba(0, 0, 0, .5);
     }
 
     .rose {
-      font-size: 54px;
+      font-size: 55px;
       margin-bottom: 8px;
     }
 
-    h1 {
+    .login-box h1 {
       margin: 0;
-      font-size: 27px;
+      font-size: 28px;
     }
 
     .subtitle {
-      margin: 10px 0 30px;
-      color: #c9bfc4;
+      margin: 10px 0 28px;
+      color: #c7bbc0;
       font-size: 14px;
     }
 
     .input {
       width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 14px;
+      padding: 14px;
+      margin-bottom: 13px;
 
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 13px;
@@ -71,24 +77,224 @@
       outline: none;
 
       background: rgba(0,0,0,.25);
-      color: white;
+      color: #fff;
 
       font-size: 15px;
-      direction: rtl;
     }
 
     .input:focus {
-      border-color: #d85b82;
-      box-shadow: 0 0 0 3px rgba(216,91,130,.12);
+      border-color: #d95780;
+      box-shadow: 0 0 0 3px rgba(217,87,128,.12);
     }
 
     .button {
       width: 100%;
       padding: 14px;
 
-      margin-top: 8px;
-
       border: none;
       border-radius: 13px;
 
-      background: linear-gradient(135deg, #d94d
+      background: linear-gradient(
+        135deg,
+        #d95780,
+        #9f3158
+      );
+
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .button:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    #loginMessage {
+      min-height: 22px;
+      margin-top: 16px;
+      color: #ff91aa;
+      font-size: 14px;
+    }
+
+    /* ---------- Admin Panel ---------- */
+
+    #panelScreen {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 16px 22px;
+
+      background: rgba(10, 7, 9, .85);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+
+      backdrop-filter: blur(15px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .brand span {
+      font-size: 27px;
+    }
+
+    .logout {
+      border: none;
+      border-radius: 10px;
+
+      padding: 9px 14px;
+
+      background: rgba(255,255,255,.08);
+      color: white;
+
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1100px, 94%);
+      margin: 30px auto;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 8px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #aaa0a5;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 20px;
+
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.08);
+    }
+
+    .card-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #aaa0a5;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-top: 25px;
+      padding: 24px;
+      border-radius: 20px;
+
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .section h3 {
+      margin-top: 0;
+    }
+
+    .empty {
+      padding: 35px 10px;
+      text-align: center;
+      color: #958a90;
+    }
+
+    @media (max-width: 600px) {
+
+      .topbar {
+        padding: 13px 15px;
+      }
+
+      .brand {
+        font-size: 16px;
+      }
+
+      .container {
+        margin-top: 22px;
+      }
+
+      .login-box {
+        padding: 32px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginScreen">
+
+  <div class="login-box">
+
+    <div class="rose">🌹</div>
+
+    <h1>Manhwa Rose</h1>
+
+    <div class="subtitle">
+      ورود به پنل مدیریت
+    </div>
+
+    <form id="loginForm">
+
+      <input
+        id="username"
+        class="input"
+        type="text"
+        placeholder="نام کاربری"
+        autocomplete="username"
+        required
+      >
+
+     
