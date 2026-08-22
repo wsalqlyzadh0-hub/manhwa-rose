@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,10 @@
   <title>Manhwa Rose</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -15,98 +20,410 @@
       justify-content: center;
       align-items: center;
 
-      background: #100711;
-      color: white;
+      font-family: Tahoma, Arial, sans-serif;
 
-      font-family: Arial, Tahoma, sans-serif;
+      background:
+        radial-gradient(
+          circle at top,
+          #5b1938,
+          #160914 45%,
+          #080509
+        );
+
+      color: white;
     }
 
     .box {
-      width: 320px;
-      padding: 35px;
+      width: 90%;
+      max-width: 380px;
+
+      padding: 35px 25px;
+
+      border-radius: 22px;
 
       text-align: center;
 
-      border-radius: 25px;
+      background: rgba(255,255,255,0.08);
 
-      background: #21101d;
+      border: 1px solid rgba(255,255,255,0.12);
 
       box-shadow:
-        0 0 50px rgba(255, 40, 100, 0.35);
+        0 20px 60px rgba(0,0,0,0.5);
+
+      backdrop-filter: blur(15px);
     }
 
     .rose {
-      font-size: 70px;
+      font-size: 55px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin: 15px 0 8px;
+      margin: 0 0 8px;
     }
 
     p {
-      color: #c9b7c1;
+      color: #c7b9c0;
+      font-size: 14px;
+      margin-bottom: 25px;
     }
 
     input {
       width: 100%;
-      padding: 13px;
+      padding: 14px;
 
-      margin-top: 10px;
+      margin-bottom: 12px;
 
-      box-sizing: border-box;
+      border-radius: 12px;
 
-      border: 1px solid #563044;
-      border-radius: 10px;
-
-      background: #120b11;
-      color: white;
+      border: 1px solid rgba(255,255,255,0.12);
 
       outline: none;
+
+      background: rgba(0,0,0,0.3);
+
+      color: white;
+
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #e65382;
     }
 
     button {
       width: 100%;
-      padding: 13px;
 
-      margin-top: 15px;
+      padding: 14px;
 
-      border: 0;
-      border-radius: 10px;
+      border: none;
 
-      background: #e34f82;
+      border-radius: 12px;
+
+      background: #d94d78;
+
       color: white;
 
       font-size: 16px;
+
       font-weight: bold;
+
+      cursor: pointer;
+
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    #message {
+      min-height: 22px;
+
+      margin-top: 15px;
+
+      color: #ff8fae;
+
+      font-size: 13px;
+    }
+
+    #panel {
+      display: none;
+    }
+
+    .panel-button {
+      margin-top: 12px;
+      background: #702b4b;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
+  <!-- LOGIN -->
+
+  <div class="box" id="login">
 
     <div class="rose">🌹</div>
 
     <h1>Manhwa Rose</h1>
 
-    <p>پنل مدیریت</p>
+    <p>
+      ورود به پنل مدیریت
+    </p>
 
-    <input
-      type="text"
-      placeholder="نام کاربری"
+    <form id="loginForm">
+
+      <input
+        id="username"
+        type="text"
+        placeholder="نام کاربری"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        id="password"
+        type="password"
+        placeholder="رمز عبور"
+        autocomplete="current-password"
+        required
+      >
+
+      <button
+        id="loginButton"
+        type="submit"
+      >
+        ورود به پنل 🌹
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+
+  </div>
+
+
+  <!-- PANEL -->
+
+  <div class="box" id="panel">
+
+    <div class="rose">🌹</div>
+
+    <h1>
+      خوش آمدی!
+    </h1>
+
+    <p>
+      وارد پنل مدیریت Manhwa Rose شدی.
+    </p>
+
+    <button class="panel-button">
+      📚 مدیریت مانهوا
+    </button>
+
+    <button class="panel-button">
+      📖 مدیریت فصل‌ها
+    </button>
+
+    <button
+      class="panel-button"
+      id="logout"
     >
-
-    <input
-      type="password"
-      placeholder="رمز عبور"
-    >
-
-    <button>
-      ورود 🌹
+      خروج 👋
     </button>
 
   </div>
+
+
+<script>
+
+const login =
+  document.getElementById("login");
+
+const panel =
+  document.getElementById("panel");
+
+const form =
+  document.getElementById("loginForm");
+
+const button =
+  document.getElementById("loginButton");
+
+const message =
+  document.getElementById("message");
+
+const logout =
+  document.getElementById("logout");
+
+
+/* نمایش پنل */
+
+function showPanel() {
+
+  login.style.display = "none";
+
+  panel.style.display = "block";
+
+}
+
+
+/* نمایش ورود */
+
+function showLogin() {
+
+  panel.style.display = "none";
+
+  login.style.display = "block";
+
+}
+
+
+/* بررسی ورود قبلی */
+
+async function checkAuth() {
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/check-auth",
+        {
+          credentials: "include"
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (result.authenticated) {
+      showPanel();
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* ورود */
+
+form.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+    message.textContent = "";
+
+    button.disabled = true;
+
+    button.textContent =
+      "در حال ورود...";
+
+
+    const username =
+      document
+        .getElementById("username")
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+
+    try {
+
+      const response =
+        await fetch(
+          "/api/login",
+          {
+
+            method: "POST",
+
+            credentials: "include",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+                username: username,
+                password: password
+              })
+
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (
+        response.ok &&
+        result.success
+      ) {
+
+        message.textContent = "";
+
+        showPanel();
+
+      } else {
+
+        message.textContent =
+          result.message ||
+          "نام کاربری یا رمز عبور اشتباه است.";
+
+      }
+
+    } catch (error) {
+
+      message.textContent =
+        "ارتباط با سرور برقرار نشد.";
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "ورود به پنل 🌹";
+
+  }
+);
+
+
+/* خروج */
+
+logout.addEventListener(
+  "click",
+  async function() {
+
+    try {
+
+      await fetch(
+        "/api/logout",
+        {
+          method: "POST",
+          credentials: "include"
+        }
+      );
+
+    } catch (error) {}
+
+    showLogin();
+
+    document
+      .getElementById("password")
+      .value = "";
+
+  }
+);
+
+
+/* شروع */
+
+checkAuth();
+
+</script>
 
 </body>
 </html>
