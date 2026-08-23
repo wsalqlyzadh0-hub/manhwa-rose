@@ -5,16 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manhwa Rose</title>
 <style>
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   @keyframes petal-fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0.9; }
+    50% { transform: translateY(50vh) translateX(20px) rotate(180deg); }
+    100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); opacity: 0; }
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(-3deg); }
-    50% { transform: translateY(-8px) rotate(3deg); }
+    0%, 100% { transform: translateY(0px) rotate(-4deg) scale(1); }
+    50% { transform: translateY(-12px) rotate(4deg) scale(1.05); }
+  }
+
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(233,90,140,0.6), 0 0 40px rgba(233,90,140,0.3); }
+    50% { text-shadow: 0 0 35px rgba(233,90,140,0.95), 0 0 65px rgba(233,90,140,0.55); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes pop-in {
+    0% { transform: translateY(16px) scale(0.94); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @keyframes spin-rose {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(233,90,140,0.5); }
+    70% { box-shadow: 0 0 0 12px rgba(233,90,140,0); }
+    100% { box-shadow: 0 0 0 0 rgba(233,90,140,0); }
   }
 
   body {
@@ -22,7 +49,10 @@
     min-height: 100vh;
     overflow-x: hidden;
     font-family: Tahoma, Arial, sans-serif;
-    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(233,90,140,0.25), transparent 45%),
+      radial-gradient(circle at 100% 30%, rgba(157,74,143,0.25), transparent 45%),
+      radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
     color: white;
     position: relative;
   }
@@ -37,97 +67,227 @@
     z-index: 0;
   }
 
-  .wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
+  .wrap { max-width: 540px; margin: 0 auto; padding: 24px 16px 70px; position: relative; z-index: 1; }
 
-  header {
-    text-align: center;
-    margin-bottom: 22px;
+  header { text-align: center; margin-bottom: 20px; }
+
+  .mascot {
+    font-size: 46px;
+    display: inline-block;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 8px 16px rgba(233,90,140,0.4));
   }
 
-  header .rose { font-size: 40px; display: inline-block; animation: float 4s ease-in-out infinite; }
-
   header h1 {
-    font-size: 26px;
-    margin: 6px 0 4px;
-    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    font-size: 30px;
+    margin: 8px 0 2px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #f9c6d8, #ffd1de);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: shimmer 5s linear infinite, glow 3s ease-in-out infinite;
   }
 
-  header p { color: #d8c3cd; font-size: 13px; margin: 0; }
+  header p { color: #dcc2cf; font-size: 13px; margin: 2px 0 0; opacity: 0.9; }
 
-  .search {
+  .search-box {
+    position: relative;
+    margin: 20px 0 24px;
+  }
+
+  .search-box input {
     width: 100%;
-    padding: 14px;
-    border-radius: 14px;
+    padding: 15px 44px 15px 16px;
+    border-radius: 16px;
     border: 1px solid rgba(255,255,255,0.15);
     background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(10px);
     color: white;
     font-size: 14px;
-    margin: 18px 0 22px;
     outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
   }
 
-  .search:focus { border-color: #e65382; }
+  .search-box input:focus {
+    border-color: #e65382;
+    box-shadow: 0 0 0 4px rgba(230,83,130,0.15);
+  }
+
+  .search-box .icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    font-size: 16px;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #ffd1de;
+    margin: 8px 0 14px;
+    font-weight: bold;
+  }
+
+  .badge-count {
+    margin-right: auto;
+    font-size: 11px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 999px;
+    color: #e8b8c8;
+  }
 
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   .card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 18px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 20px;
     overflow: hidden;
     text-decoration: none;
     color: white;
     display: block;
-    transition: transform .18s ease;
+    position: relative;
+    animation: pop-in 0.45s ease backwards;
+    transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, border-color .2s ease;
   }
 
-  .card:active { transform: scale(.97); }
+  .card:active {
+    transform: scale(.96) translateY(2px);
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform .6s ease;
+    pointer-events: none;
+  }
+
+  .card:active::after { transform: translateX(120%); }
+
+  .card .cover-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
 
   .card .cover {
     width: 100%;
-    aspect-ratio: 3/4;
+    height: 100%;
     background: linear-gradient(135deg, #4a2040, #2a1428);
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 32px;
   }
 
-  .card .info { padding: 10px 12px 14px; }
-  .card .title { font-weight: bold; font-size: 14px; margin-bottom: 4px; line-height: 1.3; }
-  .card .meta {
-    font-size: 11px;
-    color: #e8b8c8;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .card .cover-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,5,9,0.85) 0%, transparent 55%);
   }
 
-  .status-badge {
+  .ribbon {
+    position: absolute;
+    top: 10px;
+    right: -6px;
     font-size: 10px;
-    padding: 2px 8px;
+    font-weight: bold;
+    padding: 4px 12px 4px 10px;
+    background: linear-gradient(135deg, #ff5f8f, #d6336c);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    border-radius: 6px 0 0 6px;
+  }
+
+  .ribbon.completed {
+    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
+  }
+
+  .card .info { padding: 12px 12px 14px; }
+  .card .title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card .genre-tag {
+    font-size: 10.5px;
+    color: #f3c4d4;
+    background: rgba(233,90,140,0.15);
+    border: 1px solid rgba(233,90,140,0.3);
+    padding: 3px 9px;
     border-radius: 999px;
-    background: rgba(226,73,122,0.25);
-    border: 1px solid rgba(226,73,122,0.4);
+    display: inline-block;
   }
 
   #empty {
     text-align: center;
-    color: #b98ba0;
-    padding: 60px 20px;
+    color: #d3a9ba;
+    padding: 70px 20px;
     font-size: 14px;
   }
 
-  #loading { text-align: center; padding: 40px; color: #d8a8bb; }
+  #empty .big-emoji {
+    font-size: 50px;
+    display: block;
+    margin-bottom: 14px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  #loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #e8b8c8;
+  }
+
+  .spinner {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 14px;
+    font-size: 34px;
+    animation: spin-rose 1.4s linear infinite;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 11px;
+    color: #8a6272;
+  }
+
+  footer .pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff5f8f;
+    margin-left: 6px;
+    animation: pulse-ring 2s infinite;
+  }
 </style>
 </head>
 <body>
@@ -135,29 +295,44 @@
 <div class="wrap">
 
   <header>
-    <div class="rose">🌹</div>
-    <h1>Manhwa Rose</h1>
-    <p>دنیای مانهوا در دستان تو</p>
+    <div class="mascot">🌹</div>
+    <h1>MANHWA ROSE</h1>
+    <p>دنیای مانهوا در دستان تو ✨</p>
   </header>
 
-  <input class="search" id="search" placeholder="🔍 جستجوی مانهوا...">
+  <div class="search-box">
+    <span class="icon">🔍</span>
+    <input id="search" placeholder="جستجوی مانهوا...">
+  </div>
 
-  <div id="loading">در حال بارگذاری...</div>
+  <div class="section-title">
+    <span>📚 کتابخانه</span>
+    <span class="badge-count" id="count">...</span>
+  </div>
+
+  <div id="loading"><div class="spinner">🌹</div>در حال بارگذاری دنیای مانهوا...</div>
   <div class="grid" id="grid"></div>
-  <div id="empty" style="display:none;">هنوز مانهوایی اضافه نشده 🌸</div>
+  <div id="empty" style="display:none;">
+    <span class="big-emoji">🌸</span>
+    هنوز مانهوایی اضافه نشده
+  </div>
+
+  <footer>
+    <span class="pulse"></span>Manhwa Rose · ساخته‌شده با عشق 🌹
+  </footer>
 
 </div>
 
 <script>
-  const petals = ["🌸","🌹","🥀","💮"];
-  for (let i = 0; i < 10; i++) {
+  const petals = ["🌸","🌹","🥀","💮","🌺"];
+  for (let i = 0; i < 12; i++) {
     const el = document.createElement("div");
     el.className = "petal";
     el.textContent = petals[Math.floor(Math.random() * petals.length)];
     el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (10 + Math.random() * 12) + "s";
+    el.style.animationDuration = (9 + Math.random() * 12) + "s";
     el.style.animationDelay = (Math.random() * 10) + "s";
-    el.style.fontSize = (12 + Math.random() * 12) + "px";
+    el.style.fontSize = (12 + Math.random() * 14) + "px";
     document.body.appendChild(el);
   }
 
@@ -165,6 +340,7 @@
   const empty = document.getElementById("empty");
   const loading = document.getElementById("loading");
   const searchInput = document.getElementById("search");
+  const countEl = document.getElementById("count");
 
   let allManga = [];
 
@@ -177,27 +353,33 @@
 
     if (list.length === 0) {
       empty.style.display = "block";
+      countEl.textContent = "۰ عنوان";
       return;
     }
     empty.style.display = "none";
+    countEl.textContent = `${list.length} عنوان`;
 
-    list.forEach(m => {
+    list.forEach((m, i) => {
       const a = document.createElement("a");
       a.className = "card";
+      a.style.animationDelay = (i * 0.05) + "s";
       a.href = `/view.html?id=${m.id}`;
 
       const coverStyle = m.cover_url
         ? `background-image: url('${m.cover_url}')`
         : "";
 
+      const ribbonClass = m.status === "completed" ? "ribbon completed" : "ribbon";
+
       a.innerHTML = `
-        <div class="cover" style="${coverStyle}">${m.cover_url ? "" : "📖"}</div>
+        <div class="cover-wrap">
+          <div class="cover" style="${coverStyle}">${m.cover_url ? "" : "📖"}</div>
+          <div class="cover-fade"></div>
+          <div class="${ribbonClass}">${statusLabel(m.status)}</div>
+        </div>
         <div class="info">
           <div class="title">${m.title}</div>
-          <div class="meta">
-            <span>${m.genre || ""}</span>
-            <span class="status-badge">${statusLabel(m.status)}</span>
-          </div>
+          ${m.genre ? `<span class="genre-tag">${m.genre}</span>` : ""}
         </div>
       `;
       grid.appendChild(a);
@@ -214,12 +396,12 @@
         allManga = data.manga;
         render(allManga);
       } else {
-        empty.textContent = "خطا در بارگذاری.";
+        empty.innerHTML = `<span class="big-emoji">😕</span>خطا در بارگذاری.`;
         empty.style.display = "block";
       }
     } catch {
       loading.style.display = "none";
-      empty.textContent = "ارتباط با سرور برقرار نشد.";
+      empty.innerHTML = `<span class="big-emoji">📡</span>ارتباط با سرور برقرار نشد.`;
       empty.style.display = "block";
     }
   }
