@@ -1,855 +1,237 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Manhwa Rose 🌹</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-
-      font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-
-      color: white;
-
-      background:
-        radial-gradient(
-          circle at 20% 10%,
-          rgba(255, 65, 120, .18),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 90% 40%,
-          rgba(150, 50, 255, .12),
-          transparent 30%
-        ),
-        #08060a;
-    }
-
-    /* ---------- Header ---------- */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 15px 6%;
-
-      background:
-        rgba(8, 6, 10, .82);
-
-      border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
-
-      backdrop-filter:
-        blur(18px);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      font-size: 29px;
-
-      filter:
-        drop-shadow(
-          0 0 10px
-          rgba(255,60,120,.6)
-        );
-    }
-
-    nav {
-      display: flex;
-      gap: 7px;
-    }
-
-    nav a {
-      color: #cfc3ca;
-
-      text-decoration: none;
-
-      padding: 9px 13px;
-
-      border-radius: 10px;
-
-      transition: .2s;
-    }
-
-    nav a:hover {
-      color: white;
-
-      background:
-        rgba(255,255,255,.08);
-
-      transform:
-        translateY(-2px);
-    }
-
-    .search-button {
-      border: 0;
-
-      padding: 10px 14px;
-
-      border-radius: 12px;
-
-      background:
-        rgba(255,255,255,.08);
-
-      color: white;
-
-      cursor: pointer;
-
-      font-size: 15px;
-
-      transition: .2s;
-    }
-
-    .search-button:hover {
-      background:
-        rgba(255,75,130,.2);
-
-      transform:
-        scale(1.04);
-    }
-
-    /* ---------- Hero ---------- */
-
-    .hero {
-      width: min(1100px, 90%);
-
-      margin:
-        65px auto
-        45px;
-
-      padding:
-        65px 30px;
-
-      text-align: center;
-
-      border-radius: 30px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,70,125,.13),
-          rgba(255,255,255,.035)
-        );
-
-      border:
-        1px solid
-        rgba(255,255,255,.09);
-
-      box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.35);
-
-      overflow: hidden;
-
-      position: relative;
-    }
-
-    .hero::before {
-      content: "";
-
-      position: absolute;
-
-      width: 220px;
-      height: 220px;
-
-      border-radius: 50%;
-
-      background:
-        rgba(255,50,120,.2);
-
-      filter:
-        blur(80px);
-
-      top: -100px;
-      left: -70px;
-    }
-
-    .hero-rose {
-      font-size: 65px;
-
-      display: inline-block;
-
-      animation:
-        float 3s
-        ease-in-out
-        infinite;
-
-      filter:
-        drop-shadow(
-          0 0 18px
-          rgba(255,60,120,.55)
-        );
-    }
-
-    @keyframes float {
-
-      0%,100% {
-        transform:
-          translateY(0)
-          rotate(-4deg);
-      }
-
-      50% {
-        transform:
-          translateY(-9px)
-          rotate(4deg);
-      }
-
-    }
-
-    .hero h1 {
-      font-size:
-        clamp(30px, 6vw, 55px);
-
-      margin:
-        15px 0 10px;
-    }
-
-    .hero h1 span {
-      color: #ff5d91;
-
-      text-shadow:
-        0 0 20px
-        rgba(255,70,130,.35);
-    }
-
-    .hero p {
-      max-width: 600px;
-
-      margin:
-        0 auto 28px;
-
-      line-height: 1.9;
-
-      color: #b9adb4;
-    }
-
-    /* ---------- Buttons ---------- */
-
-    .buttons {
-      display: flex;
-
-      justify-content: center;
-
-      gap: 12px;
-
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-
-      padding:
-        13px 21px;
-
-      border-radius: 14px;
-
-      text-decoration: none;
-
-      font-weight: bold;
-
-      transition: .2s;
-
-      cursor: pointer;
-    }
-
-    .btn-main {
-      color: white;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ff4f87,
-          #a92e5e
-        );
-
-      box-shadow:
-        0 10px 25px
-        rgba(255,50,110,.22);
-    }
-
-    .btn-main:hover {
-      transform:
-        translateY(-4px)
-        rotate(-1deg);
-
-      box-shadow:
-        0 15px 35px
-        rgba(255,50,110,.35);
-    }
-
-    .btn-secondary {
-      color: #eee;
-
-      background:
-        rgba(255,255,255,.07);
-
-      border:
-        1px solid
-        rgba(255,255,255,.09);
-    }
-
-    .btn-secondary:hover {
-      transform:
-        translateY(-4px);
-
-      background:
-        rgba(255,255,255,.11);
-    }
-
-    /* ---------- Sections ---------- */
-
-    .section {
-      width: min(1100px, 90%);
-
-      margin:
-        0 auto 55px;
-    }
-
-    .section-title {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      margin-bottom: 20px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-
-      font-size: 23px;
-    }
-
-    .section-title a {
-      color: #ff6797;
-
-      text-decoration: none;
-
-      font-size: 13px;
-    }
-
-    /* ---------- Cards ---------- */
-
-    .cards {
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fill,
-          minmax(170px, 1fr)
-        );
-
-      gap: 17px;
-    }
-
-    .card {
-      overflow: hidden;
-
-      border-radius: 19px;
-
-      background:
-        rgba(255,255,255,.055);
-
-      border:
-        1px solid
-        rgba(255,255,255,.075);
-
-      transition: .25s;
-
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform:
-        translateY(-7px);
-
-      background:
-        rgba(255,255,255,.08);
-
-      box-shadow:
-        0 15px 35px
-        rgba(0,0,0,.3);
-    }
-
-    .cover {
-      height: 230px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 48px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #4c172d,
-          #17101c
-        );
-    }
-
-    .card:nth-child(2) .cover {
-      background:
-        linear-gradient(
-          145deg,
-          #26154d,
-          #110c18
-        );
-    }
-
-    .card:nth-child(3) .cover {
-      background:
-        linear-gradient(
-          145deg,
-          #173d3c,
-          #0b1112
-        );
-    }
-
-    .card:nth-child(4) .cover {
-      background:
-        linear-gradient(
-          145deg,
-          #493517,
-          #120d09
-        );
-    }
-
-    .card-info {
-      padding: 14px;
-    }
-
-    .card-info h3 {
-      margin:
-        0 0 7px;
-
-      font-size: 16px;
-    }
-
-    .card-info p {
-      margin: 0;
-
-      color: #988d94;
-
-      font-size: 12px;
-    }
-
-    .tag {
-      display: inline-block;
-
-      margin-top: 10px;
-
-      padding:
-        5px 9px;
-
-      border-radius: 8px;
-
-      background:
-        rgba(255,80,130,.12);
-
-      color: #ff79a2;
-
-      font-size: 11px;
-    }
-
-    /* ---------- Empty State ---------- */
-
-    .empty {
-      padding: 40px 20px;
-
-      text-align: center;
-
-      border-radius: 20px;
-
-      background:
-        rgba(255,255,255,.035);
-
-      border:
-        1px dashed
-        rgba(255,255,255,.1);
-
-      color: #8f858b;
-    }
-
-    /* ---------- Footer ---------- */
-
-    footer {
-      padding:
-        35px 20px;
-
-      text-align: center;
-
-      color: #71686e;
-
-      border-top:
-        1px solid
-        rgba(255,255,255,.06);
-    }
-
-    footer span {
-      color: #ff5c91;
-    }
-
-    /* ---------- Mobile ---------- */
-
-    @media(max-width:700px) {
-
-      header {
-        padding:
-          13px 4%;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .hero {
-        margin-top: 30px;
-
-        padding:
-          50px 20px;
-      }
-
-      .cards {
-        grid-template-columns:
-          repeat(2, 1fr);
-      }
-
-      .cover {
-        height: 200px;
-      }
-
-    }
-
-    @media(max-width:400px) {
-
-      .cards {
-        grid-template-columns:
-          1fr 1fr;
-      }
-
-      .cover {
-        height: 170px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  @keyframes petal-fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-3deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    position: relative;
+  }
+
+  .petal {
+    position: fixed;
+    top: -10vh;
+    font-size: 18px;
+    animation: petal-fall linear infinite;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 60px; position: relative; z-index: 1; }
+
+  header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  header .rose { font-size: 40px; display: inline-block; animation: float 4s ease-in-out infinite; }
+
+  header h1 {
+    font-size: 26px;
+    margin: 6px 0 4px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  header p { color: #d8c3cd; font-size: 13px; margin: 0; }
+
+  .search {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.07);
+    color: white;
+    font-size: 14px;
+    margin: 18px 0 22px;
+    outline: none;
+  }
+
+  .search:focus { border-color: #e65382; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    display: block;
+    transition: transform .18s ease;
+  }
+
+  .card:active { transform: scale(.97); }
+
+  .card .cover {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #4a2040, #2a1428);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+  }
+
+  .card .info { padding: 10px 12px 14px; }
+  .card .title { font-weight: bold; font-size: 14px; margin-bottom: 4px; line-height: 1.3; }
+  .card .meta {
+    font-size: 11px;
+    color: #e8b8c8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(226,73,122,0.25);
+    border: 1px solid rgba(226,73,122,0.4);
+  }
+
+  #empty {
+    text-align: center;
+    color: #b98ba0;
+    padding: 60px 20px;
+    font-size: 14px;
+  }
+
+  #loading { text-align: center; padding: 40px; color: #d8a8bb; }
+</style>
 </head>
-
 <body>
 
-<!-- ================= HEADER ================= -->
-
-<header>
-
-  <div class="logo">
-    <span>🌹</span>
-    Manhwa Rose
-  </div>
-
-  <nav>
-
-    <a href="#">
-      خانه
-    </a>
-
-    <a href="#manhwa">
-      مانهواها
-    </a>
-
-    <a href="#popular">
-      محبوب‌ترین
-    </a>
-
-    <a href="#new">
-      تازه‌ها
-    </a>
-
-  </nav>
-
-  <button
-    class="search-button"
-    onclick="alert('🔎 بخش جستجو به‌زودی اضافه می‌شود!')"
-  >
-    🔎
-  </button>
-
-</header>
-
-
-<!-- ================= HERO ================= -->
-
-<section class="hero">
-
-  <div class="hero-rose">
-    🌹
-  </div>
-
-  <h1>
-    دنیای <span>مانهوا</span>
-    اینجاست!
-  </h1>
-
-  <p>
-    وارد دنیای داستان‌ها شو، مانهواهای مورد علاقه‌ات
-    رو پیدا کن و ماجراجویی بعدیت رو شروع کن ✨
-  </p>
-
-  <div class="buttons">
-
-    <a
-      href="#manhwa"
-      class="btn btn-main"
-    >
-      📚 کشف مانهواها
-    </a>
-
-    <a
-      href="#popular"
-      class="btn btn-secondary"
-    >
-      🔥 محبوب‌ترین‌ها
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- ================= MANHWA ================= -->
-
-<section
-  class="section"
-  id="manhwa"
->
-
-  <div class="section-title">
-
-    <h2>
-      📚 مانهواها
-    </h2>
-
-    <a href="#">
-      مشاهده همه ←
-    </a>
-
-  </div>
-
-
-  <div class="empty">
-
-    🌹
-
-    <br><br>
-
-    هنوز مانهوا‌ای اضافه نشده.
-
-    <br>
-
-    به‌زودی اینجا پر از داستان‌های جذاب می‌شه!
-
-  </div>
-
-</section>
-
-
-<!-- ================= POPULAR ================= -->
-
-<section
-  class="section"
-  id="popular"
->
-
-  <div class="section-title">
-
-    <h2>
-      🔥 محبوب‌ترین‌ها
-    </h2>
-
-  </div>
-
-
-  <div class="cards">
-
-    <div class="card">
-
-      <div class="cover">
-        📕
-      </div>
-
-      <div class="card-info">
-
-        <h3>
-          به‌زودی...
-        </h3>
-
-        <p>
-          منتظر مانهواهای محبوب باشید
-        </p>
-
-        <span class="tag">
-          در حال آماده‌سازی
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cover">
-        📗
-      </div>
-
-      <div class="card-info">
-
-        <h3>
-          به‌زودی...
-        </h3>
-
-        <p>
-          داستان جدید در راه است
-        </p>
-
-        <span class="tag">
-          جدید
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cover">
-        📘
-      </div>
-
-      <div class="card-info">
-
-        <h3>
-          به‌زودی...
-        </h3>
-
-        <p>
-          مانهواهای جذاب اینجا قرار می‌گیرند
-        </p>
-
-        <span class="tag">
-          منتظر باشید
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cover">
-        📙
-      </div>
-
-      <div class="card-info">
-
-        <h3>
-          به‌زودی...
-        </h3>
-
-        <p>
-          محتوای جدید
-        </p>
-
-        <span class="tag">
-          Coming Soon
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= NEW ================= -->
-
-<section
-  class="section"
-  id="new"
->
-
-  <div class="section-title">
-
-    <h2>
-      🆕 تازه‌ها
-    </h2>
-
-  </div>
-
-  <div class="empty">
-
-    ✨
-
-    <br><br>
-
-    محتوای جدید به‌زودی اینجا قرار می‌گیره.
-
-  </div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  ساخته شده با
-  <span>♥</span>
-  برای عاشقان مانهوا
-
-  <br><br>
-
-  🌹 Manhwa Rose
-
-</footer>
+<div class="wrap">
+
+  <header>
+    <div class="rose">🌹</div>
+    <h1>Manhwa Rose</h1>
+    <p>دنیای مانهوا در دستان تو</p>
+  </header>
+
+  <input class="search" id="search" placeholder="🔍 جستجوی مانهوا...">
+
+  <div id="loading">در حال بارگذاری...</div>
+  <div class="grid" id="grid"></div>
+  <div id="empty" style="display:none;">هنوز مانهوایی اضافه نشده 🌸</div>
+
+</div>
+
+<script>
+  const petals = ["🌸","🌹","🥀","💮"];
+  for (let i = 0; i < 10; i++) {
+    const el = document.createElement("div");
+    el.className = "petal";
+    el.textContent = petals[Math.floor(Math.random() * petals.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (10 + Math.random() * 12) + "s";
+    el.style.animationDelay = (Math.random() * 10) + "s";
+    el.style.fontSize = (12 + Math.random() * 12) + "px";
+    document.body.appendChild(el);
+  }
+
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  const loading = document.getElementById("loading");
+  const searchInput = document.getElementById("search");
+
+  let allManga = [];
+
+  function statusLabel(s) {
+    return s === "completed" ? "تمام‌شده" : "در حال انتشار";
+  }
+
+  function render(list) {
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+
+    list.forEach(m => {
+      const a = document.createElement("a");
+      a.className = "card";
+      a.href = `/view.html?id=${m.id}`;
+
+      const coverStyle = m.cover_url
+        ? `background-image: url('${m.cover_url}')`
+        : "";
+
+      a.innerHTML = `
+        <div class="cover" style="${coverStyle}">${m.cover_url ? "" : "📖"}</div>
+        <div class="info">
+          <div class="title">${m.title}</div>
+          <div class="meta">
+            <span>${m.genre || ""}</span>
+            <span class="status-badge">${statusLabel(m.status)}</span>
+          </div>
+        </div>
+      `;
+      grid.appendChild(a);
+    });
+  }
+
+  async function load() {
+    try {
+      const res = await fetch("/api/public/manga");
+      const data = await res.json();
+      loading.style.display = "none";
+
+      if (data.success) {
+        allManga = data.manga;
+        render(allManga);
+      } else {
+        empty.textContent = "خطا در بارگذاری.";
+        empty.style.display = "block";
+      }
+    } catch {
+      loading.style.display = "none";
+      empty.textContent = "ارتباط با سرور برقرار نشد.";
+      empty.style.display = "block";
+    }
+  }
+
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.trim().toLowerCase();
+    const filtered = allManga.filter(m => m.title.toLowerCase().includes(q));
+    render(filtered);
+  });
+
+  load();
+</script>
 
 </body>
-    </html>
+</html>
