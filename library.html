@@ -250,8 +250,13 @@
     });
 
     if (initialGenre) {
-      const match = genres.find(g => g.includes(initialGenre) || initialGenre.includes(g));
-      if (match) genreFilter.value = match;
+      if (!genres.includes(initialGenre)) {
+        const opt = document.createElement("option");
+        opt.value = initialGenre;
+        opt.textContent = initialGenre;
+        genreFilter.appendChild(opt);
+      }
+      genreFilter.value = initialGenre;
     }
   }
 
