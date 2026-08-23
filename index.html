@@ -33,17 +33,6 @@
     100% { transform: translateY(0) scale(1); opacity: 1; }
   }
 
-  @keyframes spin-rose {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes pulse-ring {
-    0% { box-shadow: 0 0 0 0 rgba(233,90,140,0.5); }
-    70% { box-shadow: 0 0 0 12px rgba(233,90,140,0); }
-    100% { box-shadow: 0 0 0 0 rgba(233,90,140,0); }
-  }
-
   body {
     margin: 0;
     min-height: 100vh;
@@ -67,12 +56,12 @@
     z-index: 0;
   }
 
-  .wrap { max-width: 540px; margin: 0 auto; padding: 24px 16px 70px; position: relative; z-index: 1; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 30px 18px 60px; position: relative; z-index: 1; }
 
-  header { text-align: center; margin-bottom: 20px; }
+  header { text-align: center; margin-bottom: 30px; }
 
   .mascot {
-    font-size: 46px;
+    font-size: 50px;
     display: inline-block;
     animation: float 4s ease-in-out infinite;
     filter: drop-shadow(0 8px 16px rgba(233,90,140,0.4));
@@ -80,7 +69,7 @@
 
   header h1 {
     font-size: 30px;
-    margin: 8px 0 2px;
+    margin: 10px 0 4px;
     font-weight: 900;
     letter-spacing: 1px;
     background: linear-gradient(90deg, #ffd1de, #ff8fae, #f9c6d8, #ffd1de);
@@ -93,200 +82,77 @@
 
   header p { color: #dcc2cf; font-size: 13px; margin: 2px 0 0; opacity: 0.9; }
 
-  .search-box {
-    position: relative;
-    margin: 20px 0 24px;
+  .categories {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
   }
 
-  .search-box input {
-    width: 100%;
-    padding: 15px 44px 15px 16px;
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(10px);
-    color: white;
-    font-size: 14px;
-    outline: none;
-    transition: border-color .2s ease, box-shadow .2s ease;
-  }
-
-  .search-box input:focus {
-    border-color: #e65382;
-    box-shadow: 0 0 0 4px rgba(230,83,130,0.15);
-  }
-
-  .search-box .icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.6;
-    font-size: 16px;
-  }
-
-  .section-title {
+  .cat-card {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    color: #ffd1de;
-    margin: 8px 0 14px;
-    font-weight: bold;
-  }
-
-  .badge-count {
-    margin-right: auto;
-    font-size: 11px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 3px 10px;
-    border-radius: 999px;
-    color: #e8b8c8;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .card {
-    background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 20px;
-    overflow: hidden;
+    gap: 18px;
+    padding: 22px;
+    border-radius: 22px;
     text-decoration: none;
     color: white;
-    display: block;
     position: relative;
-    animation: pop-in 0.45s ease backwards;
-    transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, border-color .2s ease;
+    overflow: hidden;
+    animation: pop-in 0.5s ease backwards;
+    transition: transform .2s cubic-bezier(.2,.8,.2,1);
+    border: 1px solid rgba(255,255,255,0.15);
   }
 
-  .card:active {
-    transform: scale(.96) translateY(2px);
-  }
+  .cat-card:active { transform: scale(.97); }
 
-  .card::after {
+  .cat-card::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
     transform: translateX(-120%);
     transition: transform .6s ease;
-    pointer-events: none;
+  }
+  .cat-card:active::after { transform: translateX(120%); }
+
+  .cat-action {
+    background: linear-gradient(135deg, #1a3a6b, #0d2140);
+    animation-delay: 0s;
   }
 
-  .card:active::after { transform: translateX(120%); }
-
-  .card .cover-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3/4;
-    overflow: hidden;
+  .cat-romance {
+    background: linear-gradient(135deg, #7a5a10, #4a3608);
+    animation-delay: 0.1s;
   }
 
-  .card .cover {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #4a2040, #2a1428);
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
+  .cat-all {
+    background: linear-gradient(135deg, #7a2050, #4a1230);
+    animation-delay: 0.2s;
   }
 
-  .card .cover-fade {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(10,5,9,0.85) 0%, transparent 55%);
+  .cat-rose {
+    font-size: 44px;
+    flex-shrink: 0;
   }
 
-  .ribbon {
-    position: absolute;
-    top: 10px;
-    right: -6px;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 4px 12px 4px 10px;
-    background: linear-gradient(135deg, #ff5f8f, #d6336c);
-    color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-    border-radius: 6px 0 0 6px;
-  }
+  .cat-rose.blue { filter: hue-rotate(150deg) saturate(2.2); }
+  .cat-rose.yellow { filter: hue-rotate(-65deg) saturate(2); }
 
-  .ribbon.completed {
-    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
-  }
+  .cat-info h2 { margin: 0 0 4px; font-size: 19px; }
+  .cat-info p { margin: 0; font-size: 12.5px; opacity: 0.8; }
 
-  .card .info { padding: 12px 12px 14px; }
-  .card .title {
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 6px;
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card .genre-tag {
-    font-size: 10.5px;
-    color: #f3c4d4;
-    background: rgba(233,90,140,0.15);
-    border: 1px solid rgba(233,90,140,0.3);
-    padding: 3px 9px;
-    border-radius: 999px;
-    display: inline-block;
-  }
-
-  #empty {
-    text-align: center;
-    color: #d3a9ba;
-    padding: 70px 20px;
-    font-size: 14px;
-  }
-
-  #empty .big-emoji {
-    font-size: 50px;
-    display: block;
-    margin-bottom: 14px;
-    animation: float 3s ease-in-out infinite;
-  }
-
-  #loading {
-    text-align: center;
-    padding: 60px 20px;
-    color: #e8b8c8;
-  }
-
-  .spinner {
-    width: 44px;
-    height: 44px;
-    margin: 0 auto 14px;
-    font-size: 34px;
-    animation: spin-rose 1.4s linear infinite;
+  .cat-arrow {
+    margin-right: auto;
+    font-size: 18px;
+    opacity: 0.6;
   }
 
   footer {
     text-align: center;
-    margin-top: 36px;
+    margin-top: 40px;
     font-size: 11px;
     color: #8a6272;
-  }
-
-  footer .pulse {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ff5f8f;
-    margin-left: 6px;
-    animation: pulse-ring 2s infinite;
   }
 </style>
 </head>
@@ -297,35 +163,47 @@
   <header>
     <div class="mascot">🌹</div>
     <h1>MANHWA ROSE</h1>
-    <p>دنیای مانهوا در دستان تو ✨</p>
+    <p>یک دسته رو انتخاب کن و شروع کن ✨</p>
   </header>
 
-  <div class="search-box">
-    <span class="icon">🔍</span>
-    <input id="search" placeholder="جستجوی مانهوا...">
+  <div class="categories">
+
+    <a href="/library.html?genre=اکشن" class="cat-card cat-action">
+      <div class="cat-rose blue">🌹</div>
+      <div class="cat-info">
+        <h2>رز آبی</h2>
+        <p>اکشن</p>
+      </div>
+      <div class="cat-arrow">◀</div>
+    </a>
+
+    <a href="/library.html?genre=عاشقانه" class="cat-card cat-romance">
+      <div class="cat-rose yellow">🌹</div>
+      <div class="cat-info">
+        <h2>رز زرد</h2>
+        <p>عاشقانه</p>
+      </div>
+      <div class="cat-arrow">◀</div>
+    </a>
+
+    <a href="/library.html" class="cat-card cat-all">
+      <div class="cat-rose">🌹</div>
+      <div class="cat-info">
+        <h2>همه</h2>
+        <p>مشاهده‌ی کل کتابخانه</p>
+      </div>
+      <div class="cat-arrow">◀</div>
+    </a>
+
   </div>
 
-  <div class="section-title">
-    <span>📚 کتابخانه</span>
-    <span class="badge-count" id="count">...</span>
-  </div>
-
-  <div id="loading"><div class="spinner">🌹</div>در حال بارگذاری دنیای مانهوا...</div>
-  <div class="grid" id="grid"></div>
-  <div id="empty" style="display:none;">
-    <span class="big-emoji">🌸</span>
-    هنوز مانهوایی اضافه نشده
-  </div>
-
-  <footer>
-    <span class="pulse"></span>Manhwa Rose · ساخته‌شده با عشق 🌹
-  </footer>
+  <footer>Manhwa Rose · ساخته‌شده با عشق 🌹</footer>
 
 </div>
 
 <script>
   const petals = ["🌸","🌹","🥀","💮","🌺"];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 10; i++) {
     const el = document.createElement("div");
     el.className = "petal";
     el.textContent = petals[Math.floor(Math.random() * petals.length)];
@@ -335,84 +213,6 @@
     el.style.fontSize = (12 + Math.random() * 14) + "px";
     document.body.appendChild(el);
   }
-
-  const grid = document.getElementById("grid");
-  const empty = document.getElementById("empty");
-  const loading = document.getElementById("loading");
-  const searchInput = document.getElementById("search");
-  const countEl = document.getElementById("count");
-
-  let allManga = [];
-
-  function statusLabel(s) {
-    return s === "completed" ? "تمام‌شده" : "در حال انتشار";
-  }
-
-  function render(list) {
-    grid.innerHTML = "";
-
-    if (list.length === 0) {
-      empty.style.display = "block";
-      countEl.textContent = "۰ عنوان";
-      return;
-    }
-    empty.style.display = "none";
-    countEl.textContent = `${list.length} عنوان`;
-
-    list.forEach((m, i) => {
-      const a = document.createElement("a");
-      a.className = "card";
-      a.style.animationDelay = (i * 0.05) + "s";
-      a.href = `/view.html?id=${m.id}`;
-
-      const coverStyle = m.cover_url
-        ? `background-image: url('${m.cover_url}')`
-        : "";
-
-      const ribbonClass = m.status === "completed" ? "ribbon completed" : "ribbon";
-
-      a.innerHTML = `
-        <div class="cover-wrap">
-          <div class="cover" style="${coverStyle}">${m.cover_url ? "" : "📖"}</div>
-          <div class="cover-fade"></div>
-          <div class="${ribbonClass}">${statusLabel(m.status)}</div>
-        </div>
-        <div class="info">
-          <div class="title">${m.title}</div>
-          ${m.genre ? `<span class="genre-tag">${m.genre}</span>` : ""}
-        </div>
-      `;
-      grid.appendChild(a);
-    });
-  }
-
-  async function load() {
-    try {
-      const res = await fetch("/api/public/manga");
-      const data = await res.json();
-      loading.style.display = "none";
-
-      if (data.success) {
-        allManga = data.manga;
-        render(allManga);
-      } else {
-        empty.innerHTML = `<span class="big-emoji">😕</span>خطا در بارگذاری.`;
-        empty.style.display = "block";
-      }
-    } catch {
-      loading.style.display = "none";
-      empty.innerHTML = `<span class="big-emoji">📡</span>ارتباط با سرور برقرار نشد.`;
-      empty.style.display = "block";
-    }
-  }
-
-  searchInput.addEventListener("input", () => {
-    const q = searchInput.value.trim().toLowerCase();
-    const filtered = allManga.filter(m => m.title.toLowerCase().includes(q));
-    render(filtered);
-  });
-
-  load();
 </script>
 
 </body>
