@@ -176,6 +176,8 @@
 
     .btn-manga { background: linear-gradient(135deg, #e2497a, #b13564); box-shadow: 0 10px 25px rgba(226,73,122,0.35); }
     .btn-chapters { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); box-shadow: 0 10px 25px rgba(157,74,143,0.35); }
+    .btn-support { background: linear-gradient(135deg, #3a6b7a, #1f4550); box-shadow: 0 10px 25px rgba(58,107,122,0.35); }
+    .btn-testfiles { background: linear-gradient(135deg, #7a5a10, #4a3608); box-shadow: 0 10px 25px rgba(122,90,16,0.35); }
 
     .btn-logout {
       background: linear-gradient(135deg, #3a2030, #241521);
@@ -236,7 +238,19 @@
 
     <button class="panel-button btn-chapters" onclick="window.location.href='/chapters.html'">
       <span class="icon">📖</span>
-      <span style="flex:1; text-align:right;">مدیریت فصل‌ها</span>
+      <span style="flex:1; text-align:right;">مدیریت قسمت‌ها</span>
+      <span class="arrow">◀</span>
+    </button>
+
+    <button class="panel-button btn-support" onclick="window.location.href='/support.html'">
+      <span class="icon">🎧</span>
+      <span style="flex:1; text-align:right;">پیام‌های پشتیبانی</span>
+      <span class="arrow">◀</span>
+    </button>
+
+    <button class="panel-button btn-testfiles" onclick="window.location.href='/test-files.html'">
+      <span class="icon">📝</span>
+      <span style="flex:1; text-align:right;">فایل‌های تست</span>
       <span class="arrow">◀</span>
     </button>
 
@@ -341,4 +355,4 @@
 
 </body>
 
-</html>
+  </html>
