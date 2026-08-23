@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدیریت قسمت‌ها - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 14px 60px;
+  }
+
+  .wrap { max-width: 480px; margin: 0 auto; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin: 0 0 20px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(12px);
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  textarea { resize: vertical; min-height: 70px; font-family: monospace; direction: ltr; text-align: left; }
+
+  label { font-size: 12px; color: #e8b8c8; display: block; margin-bottom: 4px; }
+  .hint { font-size: 11px; color: #a88; margin: -6px 0 10px; }
+
+  button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    transition: transform .15s ease, filter .15s ease;
+  }
+
+  button:active { transform: scale(.97); }
+
+  .btn-save {
+    width: 100%;
+    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
+  }
+
+  .chapter-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .chapter-info { flex: 1; min-width: 0; }
+  .chapter-info .title { font-weight: bold; font-size: 15px; margin-bottom: 2px; }
+  .chapter-info .meta { font-size: 12px; color: #d8a8bb; }
+
+  .chapter-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .chapter-actions button { padding: 8px 10px; font-size: 13px; }
+
+  .btn-edit { background: #4a2a55; }
+  .btn-delete { background: #7a2a3a; }
+
+  #message { text-align: center; min-height: 20px; margin-bottom: 10px; color: #ff8fae; font-size: 13px; }
+  #empty { text-align: center; color: #b98ba0; font-size: 14px; padding: 20px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="/admin.html">← بازگشت به پنل</a>
+    <span>🌹</span>
+  </div>
+
+  <h1>📖 مدیریت قسمت‌ها</h1>
+
+  <div id="message"></div>
+
+  <div class="card">
+    <label>انتخاب مانهوا</label>
+    <select id="mangaSelect"></select>
+  </div>
+
+  <div class="card" id="formCard">
+    <input type="hidden" id="editId">
+    <label>شماره قسمت</label>
+    <input id="chapter_number" type="number" step="0.5" placeholder="مثلاً 1 یا 1.5">
+
+    <label>عنوان قسمت (اختیاری)</label>
+    <input id="chTitle" placeholder="عنوان قسمت">
+
+    <label>لینک تصاویر صفحات</label>
+    <textarea id="pages" placeholder="هر لینک تصویر رو تو یه خط جدا بنویس"></textarea>
+    <div class="hint">هر خط = یک صفحه از قسمت، به ترتیب</div>
+
+    <button class="btn-save" id="saveBtn">➕ افزودن قسمت</button>
+  </div>
+
+  <div id="list"></div>
+  <div id="empty" style="display:none;">این مانهوا هنوز قسمتی نداره 🌸</div>
+
+</div>
+
+<script>
+  const mangaSelect = document.getElementById("mangaSelect");
+  const listEl = document.getElementById("list");
+  const emptyEl = document.getElementById("empty");
+  const messageEl = document.getElementById("message");
+  const saveBtn = document.getElementById("saveBtn");
+  const editIdEl = document.getElementById("editId");
+
+  function showMessage(text) {
+    messageEl.textContent = text;
+    setTimeout(() => { messageEl.textContent = ""; }, 3000);
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch("/api/check-auth", { credentials: "include" });
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = "/admin.html";
+    } catch {
+      window.location.href = "/admin.html";
+    }
+  }
+
+  function resetForm() {
+    editIdEl.value = "";
+    document.getElementById("chapter_number").value = "";
+    document.getElementById("chTitle").value = "";
+    document.getElementById("pages").value = "";
+    saveBtn.textContent = "➕ افزودن قسمت";
+  }
+
+  async function loadMangaList() {
+    try {
+      const res = await fetch("/api/manga", { credentials: "include" });
+      const data = await res.json();
+
+      if (!data.success || data.manga.length === 0) {
+        mangaSelect.innerHTML = `<option value="">ابتدا یک مانهوا اضافه کن</option>`;
+        return;
+      }
+
+      mangaSelect.innerHTML = data.manga
+        .map(m => `<option value="${m.id}">${m.title}</option>`)
+        .join("");
+
+      loadChapters();
+
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+  }
+
+  async function loadChapters() {
+    const mangaId = mangaSelect.value;
+    if (!mangaId) { listEl.innerHTML = ""; emptyEl.style.display = "block"; return; }
+
+    try {
+      const res = await fetch(`/api/chapters?manga_id=${mangaId}`, { credentials: "include" });
+      const data = await res.json();
+
+      if (!data.success) { showMessage(data.message || "خطا در بارگذاری."); return; }
+
+      listEl.innerHTML = "";
+
+      if (data.chapters.length === 0) {
+        emptyEl.style.display = "block";
+        return;
+      }
+      emptyEl.style.display = "none";
+
+      data.chapters.forEach(ch => {
+        const item = document.createElement("div");
+        item.className = "chapter-item";
+        item.innerHTML = `
+          <div class="chapter-info">
+            <div class="title">قسمت ${ch.chapter_number} ${ch.title ? '- ' + ch.title : ''}</div>
+            <div class="meta">${ch.pages.length} صفحه</div>
+          </div>
+          <div class="chapter-actions">
+            <button class="btn-edit">✏️</button>
+            <button class="btn-delete">🗑️</button>
+          </div>
+        `;
+        item.querySelector(".btn-edit").addEventListener("click", () => editChapter(ch));
+        item.querySelector(".btn-delete").addEventListener("click", () => deleteChapter(ch.id, ch.chapter_number));
+        listEl.appendChild(item);
+      });
+
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+  }
+
+  function editChapter(ch) {
+    editIdEl.value = ch.id;
+    document.getElementById("chapter_number").value = ch.chapter_number;
+    document.getElementById("chTitle").value = ch.title || "";
+    document.getElementById("pages").value = ch.pages.join("\n");
+    saveBtn.textContent = "💾 ذخیره تغییرات";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function deleteChapter(id, num) {
+    if (!confirm(`مطمئنی می‌خوای قسمت ${num} رو حذف کنی؟`)) return;
+
+    try {
+      const res = await fetch(`/api/chapters/${id}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      if (data.success) {
+        showMessage("حذف شد.");
+        loadChapters();
+      } else {
+        showMessage(data.message || "خطا در حذف.");
+      }
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+  }
+
+  mangaSelect.addEventListener("change", () => { resetForm(); loadChapters(); });
+
+  saveBtn.addEventListener("click", async () => {
+    const manga_id = mangaSelect.value;
+    if (!manga_id) { showMessage("اول یک مانهوا انتخاب کن."); return; }
+
+    const chapter_number = document.getElementById("chapter_number").value;
+    if (!chapter_number) { showMessage("شماره قسمت الزامی است."); return; }
+
+    const pages = document.getElementById("pages").value
+      .split("\n")
+      .map(l => l.trim())
+      .filter(l => l.length > 0);
+
+    const body = {
+      manga_id: Number(manga_id),
+      chapter_number: Number(chapter_number),
+      title: document.getElementById("chTitle").value,
+      pages
+    };
+
+    const id = editIdEl.value;
+    const url = id ? `/api/chapters/${id}` : "/api/chapters";
+    const method = id ? "PUT" : "POST";
+
+    saveBtn.disabled = true;
+
+    try {
+      const res = await fetch(url, {
+        method,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showMessage(id ? "بروزرسانی شد ✅" : "اضافه شد ✅");
+        resetForm();
+        loadChapters();
+      } else {
+        showMessage(data.message || "خطا.");
+      }
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+
+    saveBtn.disabled = false;
+  });
+
+  checkAuth();
+  loadMangaList();
+</script>
+
+</body>
+</html>
