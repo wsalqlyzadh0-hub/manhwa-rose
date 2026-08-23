@@ -2,191 +2,218 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Manhwa Rose</title>
 
   <style>
-    * {
-      box-sizing: border-box;
+
+    * { box-sizing: border-box; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-3deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(233,90,140,0.6), 0 0 40px rgba(233,90,140,0.3); }
+      50% { text-shadow: 0 0 30px rgba(233,90,140,0.9), 0 0 60px rgba(233,90,140,0.5); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes petal-fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-
+      overflow-x: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-family: Tahoma, Arial, sans-serif;
-
-      background:
-        radial-gradient(
-          circle at top,
-          #5b1938,
-          #160914 45%,
-          #080509
-        );
-
+      background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
       color: white;
+      position: relative;
+    }
+
+    .petal {
+      position: fixed;
+      top: -10vh;
+      font-size: 20px;
+      animation: petal-fall linear infinite;
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: 0;
     }
 
     .box {
-      width: 90%;
-      max-width: 380px;
-
-      padding: 35px 25px;
-
-      border-radius: 22px;
-
+      width: 92%;
+      max-width: 400px;
+      padding: 40px 26px;
+      border-radius: 26px;
       text-align: center;
-
-      background: rgba(255,255,255,0.08);
-
-      border: 1px solid rgba(255,255,255,0.12);
-
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.5);
-
-      backdrop-filter: blur(15px);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      position: relative;
+      z-index: 1;
+      animation: pop 0.5s ease;
     }
 
     .rose {
-      font-size: 55px;
-      margin-bottom: 10px;
+      font-size: 60px;
+      margin-bottom: 8px;
+      display: inline-block;
+      animation: float 4s ease-in-out infinite;
     }
 
     h1 {
       margin: 0 0 8px;
+      font-size: 30px;
+      background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 4s linear infinite, glow 3s ease-in-out infinite;
+      letter-spacing: 1px;
     }
 
-    p {
-      color: #c7b9c0;
+    p.subtitle {
+      color: #d8c3cd;
       font-size: 14px;
-      margin-bottom: 25px;
+      margin-bottom: 26px;
+      opacity: 0.9;
     }
 
     input {
       width: 100%;
       padding: 14px;
-
       margin-bottom: 12px;
-
       border-radius: 12px;
-
-      border: 1px solid rgba(255,255,255,0.12);
-
+      border: 1px solid rgba(255,255,255,0.15);
       outline: none;
-
       background: rgba(0,0,0,0.3);
-
       color: white;
-
       font-size: 15px;
     }
 
-    input:focus {
-      border-color: #e65382;
-    }
+    input:focus { border-color: #e65382; }
 
-    button {
+    #loginButton {
       width: 100%;
-
       padding: 14px;
-
       border: none;
-
       border-radius: 12px;
-
-      background: #d94d78;
-
+      background: linear-gradient(135deg, #e2497a, #b13564);
       color: white;
-
       font-size: 16px;
-
       font-weight: bold;
-
       cursor: pointer;
-
-      transition: 0.2s;
+      transition: .2s;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-    }
+    #loginButton:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    #loginButton:active { transform: scale(.98); }
+    #loginButton:disabled { opacity: .6; cursor: wait; }
 
-    button:active {
-      transform: scale(0.98);
-    }
+    #message { min-height: 22px; margin-top: 15px; color: #ff8fae; font-size: 13px; }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-
-    #message {
-      min-height: 22px;
-
-      margin-top: 15px;
-
-      color: #ff8fae;
-
-      font-size: 13px;
-    }
-
-    #panel {
-      display: none;
-    }
+    #panel { display: none; }
 
     .panel-button {
-      margin-top: 12px;
-      background: #702b4b;
+      width: 100%;
+      padding: 18px 20px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
+
+    .panel-button .icon { font-size: 22px; transition: transform .3s ease; }
+    .panel-button .arrow { opacity: 0.6; transition: transform .25s ease, opacity .25s ease; }
+
+    .panel-button::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: skewX(-20deg);
+      transition: left .5s ease;
+    }
+
+    .panel-button:hover::before { left: 140%; }
+    .panel-button:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.12); }
+    .panel-button:hover .icon { transform: rotate(-10deg) scale(1.15); }
+    .panel-button:hover .arrow { transform: translateX(-6px); opacity: 1; }
+    .panel-button:active { transform: scale(.97); }
+
+    .btn-manga { background: linear-gradient(135deg, #e2497a, #b13564); box-shadow: 0 10px 25px rgba(226,73,122,0.35); }
+    .btn-chapters { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); box-shadow: 0 10px 25px rgba(157,74,143,0.35); }
+
+    .btn-logout {
+      background: linear-gradient(135deg, #3a2030, #241521);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+      margin-top: 26px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+    .btn-logout:hover { opacity: 1; }
+
+    .badge {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 12px;
+      color: #f3c4d4;
+    }
+
   </style>
+
 </head>
 
 <body>
 
   <!-- LOGIN -->
-
   <div class="box" id="login">
 
     <div class="rose">🌹</div>
-
     <h1>Manhwa Rose</h1>
-
-    <p>
-      ورود به پنل مدیریت
-    </p>
+    <p class="subtitle">ورود به پنل مدیریت</p>
 
     <form id="loginForm">
-
-      <input
-        id="username"
-        type="text"
-        placeholder="نام کاربری"
-        autocomplete="username"
-        required
-      >
-
-      <input
-        id="password"
-        type="password"
-        placeholder="رمز عبور"
-        autocomplete="current-password"
-        required
-      >
-
-      <button
-        id="loginButton"
-        type="submit"
-      >
-        ورود به پنل 🌹
-      </button>
-
+      <input id="username" type="text" placeholder="نام کاربری" autocomplete="username" required>
+      <input id="password" type="password" placeholder="رمز عبور" autocomplete="current-password" required>
+      <button id="loginButton" type="submit">ورود به پنل 🌹</button>
     </form>
 
     <div id="message"></div>
@@ -195,235 +222,123 @@
 
 
   <!-- PANEL -->
-
   <div class="box" id="panel">
 
     <div class="rose">🌹</div>
+    <h1>خوش آمدی!</h1>
+    <p class="subtitle">وارد پنل مدیریت Manhwa Rose شدی 💫</p>
 
-    <h1>
-      خوش آمدی!
-    </h1>
-
-    <p>
-      وارد پنل مدیریت Manhwa Rose شدی.
-    </p>
-
-    <button class="panel-button">
-      📚 مدیریت مانهوا
+    <button class="panel-button btn-manga" onclick="window.location.href='/manga.html'">
+      <span class="icon">📚</span>
+      <span style="flex:1; text-align:right;">مدیریت مانهوا</span>
+      <span class="arrow">◀</span>
     </button>
 
-    <button class="panel-button">
-      📖 مدیریت فصل‌ها
+    <button class="panel-button btn-chapters" onclick="window.location.href='/chapters.html'">
+      <span class="icon">📖</span>
+      <span style="flex:1; text-align:right;">مدیریت فصل‌ها</span>
+      <span class="arrow">◀</span>
     </button>
 
-    <button
-      class="panel-button"
-      id="logout"
-    >
-      خروج 👋
+    <button class="panel-button btn-logout" id="logout">
+      <span class="icon">👋</span>
+      <span style="flex:1; text-align:right;">خروج</span>
+      <span class="arrow">◀</span>
     </button>
+
+    <div class="badge">🌹 Manhwa Rose Admin</div>
 
   </div>
 
 
-<script>
+  <script>
 
-const login =
-  document.getElementById("login");
-
-const panel =
-  document.getElementById("panel");
-
-const form =
-  document.getElementById("loginForm");
-
-const button =
-  document.getElementById("loginButton");
-
-const message =
-  document.getElementById("message");
-
-const logout =
-  document.getElementById("logout");
-
-
-/* نمایش پنل */
-
-function showPanel() {
-
-  login.style.display = "none";
-
-  panel.style.display = "block";
-
-}
-
-
-/* نمایش ورود */
-
-function showLogin() {
-
-  panel.style.display = "none";
-
-  login.style.display = "block";
-
-}
-
-
-/* بررسی ورود قبلی */
-
-async function checkAuth() {
-
-  try {
-
-    const response =
-      await fetch(
-        "/api/check-auth",
-        {
-          credentials: "include"
-        }
-      );
-
-    const result =
-      await response.json();
-
-    if (result.authenticated) {
-      showPanel();
+    // floating petals
+    const petals = ["🌸","🌹","🥀","💮"];
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement("div");
+      el.className = "petal";
+      el.textContent = petals[Math.floor(Math.random() * petals.length)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (8 + Math.random() * 10) + "s";
+      el.style.animationDelay = (Math.random() * 10) + "s";
+      el.style.fontSize = (14 + Math.random() * 14) + "px";
+      document.body.appendChild(el);
     }
 
-  } catch (error) {
+    const login = document.getElementById("login");
+    const panel = document.getElementById("panel");
+    const form = document.getElementById("loginForm");
+    const button = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+    const logout = document.getElementById("logout");
 
-    console.log(error);
+    function showPanel() {
+      login.style.display = "none";
+      panel.style.display = "block";
+    }
 
-  }
+    function showLogin() {
+      panel.style.display = "none";
+      login.style.display = "block";
+    }
 
-}
+    async function checkAuth() {
+      try {
+        const response = await fetch("/api/check-auth", { method: "GET", credentials: "include" });
+        const result = await response.json();
+        if (result.authenticated) showPanel();
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      message.textContent = "";
+      button.disabled = true;
+      button.textContent = "در حال ورود...";
 
-/* ورود */
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: document.getElementById("username").value.trim(),
+            password: document.getElementById("password").value
+          })
+        });
 
-form.addEventListener(
-  "submit",
-  async function(event) {
+        const result = await response.json();
 
-    event.preventDefault();
+        if (response.ok && result.success) {
+          showPanel();
+        } else {
+          message.textContent = result.message || "ورود ناموفق بود.";
+        }
 
-    message.textContent = "";
-
-    button.disabled = true;
-
-    button.textContent =
-      "در حال ورود...";
-
-
-    const username =
-      document
-        .getElementById("username")
-        .value
-        .trim();
-
-    const password =
-      document
-        .getElementById("password")
-        .value;
-
-
-    try {
-
-      const response =
-        await fetch(
-          "/api/login",
-          {
-
-            method: "POST",
-
-            credentials: "include",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body:
-              JSON.stringify({
-                username: username,
-                password: password
-              })
-
-          }
-        );
-
-
-      const result =
-        await response.json();
-
-
-      if (
-        response.ok &&
-        result.success
-      ) {
-
-        message.textContent = "";
-
-        showPanel();
-
-      } else {
-
-        message.textContent =
-          result.message ||
-          "نام کاربری یا رمز عبور اشتباه است.";
-
+      } catch (error) {
+        console.error(error);
+        message.textContent = "ارتباط با سرور برقرار نشد.";
       }
 
-    } catch (error) {
+      button.disabled = false;
+      button.textContent = "ورود به پنل 🌹";
+    });
 
-      message.textContent =
-        "ارتباط با سرور برقرار نشد.";
+    logout.addEventListener("click", async function() {
+      try {
+        await fetch("/api/logout", { method: "POST", credentials: "include" });
+      } catch (error) {}
+      showLogin();
+      document.getElementById("password").value = "";
+    });
 
-    }
+    checkAuth();
 
-
-    button.disabled = false;
-
-    button.textContent =
-      "ورود به پنل 🌹";
-
-  }
-);
-
-
-/* خروج */
-
-logout.addEventListener(
-  "click",
-  async function() {
-
-    try {
-
-      await fetch(
-        "/api/logout",
-        {
-          method: "POST",
-          credentials: "include"
-        }
-      );
-
-    } catch (error) {}
-
-    showLogin();
-
-    document
-      .getElementById("password")
-      .value = "";
-
-  }
-);
-
-
-/* شروع */
-
-checkAuth();
-
-</script>
+  </script>
 
 </body>
+
 </html>
