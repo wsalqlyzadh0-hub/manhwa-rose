@@ -345,7 +345,11 @@ export default {
       const id = path.split("/").pop();
       await env.DB.prepare("DELETE FROM chapters WHERE id = ?").bind(id).run();
 
-      return json({ success: true });/* ---------- PUBLIC (no auth needed, for the public website) ---------- */
+      return json({ success: true });
+    }
+
+
+    /* ---------- PUBLIC (no auth needed, for the public website) ---------- */
 
     if (path === "/api/public/manga" && method === "GET") {
       const { results } = await env.DB.prepare(
@@ -406,4 +410,3 @@ export default {
     });
   }
 };
-  }
