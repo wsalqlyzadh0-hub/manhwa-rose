@@ -144,9 +144,16 @@
     <label>لینک عکس کاور</label>
     <input id="cover_url" placeholder="https://...">
 
-    <label>ژانر</label>
-    <input id="genre" placeholder="رمانتیک، فانتزی، اکشن...">
-
+    <label>دسته‌بندی</label>
+    <select id="genre">
+      <option value="اکشن">🔵 اکشن (رز آبی)</option>
+      <option value="عاشقانه">🟡 عاشقانه (رز زرد)</option>
+      <option value="فانتزی">فانتزی</option>
+      <option value="درام">درام</option>
+      <option value="کمدی">کمدی</option>
+      <option value="ماجراجویی">ماجراجویی</option>
+      <option value="ترسناک">ترسناک</option>
+    </select>
     <label>وضعیت</label>
     <select id="status">
       <option value="ongoing">در حال انتشار</option>
@@ -246,7 +253,7 @@
   }
 
   async function deleteManga(id, title) {
-    if (!confirm(`مطمئنی می‌خوای "${title}" رو حذف کنی؟ فصل‌هاش هم پاک میشن.`)) return;
+    if (!confirm(`مطمئنی می‌خوای "${title}" رو حذف کنی؟ قسمت‌هاش هم پاک میشن.`)) return;
 
     try {
       const res = await fetch(`/api/manga/${id}`, { method: "DELETE", credentials: "include" });
