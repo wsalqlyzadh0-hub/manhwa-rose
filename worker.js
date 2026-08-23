@@ -351,6 +351,99 @@ export default {
 
     /* ---------- PUBLIC (no auth needed, for the public website) ---------- */
 
+    if (path === "/api/public/support" && method === "POST") {
+      try {
+        const body = await request.json();
+        const name = String(body.name || "").trim();
+        const message = String(body.message || "").trim();
+
+        if (!name || !message) {
+          return json({ success: false, message: "نام و پیام الزامی است." }, 400);
+        }
+
+        await env.DB.prepare(
+          `INSERT INTO support_messages (name, message) VALUES (?, ?)`
+        ).bind(name, message).run();
+
+        return json({ success: true });
+
+      } catch {
+        return json({ success: false, message: "خطا در ارسال پیام." }, 500);
+      }
+    }
+
+    if (path === "/api/public/test-files" && method === "GET") {
+      const { results } = await env.DB.prepare(
+        "SELECT type, file_url FROM test_files"
+      ).all();
+
+      const map = {};
+      results.forEach(r => { map[r.type] = r.file_url; });
+
+      return json({ success: true, files: map });
+    }
+
+
+    /* ---------- ADMIN: SUPPORT MESSAGES ---------- */
+
+    if (path === "/api/support" && method === "GET") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const { results } = await env.DB.prepare(
+        "SELECT * FROM support_messages ORDER BY created_at DESC"
+      ).all();
+
+      return json({ success: true, messages: results });
+    }
+
+    if (path.match(/^\/api\/support\/\d+$/) && method === "DELETE") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const id = path.split("/").pop();
+      await env.DB.prepare("DELETE FROM support_messages WHERE id = ?").bind(id).run();
+
+      return json({ success: true });
+    }
+
+
+    /* ---------- ADMIN: TEST FILES ---------- */
+
+    if (path === "/api/test-files" && method === "GET") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const { results } = await env.DB.prepare(
+        "SELECT type, file_url FROM test_files"
+      ).all();
+
+      const map = {};
+      results.forEach(r => { map[r.type] = r.file_url; });
+
+      return json({ success: true, files: map });
+    }
+
+    if (path === "/api/test-files" && method === "PUT") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      try {
+        const body = await request.json();
+        const type = String(body.type || "");
+        const file_url = String(body.file_url || "");
+
+        if (!["translate", "clean", "type"].includes(type)) {
+          return json({ success: false, message: "نوع نامعتبر است." }, 400);
+        }
+
+        await env.DB.prepare(
+          `UPDATE test_files SET file_url = ? WHERE type = ?`
+        ).bind(file_url, type).run();
+
+        return json({ success: true });
+
+      } catch {
+        return json({ success: false, message: "خطا در بروزرسانی." }, 500);
+      }
+    }
+
     if (path === "/api/public/manga" && method === "GET") {
       const { results } = await env.DB.prepare(
         "SELECT id, title, description, cover_url, genre, status FROM manga ORDER BY created_at DESC"
