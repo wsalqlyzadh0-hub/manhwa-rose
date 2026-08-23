@@ -301,7 +301,7 @@ export default {
         const pages = Array.isArray(body.pages) ? body.pages : [];
 
         if (!manga_id || !chapter_number) {
-          return json({ success: false, message: "مانهوا و شماره فصل الزامی است." }, 400);
+          return json({ success: false, message: "مانهوا و شماره قسمت الزامی است." }, 400);
         }
 
         const result = await env.DB.prepare(
@@ -312,7 +312,7 @@ export default {
         return json({ success: true, id: result.meta.last_row_id });
 
       } catch {
-        return json({ success: false, message: "خطا در ثبت فصل." }, 500);
+        return json({ success: false, message: "خطا در ثبت قسمت." }, 500);
       }
     }
 
@@ -335,7 +335,7 @@ export default {
         return json({ success: true });
 
       } catch {
-        return json({ success: false, message: "خطا در بروزرسانی فصل." }, 500);
+        return json({ success: false, message: "خطا در بروزرسانی قسمت." }, 500);
       }
     }
 
@@ -345,7 +345,52 @@ export default {
       const id = path.split("/").pop();
       await env.DB.prepare("DELETE FROM chapters WHERE id = ?").bind(id).run();
 
-      return json({ success: true });
+      return json({ success: true });/* ---------- PUBLIC (no auth needed, for the public website) ---------- */
+
+    if (path === "/api/public/manga" && method === "GET") {
+      const { results } = await env.DB.prepare(
+        "SELECT id, title, description, cover_url, genre, status FROM manga ORDER BY created_at DESC"
+      ).all();
+
+      return json({ success: true, manga: results });
+    }
+
+    if (path.match(/^\/api\/public\/manga\/\d+$/) && method === "GET") {
+      const id = path.split("/").pop();
+
+      const manga = await env.DB.prepare(
+        "SELECT id, title, description, cover_url, genre, status FROM manga WHERE id = ?"
+      ).bind(id).first();
+
+      if (!manga) {
+        return json({ success: false, message: "مانهوا پیدا نشد." }, 404);
+      }
+
+      const { results: chapters } = await env.DB.prepare(
+        "SELECT id, chapter_number, title FROM chapters WHERE manga_id = ? ORDER BY chapter_number ASC"
+      ).bind(id).all();
+
+      return json({ success: true, manga, chapters });
+    }
+
+    if (path.match(/^\/api\/public\/chapters\/\d+$/) && method === "GET") {
+      const id = path.split("/").pop();
+
+      const chapter = await env.DB.prepare(
+        "SELECT * FROM chapters WHERE id = ?"
+      ).bind(id).first();
+
+      if (!chapter) {
+        return json({ success: false, message: "قسمت پیدا نشد." }, 404);
+      }
+
+      chapter.pages = JSON.parse(chapter.pages || "[]");
+
+      const { results: siblings } = await env.DB.prepare(
+        "SELECT id, chapter_number FROM chapters WHERE manga_id = ? ORDER BY chapter_number ASC"
+      ).bind(chapter.manga_id).all();
+
+      return json({ success: true, chapter, siblings });
     }
 
 
@@ -361,3 +406,4 @@ export default {
     });
   }
 };
+  }
