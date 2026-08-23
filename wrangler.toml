@@ -2,6 +2,10 @@ name = "manhwa-rose"
 main = "worker.js"
 compatibility_date = "2026-08-22"
 
+[vars]
+ADMIN_USERNAME = "Vesal9090"
+ADMIN_PASSWORD = "Vesal9090"
+
 [assets]
 directory = "."
 binding = "ASSETS"
