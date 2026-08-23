@@ -97,6 +97,26 @@
   .chapter-item .title { font-size: 12px; color: #c9a5b6; margin-top: 2px; }
   .chapter-item .arrow { opacity: 0.6; }
 
+  .quick-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .quick-btn {
+    flex: 1;
+    text-align: center;
+    padding: 13px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .quick-btn.first { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); }
+  .quick-btn.last { background: linear-gradient(135deg, #e2497a, #b13564); }
+
   #empty, #loading { text-align: center; color: #b98ba0; padding: 30px; font-size: 14px; }
 </style>
 </head>
@@ -124,6 +144,10 @@
     <div class="description" id="description"></div>
 
     <h2>📖 قسمت‌ها</h2>
+    <div class="quick-nav" id="quickNav" style="display:none;">
+      <a class="quick-btn first" id="firstBtn">⏮ اولین قسمت</a>
+      <a class="quick-btn last" id="lastBtn">آخرین قسمت ⏭</a>
+    </div>
     <div id="chapters"></div>
     <div id="empty" style="display:none;">هنوز قسمتی برای این مانهوا اضافه نشده 🌸</div>
 
@@ -176,6 +200,13 @@
       if (data.chapters.length === 0) {
         emptyEl.style.display = "block";
       } else {
+        const quickNav = document.getElementById("quickNav");
+        const firstCh = data.chapters[0];
+        const lastCh = data.chapters[data.chapters.length - 1];
+        document.getElementById("firstBtn").href = `/read.html?id=${firstCh.id}`;
+        document.getElementById("lastBtn").href = `/read.html?id=${lastCh.id}`;
+        quickNav.style.display = "flex";
+
         data.chapters.forEach(ch => {
           const a = document.createElement("a");
           a.className = "chapter-item";
@@ -200,4 +231,4 @@
 </script>
 
 </body>
-  </html>
+</html>
