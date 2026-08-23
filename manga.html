@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدیریت مانهوا - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 14px 60px;
+  }
+
+  .wrap { max-width: 480px; margin: 0 auto; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .topbar a {
+    color: #ffb3c9;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    margin: 0 0 20px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(12px);
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  textarea { resize: vertical; min-height: 60px; }
+
+  button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    transition: transform .15s ease, filter .15s ease;
+  }
+
+  button:active { transform: scale(.97); }
+
+  .btn-save {
+    width: 100%;
+    background: linear-gradient(135deg, #e2497a, #b13564);
+  }
+
+  .btn-save:hover { filter: brightness(1.1); }
+
+  .manga-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .manga-item img {
+    width: 52px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  .manga-info { flex: 1; min-width: 0; }
+  .manga-info .title { font-weight: bold; font-size: 15px; margin-bottom: 2px; }
+  .manga-info .meta { font-size: 12px; color: #d8a8bb; }
+
+  .manga-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .manga-actions button { padding: 8px 10px; font-size: 13px; }
+
+  .btn-edit { background: #4a2a55; }
+  .btn-delete { background: #7a2a3a; }
+
+  #message { text-align: center; min-height: 20px; margin-bottom: 10px; color: #ff8fae; font-size: 13px; }
+  #empty { text-align: center; color: #b98ba0; font-size: 14px; padding: 20px; }
+
+  label { font-size: 12px; color: #e8b8c8; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="/admin.html">← بازگشت به پنل</a>
+    <span>🌹</span>
+  </div>
+
+  <h1>📚 مدیریت مانهوا</h1>
+
+  <div id="message"></div>
+
+  <div class="card" id="formCard">
+    <input type="hidden" id="editId">
+    <label>عنوان</label>
+    <input id="title" placeholder="اسم مانهوا">
+
+    <label>توضیحات</label>
+    <textarea id="description" placeholder="خلاصه داستان..."></textarea>
+
+    <label>لینک عکس کاور</label>
+    <input id="cover_url" placeholder="https://...">
+
+    <label>ژانر</label>
+    <input id="genre" placeholder="رمانتیک، فانتزی، اکشن...">
+
+    <label>وضعیت</label>
+    <select id="status">
+      <option value="ongoing">در حال انتشار</option>
+      <option value="completed">تمام‌شده</option>
+    </select>
+
+    <button class="btn-save" id="saveBtn">➕ افزودن مانهوا</button>
+  </div>
+
+  <div id="list"></div>
+  <div id="empty" style="display:none;">هنوز مانهوایی اضافه نکردی 🌸</div>
+
+</div>
+
+<script>
+  const listEl = document.getElementById("list");
+  const emptyEl = document.getElementById("empty");
+  const messageEl = document.getElementById("message");
+  const saveBtn = document.getElementById("saveBtn");
+  const editIdEl = document.getElementById("editId");
+
+  const fields = ["title", "description", "cover_url", "genre", "status"];
+
+  function showMessage(text) {
+    messageEl.textContent = text;
+    setTimeout(() => { messageEl.textContent = ""; }, 3000);
+  }
+
+  function resetForm() {
+    editIdEl.value = "";
+    fields.forEach(f => document.getElementById(f).value = "");
+    document.getElementById("status").value = "ongoing";
+    saveBtn.textContent = "➕ افزودن مانهوا";
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch("/api/check-auth", { credentials: "include" });
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = "/admin.html";
+    } catch {
+      window.location.href = "/admin.html";
+    }
+  }
+
+  async function loadManga() {
+    try {
+      const res = await fetch("/api/manga", { credentials: "include" });
+      const data = await res.json();
+
+      if (!data.success) {
+        showMessage(data.message || "خطا در بارگذاری.");
+        return;
+      }
+
+      listEl.innerHTML = "";
+
+      if (data.manga.length === 0) {
+        emptyEl.style.display = "block";
+        return;
+      }
+      emptyEl.style.display = "none";
+
+      data.manga.forEach(m => {
+        const item = document.createElement("div");
+        item.className = "manga-item";
+        item.innerHTML = `
+          <img src="${m.cover_url || ''}" onerror="this.style.display='none'">
+          <div class="manga-info">
+            <div class="title">${m.title}</div>
+            <div class="meta">${m.genre || 'بدون ژانر'} · ${m.status === 'completed' ? 'تمام‌شده' : 'در حال انتشار'}</div>
+          </div>
+          <div class="manga-actions">
+            <button class="btn-edit">✏️</button>
+            <button class="btn-delete">🗑️</button>
+          </div>
+        `;
+        item.querySelector(".btn-edit").addEventListener("click", () => editManga(m));
+        item.querySelector(".btn-delete").addEventListener("click", () => deleteManga(m.id, m.title));
+        listEl.appendChild(item);
+      });
+
+    } catch (e) {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+  }
+
+  function editManga(m) {
+    editIdEl.value = m.id;
+    document.getElementById("title").value = m.title;
+    document.getElementById("description").value = m.description || "";
+    document.getElementById("cover_url").value = m.cover_url || "";
+    document.getElementById("genre").value = m.genre || "";
+    document.getElementById("status").value = m.status || "ongoing";
+    saveBtn.textContent = "💾 ذخیره تغییرات";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function deleteManga(id, title) {
+    if (!confirm(`مطمئنی می‌خوای "${title}" رو حذف کنی؟ فصل‌هاش هم پاک میشن.`)) return;
+
+    try {
+      const res = await fetch(`/api/manga/${id}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      if (data.success) {
+        showMessage("حذف شد.");
+        loadManga();
+      } else {
+        showMessage(data.message || "خطا در حذف.");
+      }
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+  }
+
+  saveBtn.addEventListener("click", async () => {
+    const title = document.getElementById("title").value.trim();
+    if (!title) { showMessage("عنوان الزامی است."); return; }
+
+    const body = {
+      title,
+      description: document.getElementById("description").value,
+      cover_url: document.getElementById("cover_url").value,
+      genre: document.getElementById("genre").value,
+      status: document.getElementById("status").value
+    };
+
+    const id = editIdEl.value;
+    const url = id ? `/api/manga/${id}` : "/api/manga";
+    const method = id ? "PUT" : "POST";
+
+    saveBtn.disabled = true;
+
+    try {
+      const res = await fetch(url, {
+        method,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showMessage(id ? "بروزرسانی شد ✅" : "اضافه شد ✅");
+        resetForm();
+        loadManga();
+      } else {
+        showMessage(data.message || "خطا.");
+      }
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
+
+    saveBtn.disabled = false;
+  });
+
+  checkAuth();
+  loadManga();
+</script>
+
+</body>
+</html>
