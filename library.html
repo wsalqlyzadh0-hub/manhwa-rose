@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کتابخانه - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  @keyframes petal-fall {
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0.9; }
+    50% { transform: translateY(50vh) translateX(20px) rotate(180deg); }
+    100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); opacity: 0; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-4deg) scale(1); }
+    50% { transform: translateY(-12px) rotate(4deg) scale(1.05); }
+  }
+
+  @keyframes pop-in {
+    0% { transform: translateY(16px) scale(0.94); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @keyframes spin-rose {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: Tahoma, Arial, sans-serif;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(233,90,140,0.25), transparent 45%),
+      radial-gradient(circle at 100% 30%, rgba(157,74,143,0.25), transparent 45%),
+      radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    position: relative;
+  }
+
+  .petal {
+    position: fixed;
+    top: -10vh;
+    font-size: 18px;
+    animation: petal-fall linear infinite;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 540px; margin: 0 auto; padding: 20px 16px 70px; position: relative; z-index: 1; }
+
+  .topbar { margin-bottom: 16px; }
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    margin: 6px 0 18px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .search-box { position: relative; margin-bottom: 12px; }
+
+  .search-box input {
+    width: 100%;
+    padding: 14px 42px 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 14px;
+    outline: none;
+  }
+  .search-box input:focus { border-color: #e65382; }
+  .search-box .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.6; }
+
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .filters select {
+    flex: 1;
+    padding: 11px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: white;
+    font-size: 12.5px;
+    outline: none;
+  }
+
+  .filters select:focus { border-color: #e65382; }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #ffd1de;
+    margin: 4px 0 14px;
+  }
+
+  .badge-count {
+    margin-right: auto;
+    font-size: 11px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 999px;
+    color: #e8b8c8;
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .card {
+    background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    display: block;
+    position: relative;
+    animation: pop-in 0.4s ease backwards;
+    transition: transform .2s ease;
+  }
+  .card:active { transform: scale(.96); }
+
+  .card .cover-wrap { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; }
+  .card .cover {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #4a2040, #2a1428);
+    background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center; font-size: 32px;
+  }
+  .card .cover-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,5,9,0.85) 0%, transparent 55%); }
+
+  .ribbon {
+    position: absolute; top: 10px; right: -6px;
+    font-size: 10px; font-weight: bold;
+    padding: 4px 12px 4px 10px;
+    background: linear-gradient(135deg, #ff5f8f, #d6336c);
+    color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    border-radius: 6px 0 0 6px;
+  }
+  .ribbon.completed { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); }
+
+  .card .info { padding: 12px 12px 14px; }
+  .card .title {
+    font-weight: bold; font-size: 14px; margin-bottom: 6px; line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card .genre-tag {
+    font-size: 10.5px; color: #f3c4d4;
+    background: rgba(233,90,140,0.15);
+    border: 1px solid rgba(233,90,140,0.3);
+    padding: 3px 9px; border-radius: 999px; display: inline-block;
+  }
+
+  #empty { text-align: center; color: #d3a9ba; padding: 70px 20px; font-size: 14px; }
+  #empty .big-emoji { font-size: 50px; display: block; margin-bottom: 14px; animation: float 3s ease-in-out infinite; }
+
+  #loading { text-align: center; padding: 60px 20px; color: #e8b8c8; }
+  .spinner { width: 44px; height: 44px; margin: 0 auto 14px; font-size: 34px; animation: spin-rose 1.4s linear infinite; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar"><a href="/index.html">← بازگشت</a></div>
+
+  <h1>📚 کتابخانه</h1>
+
+  <div class="search-box">
+    <span class="icon">🔍</span>
+    <input id="search" placeholder="جستجوی مانهوا...">
+  </div>
+
+  <div class="filters">
+    <select id="genreFilter">
+      <option value="">همه‌ی ژانرها</option>
+    </select>
+    <select id="statusFilter">
+      <option value="">همه‌ی وضعیت‌ها</option>
+      <option value="ongoing">در حال انتشار</option>
+      <option value="completed">تمام‌شده</option>
+    </select>
+  </div>
+
+  <div class="section-title">
+    <span class="badge-count" id="count">...</span>
+  </div>
+
+  <div id="loading"><div class="spinner">🌹</div>در حال بارگذاری...</div>
+  <div class="grid" id="grid"></div>
+  <div id="empty" style="display:none;">
+    <span class="big-emoji">🌸</span>
+    چیزی پیدا نشد
+  </div>
+
+</div>
+
+<script>
+  const petals = ["🌸","🌹","🥀","💮","🌺"];
+  for (let i = 0; i < 8; i++) {
+    const el = document.createElement("div");
+    el.className = "petal";
+    el.textContent = petals[Math.floor(Math.random() * petals.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (9 + Math.random() * 12) + "s";
+    el.style.animationDelay = (Math.random() * 10) + "s";
+    el.style.fontSize = (12 + Math.random() * 14) + "px";
+    document.body.appendChild(el);
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const initialGenre = params.get("genre") || "";
+
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  const loading = document.getElementById("loading");
+  const searchInput = document.getElementById("search");
+  const genreFilter = document.getElementById("genreFilter");
+  const statusFilter = document.getElementById("statusFilter");
+  const countEl = document.getElementById("count");
+
+  let allManga = [];
+
+  function statusLabel(s) {
+    return s === "completed" ? "تمام‌شده" : "در حال انتشار";
+  }
+
+  function populateGenres() {
+    const genres = [...new Set(allManga.map(m => m.genre).filter(Boolean))];
+    genres.forEach(g => {
+      const opt = document.createElement("option");
+      opt.value = g;
+      opt.textContent = g;
+      genreFilter.appendChild(opt);
+    });
+
+    if (initialGenre) {
+      const match = genres.find(g => g.includes(initialGenre) || initialGenre.includes(g));
+      if (match) genreFilter.value = match;
+    }
+  }
+
+  function applyFilters() {
+    const q = searchInput.value.trim().toLowerCase();
+    const g = genreFilter.value;
+    const s = statusFilter.value;
+
+    const filtered = allManga.filter(m => {
+      const matchQ = m.title.toLowerCase().includes(q);
+      const matchG = !g || m.genre === g;
+      const matchS = !s || m.status === s;
+      return matchQ && matchG && matchS;
+    });
+
+    render(filtered);
+  }
+
+  function render(list) {
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+      empty.style.display = "block";
+      countEl.textContent = "۰ عنوان";
+      return;
+    }
+    empty.style.display = "none";
+    countEl.textContent = `${list.length} عنوان`;
+
+    list.forEach((m, i) => {
+      const a = document.createElement("a");
+      a.className = "card";
+      a.style.animationDelay = (i * 0.04) + "s";
+      a.href = `/view.html?id=${m.id}`;
+
+      const coverStyle = m.cover_url ? `background-image: url('${m.cover_url}')` : "";
+      const ribbonClass = m.status === "completed" ? "ribbon completed" : "ribbon";
+
+      a.innerHTML = `
+        <div class="cover-wrap">
+          <div class="cover" style="${coverStyle}">${m.cover_url ? "" : "📖"}</div>
+          <div class="cover-fade"></div>
+          <div class="${ribbonClass}">${statusLabel(m.status)}</div>
+        </div>
+        <div class="info">
+          <div class="title">${m.title}</div>
+          ${m.genre ? `<span class="genre-tag">${m.genre}</span>` : ""}
+        </div>
+      `;
+      grid.appendChild(a);
+    });
+  }
+
+  async function load() {
+    try {
+      const res = await fetch("/api/public/manga");
+      const data = await res.json();
+      loading.style.display = "none";
+
+      if (data.success) {
+        allManga = data.manga;
+        populateGenres();
+        applyFilters();
+      } else {
+        empty.innerHTML = `<span class="big-emoji">😕</span>خطا در بارگذاری.`;
+        empty.style.display = "block";
+      }
+    } catch {
+      loading.style.display = "none";
+      empty.innerHTML = `<span class="big-emoji">📡</span>ارتباط با سرور برقرار نشد.`;
+      empty.style.display = "block";
+    }
+  }
+
+  searchInput.addEventListener("input", applyFilters);
+  genreFilter.addEventListener("change", applyFilters);
+  statusFilter.addEventListener("change", applyFilters);
+
+  load();
+</script>
+
+</body>
+</html>
