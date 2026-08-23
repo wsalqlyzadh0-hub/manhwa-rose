@@ -154,6 +154,102 @@
     font-size: 11px;
     color: #8a6272;
   }
+
+  .extra-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .extra-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.13);
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: right;
+    width: 100%;
+  }
+
+  .extra-btn.support { background: linear-gradient(135deg, rgba(58,107,122,0.35), rgba(31,69,80,0.35)); }
+  .extra-btn.join { background: linear-gradient(135deg, rgba(226,73,122,0.25), rgba(157,74,143,0.25)); }
+
+  .extra-icon { font-size: 26px; flex-shrink: 0; }
+  .extra-info { display: flex; flex-direction: column; gap: 4px; }
+  .extra-title { font-size: 14.5px; font-weight: bold; }
+  .extra-sub { font-size: 11.5px; color: #d8c3cd; line-height: 1.7; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: rgba(25,12,20,0.98);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .modal-box h3 { margin: 0 0 14px; font-size: 16px; color: #ffd1de; }
+
+  .modal-box input, .modal-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 13px;
+    font-family: inherit;
+  }
+
+  .modal-box textarea { min-height: 80px; resize: vertical; }
+
+  #supportMsg { font-size: 12px; color: #ff8fae; min-height: 18px; margin-bottom: 6px; text-align: center; }
+
+  .modal-send {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #e2497a, #b13564);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+
+  .modal-close {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+    font-size: 13px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
@@ -197,7 +293,36 @@
 
   </div>
 
+  <div class="extra-buttons">
+    <button class="extra-btn support" id="supportBtn">
+      <span class="extra-icon">🎧</span>
+      <span class="extra-info">
+        <span class="extra-title">پشتیبانی</span>
+        <span class="extra-sub">مشکلی تو سایت داری یا سؤالی برات پیش اومده؟ هر وقت خواستی باهامون در ارتباط باش، همیشه پاسخگوییم.</span>
+      </span>
+    </button>
+
+    <a class="extra-btn join" href="/join.html">
+      <span class="extra-icon">🌹</span>
+      <span class="extra-info">
+        <span class="extra-title">عضویت در تیم رز</span>
+        <span class="extra-sub">عاشق مانهوایی و دوست داری تو ترجمه، ویرایش یا آپلود بهمون کمک کنی؟ بیا با هم این دنیا رو بزرگ‌تر کنیم.</span>
+      </span>
+    </a>
+  </div>
+
   <footer>Manhwa Rose · ساخته‌شده با عشق 🌹</footer>
+
+  <div class="modal-overlay" id="supportOverlay">
+    <div class="modal-box">
+      <h3>🎧 ارسال پیام به پشتیبانی</h3>
+      <input id="supportName" placeholder="اسمت رو بنویس">
+      <textarea id="supportMessage" placeholder="پیامت رو بنویس..."></textarea>
+      <div id="supportMsg"></div>
+      <button class="modal-send" id="supportSend">ارسال پیام</button>
+      <button class="modal-close" id="supportClose">بستن</button>
+    </div>
+  </div>
 
 </div>
 
@@ -213,7 +338,56 @@
     el.style.fontSize = (12 + Math.random() * 14) + "px";
     document.body.appendChild(el);
   }
+
+  const supportBtn = document.getElementById("supportBtn");
+  const supportOverlay = document.getElementById("supportOverlay");
+  const supportClose = document.getElementById("supportClose");
+  const supportSend = document.getElementById("supportSend");
+  const supportMsg = document.getElementById("supportMsg");
+
+  supportBtn.addEventListener("click", () => supportOverlay.classList.add("open"));
+  supportClose.addEventListener("click", () => supportOverlay.classList.remove("open"));
+  supportOverlay.addEventListener("click", (e) => {
+    if (e.target === supportOverlay) supportOverlay.classList.remove("open");
+  });
+
+  supportSend.addEventListener("click", async () => {
+    const name = document.getElementById("supportName").value.trim();
+    const message = document.getElementById("supportMessage").value.trim();
+
+    if (!name || !message) {
+      supportMsg.textContent = "لطفاً اسم و پیام رو بنویس.";
+      return;
+    }
+
+    supportSend.disabled = true;
+
+    try {
+      const res = await fetch("/api/public/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, message })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        supportMsg.style.color = "#8fe0a0";
+        supportMsg.textContent = "پیامت ارسال شد ✅";
+        document.getElementById("supportName").value = "";
+        document.getElementById("supportMessage").value = "";
+        setTimeout(() => supportOverlay.classList.remove("open"), 1200);
+      } else {
+        supportMsg.style.color = "#ff8fae";
+        supportMsg.textContent = data.message || "خطا در ارسال.";
+      }
+    } catch {
+      supportMsg.style.color = "#ff8fae";
+      supportMsg.textContent = "ارتباط با سرور برقرار نشد.";
+    }
+
+    supportSend.disabled = false;
+  });
 </script>
 
 </body>
-</html>
+ </html>
