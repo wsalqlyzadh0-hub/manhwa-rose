@@ -2,15 +2,13 @@ const COOKIE_NAME = "mr_admin";
 const SESSION_TIME = 86400;
 
 function getCookie(request) {
-  const cookieHeader = request.headers.get("Cookie") || "";
+  const header = request.headers.get("Cookie") || "";
 
-  const cookies = cookieHeader.split(";");
+  for (const item of header.split(";")) {
+    const [name, ...value] = item.trim().split("=");
 
-  for (const cookie of cookies) {
-    const parts = cookie.trim().split("=");
-
-    if (parts[0] === COOKIE_NAME) {
-      return parts.slice(1).join("=");
+    if (name === COOKIE_NAME) {
+      return value.join("=");
     }
   }
 
@@ -18,80 +16,48 @@ function getCookie(request) {
 }
 
 async function createToken(username, password) {
-
   const expires =
     Math.floor(Date.now() / 1000) + SESSION_TIME;
 
-  const data =
-    username + "|" + expires;
+  const data = `${username}|${expires}`;
 
-  const key =
-    await crypto.subtle.importKey(
-      "raw",
-      new TextEncoder().encode(password),
-      {
-        name: "HMAC",
-        hash: "SHA-256"
-      },
-      false,
-      ["sign"]
-    );
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
 
-  const signature =
-    await crypto.subtle.sign(
-      "HMAC",
-      key,
-      new TextEncoder().encode(data)
-    );
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(data)
+  );
 
   let binary = "";
 
-  for (
-    const byte of new Uint8Array(signature)
-  ) {
+  for (const byte of new Uint8Array(signature)) {
     binary += String.fromCharCode(byte);
   }
 
-  const hash =
-    btoa(binary)
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=/g, "");
+  const hash = btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
 
-  return (
-    btoa(data) +
-    "." +
-    hash
-  );
+  return `${btoa(data)}.${hash}`;
 }
 
-
-async function verifyToken(
-  token,
-  username,
-  password
-) {
-
+async function verifyToken(token, username, password) {
   try {
+    const parts = token.split(".");
 
-    const parts =
-      token.split(".");
+    if (parts.length !== 2) return false;
 
-    if (parts.length !== 2) {
-      return false;
-    }
-
-    const data =
-      atob(parts[0]);
-
-    const dataParts =
-      data.split("|");
-
-    const tokenUsername =
-      dataParts[0];
-
-    const expires =
-      Number(dataParts[1]);
+    const data = atob(parts[0]);
+    const [tokenUsername, expiresText] = data.split("|");
+    const expires = Number(expiresText);
 
     if (
       tokenUsername !== username ||
@@ -101,222 +67,297 @@ async function verifyToken(
       return false;
     }
 
-    const key =
-      await crypto.subtle.importKey(
-        "raw",
-        new TextEncoder().encode(password),
-        {
-          name: "HMAC",
-          hash: "SHA-256"
-        },
-        false,
-        ["sign"]
-      );
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(password),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
 
-    const signature =
-      await crypto.subtle.sign(
-        "HMAC",
-        key,
-        new TextEncoder().encode(data)
-      );
+    const signature = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      new TextEncoder().encode(data)
+    );
 
     let binary = "";
 
-    for (
-      const byte of new Uint8Array(signature)
-    ) {
+    for (const byte of new Uint8Array(signature)) {
       binary += String.fromCharCode(byte);
     }
 
-    const expected =
-      btoa(binary)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=/g, "");
+    const expected = btoa(binary)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=/g, "");
 
     return expected === parts[1];
 
   } catch {
-
     return false;
-
   }
 }
 
+async function isAuthenticated(request, env) {
+  if (!env.ADMIN_USERNAME || !env.ADMIN_PASSWORD) return false;
+  const token = getCookie(request);
+  if (!token) return false;
+  return await verifyToken(token, env.ADMIN_USERNAME, env.ADMIN_PASSWORD);
+}
+
+function json(data, status = 200, headers = {}) {
+  return new Response(
+    JSON.stringify(data),
+    {
+      status,
+      headers: {
+        "Content-Type": "application/json",
+        ...headers
+      }
+    }
+  );
+}
+
+function unauthorized() {
+  return json({ success: false, message: "دسترسی غیرمجاز است." }, 401);
+}
 
 export default {
 
   async fetch(request, env) {
 
-    const url =
-      new URL(request.url);
+    const url = new URL(request.url);
+    const path = url.pathname;
+    const method = request.method;
 
+    /* ---------- AUTH ---------- */
 
-    /* =========================
-       LOGIN
-    ========================= */
+    if (path === "/api/login" && method === "POST") {
 
-    if (
-      url.pathname === "/api/login" &&
-      request.method === "POST"
-    ) {
+      if (!env.ADMIN_USERNAME || !env.ADMIN_PASSWORD) {
+        return json({ success: false, message: "Admin secrets are not configured." }, 500);
+      }
 
       try {
+        const body = await request.json();
+        const username = String(body.username || "");
+        const password = String(body.password || "");
 
-        if (
-          !env.ADMIN_USERNAME ||
-          !env.ADMIN_PASSWORD
-        ) {
-
-          return Response.json(
-            {
-              success: false,
-              message:
-                "Admin secrets are not configured."
-            },
-            { status: 500 }
-          );
-
+        if (username !== env.ADMIN_USERNAME || password !== env.ADMIN_PASSWORD) {
+          return json({ success: false, message: "نام کاربری یا رمز عبور اشتباه است." }, 401);
         }
 
+        const token = await createToken(env.ADMIN_USERNAME, env.ADMIN_PASSWORD);
 
-        const body =
-          await request.json();
-
-        const username =
-          String(body.username || "");
-
-        const password =
-          String(body.password || "");
-
-
-        if (
-          username !== env.ADMIN_USERNAME ||
-          password !== env.ADMIN_PASSWORD
-        ) {
-
-          return Response.json(
-            {
-              success: false,
-              message:
-                "نام کاربری یا رمز عبور اشتباه است."
-            },
-            { status: 401 }
-          );
-
-        }
-
-
-        const token =
-          await createToken(
-            env.ADMIN_USERNAME,
-            env.ADMIN_PASSWORD
-          );
-
-
-        return new Response(
-          JSON.stringify({
-            success: true
-          }),
+        return json(
+          { success: true },
+          200,
           {
-            status: 200,
-
-            headers: {
-              "Content-Type":
-                "application/json",
-
-              "Set-Cookie":
-                `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${SESSION_TIME}`
-            }
+            "Set-Cookie":
+              `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${SESSION_TIME}`
           }
         );
 
       } catch {
-
-        return Response.json(
-          {
-            success: false,
-            message:
-              "درخواست نامعتبر است."
-          },
-          { status: 400 }
-        );
-
+        return json({ success: false, message: "درخواست نامعتبر است." }, 400);
       }
-
     }
 
+    if (path === "/api/check-auth" && method === "GET") {
 
-    /* =========================
-       CHECK LOGIN
-    ========================= */
-
-    if (
-      url.pathname === "/api/check-auth"
-    ) {
-
-      const token =
-        getCookie(request);
-
-      if (!token) {
-
-        return Response.json({
-          authenticated: false
-        });
-
+      if (!env.ADMIN_USERNAME || !env.ADMIN_PASSWORD) {
+        return json({ authenticated: false, message: "Admin secrets are not configured." }, 500);
       }
 
-
-      const valid =
-        await verifyToken(
-          token,
-          env.ADMIN_USERNAME,
-          env.ADMIN_PASSWORD
-        );
-
-
-      return Response.json({
-        authenticated: valid
-      });
-
+      const authed = await isAuthenticated(request, env);
+      return json({ authenticated: authed });
     }
 
-
-    /* =========================
-       LOGOUT
-    ========================= */
-
-    if (
-      url.pathname === "/api/logout" &&
-      request.method === "POST"
-    ) {
-
-      return new Response(
-        JSON.stringify({
-          success: true
-        }),
+    if (path === "/api/logout" && method === "POST") {
+      return json(
+        { success: true },
+        200,
         {
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "Set-Cookie":
-              `${COOKIE_NAME}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`
-
-          }
+          "Set-Cookie":
+            `${COOKIE_NAME}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`
         }
       );
-
     }
 
 
-    /* =========================
-       WEBSITE
-    ========================= */
+    /* ---------- MANGA CRUD ---------- */
 
-    return env.ASSETS.fetch(request);
+    if (path === "/api/manga" && method === "GET") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
 
+      const { results } = await env.DB.prepare(
+        "SELECT * FROM manga ORDER BY created_at DESC"
+      ).all();
+
+      return json({ success: true, manga: results });
+    }
+
+    if (path === "/api/manga" && method === "POST") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      try {
+        const body = await request.json();
+        const title = String(body.title || "").trim();
+        if (!title) return json({ success: false, message: "عنوان الزامی است." }, 400);
+
+        const description = String(body.description || "");
+        const cover_url = String(body.cover_url || "");
+        const genre = String(body.genre || "");
+        const status = String(body.status || "ongoing");
+
+        const result = await env.DB.prepare(
+          `INSERT INTO manga (title, description, cover_url, genre, status)
+           VALUES (?, ?, ?, ?, ?)`
+        ).bind(title, description, cover_url, genre, status).run();
+
+        return json({ success: true, id: result.meta.last_row_id });
+
+      } catch (e) {
+        return json({ success: false, message: "خطا در ثبت مانهوا." }, 500);
+      }
+    }
+
+    if (path.match(/^\/api\/manga\/\d+$/) && method === "PUT") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const id = path.split("/").pop();
+
+      try {
+        const body = await request.json();
+        const title = String(body.title || "").trim();
+        if (!title) return json({ success: false, message: "عنوان الزامی است." }, 400);
+
+        const description = String(body.description || "");
+        const cover_url = String(body.cover_url || "");
+        const genre = String(body.genre || "");
+        const status = String(body.status || "ongoing");
+
+        await env.DB.prepare(
+          `UPDATE manga SET title = ?, description = ?, cover_url = ?, genre = ?, status = ?
+           WHERE id = ?`
+        ).bind(title, description, cover_url, genre, status, id).run();
+
+        return json({ success: true });
+
+      } catch {
+        return json({ success: false, message: "خطا در بروزرسانی مانهوا." }, 500);
+      }
+    }
+
+    if (path.match(/^\/api\/manga\/\d+$/) && method === "DELETE") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const id = path.split("/").pop();
+
+      await env.DB.prepare("DELETE FROM chapters WHERE manga_id = ?").bind(id).run();
+      await env.DB.prepare("DELETE FROM manga WHERE id = ?").bind(id).run();
+
+      return json({ success: true });
+    }
+
+
+    /* ---------- CHAPTERS CRUD ---------- */
+
+    if (path === "/api/chapters" && method === "GET") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const mangaId = url.searchParams.get("manga_id");
+
+      let query;
+      if (mangaId) {
+        query = env.DB.prepare(
+          "SELECT * FROM chapters WHERE manga_id = ? ORDER BY chapter_number ASC"
+        ).bind(mangaId);
+      } else {
+        query = env.DB.prepare(
+          "SELECT * FROM chapters ORDER BY created_at DESC"
+        );
+      }
+
+      const { results } = await query.all();
+
+      const chapters = results.map(ch => ({
+        ...ch,
+        pages: JSON.parse(ch.pages || "[]")
+      }));
+
+      return json({ success: true, chapters });
+    }
+
+    if (path === "/api/chapters" && method === "POST") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      try {
+        const body = await request.json();
+        const manga_id = Number(body.manga_id);
+        const chapter_number = Number(body.chapter_number);
+        const title = String(body.title || "");
+        const pages = Array.isArray(body.pages) ? body.pages : [];
+
+        if (!manga_id || !chapter_number) {
+          return json({ success: false, message: "مانهوا و شماره فصل الزامی است." }, 400);
+        }
+
+        const result = await env.DB.prepare(
+          `INSERT INTO chapters (manga_id, chapter_number, title, pages)
+           VALUES (?, ?, ?, ?)`
+        ).bind(manga_id, chapter_number, title, JSON.stringify(pages)).run();
+
+        return json({ success: true, id: result.meta.last_row_id });
+
+      } catch {
+        return json({ success: false, message: "خطا در ثبت فصل." }, 500);
+      }
+    }
+
+    if (path.match(/^\/api\/chapters\/\d+$/) && method === "PUT") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const id = path.split("/").pop();
+
+      try {
+        const body = await request.json();
+        const chapter_number = Number(body.chapter_number);
+        const title = String(body.title || "");
+        const pages = Array.isArray(body.pages) ? body.pages : [];
+
+        await env.DB.prepare(
+          `UPDATE chapters SET chapter_number = ?, title = ?, pages = ?
+           WHERE id = ?`
+        ).bind(chapter_number, title, JSON.stringify(pages), id).run();
+
+        return json({ success: true });
+
+      } catch {
+        return json({ success: false, message: "خطا در بروزرسانی فصل." }, 500);
+      }
+    }
+
+    if (path.match(/^\/api\/chapters\/\d+$/) && method === "DELETE") {
+      if (!(await isAuthenticated(request, env))) return unauthorized();
+
+      const id = path.split("/").pop();
+      await env.DB.prepare("DELETE FROM chapters WHERE id = ?").bind(id).run();
+
+      return json({ success: true });
+    }
+
+
+    /* ---------- WEBSITE / ASSETS ---------- */
+
+    if (env.ASSETS) {
+      return env.ASSETS.fetch(request);
+    }
+
+    return new Response("Worker is running.", {
+      status: 200,
+      headers: { "Content-Type": "text/plain" }
+    });
   }
-
 };
