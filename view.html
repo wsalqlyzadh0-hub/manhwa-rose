@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مانهوا - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 16px 60px;
+  }
+
+  .wrap { max-width: 520px; margin: 0 auto; }
+
+  .topbar {
+    margin-bottom: 18px;
+  }
+
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+
+  .header-card {
+    display: flex;
+    gap: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .cover {
+    width: 110px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #4a2040, #2a1428);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+  }
+
+  .head-info { flex: 1; min-width: 0; }
+  .head-info h1 { font-size: 19px; margin: 0 0 6px; }
+  .head-info .genre { font-size: 12px; color: #e8b8c8; margin-bottom: 6px; }
+  .status-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(226,73,122,0.25);
+    border: 1px solid rgba(226,73,122,0.4);
+  }
+
+  .description {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #e8d4dc;
+    margin-bottom: 22px;
+  }
+
+  h2 {
+    font-size: 17px;
+    margin: 0 0 12px;
+    color: #ffd1de;
+  }
+
+  .chapter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: white;
+    transition: transform .15s ease, background .15s ease;
+  }
+
+  .chapter-item:active { transform: scale(.98); background: rgba(255,255,255,0.09); }
+
+  .chapter-item .num { font-weight: bold; font-size: 14px; }
+  .chapter-item .title { font-size: 12px; color: #c9a5b6; margin-top: 2px; }
+  .chapter-item .arrow { opacity: 0.6; }
+
+  #empty, #loading { text-align: center; color: #b98ba0; padding: 30px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="/index.html">← بازگشت به کتابخانه</a>
+  </div>
+
+  <div id="loading">در حال بارگذاری...</div>
+
+  <div id="content" style="display:none;">
+
+    <div class="header-card">
+      <div class="cover" id="cover">📖</div>
+      <div class="head-info">
+        <h1 id="title"></h1>
+        <div class="genre" id="genre"></div>
+        <span class="status-badge" id="status"></span>
+      </div>
+    </div>
+
+    <div class="description" id="description"></div>
+
+    <h2>📖 قسمت‌ها</h2>
+    <div id="chapters"></div>
+    <div id="empty" style="display:none;">هنوز قسمتی برای این مانهوا اضافه نشده 🌸</div>
+
+  </div>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const mangaId = params.get("id");
+
+  const loading = document.getElementById("loading");
+  const content = document.getElementById("content");
+  const emptyEl = document.getElementById("empty");
+  const chaptersEl = document.getElementById("chapters");
+
+  async function load() {
+    if (!mangaId) {
+      loading.textContent = "مانهوا مشخص نشده.";
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/public/manga/${mangaId}`);
+      const data = await res.json();
+
+      if (!data.success) {
+        loading.textContent = data.message || "مانهوا پیدا نشد.";
+        return;
+      }
+
+      loading.style.display = "none";
+      content.style.display = "block";
+
+      const m = data.manga;
+
+      document.getElementById("title").textContent = m.title;
+      document.getElementById("genre").textContent = m.genre || "";
+      document.getElementById("status").textContent =
+        m.status === "completed" ? "تمام‌شده" : "در حال انتشار";
+      document.getElementById("description").textContent =
+        m.description || "توضیحاتی ثبت نشده.";
+
+      if (m.cover_url) {
+        const coverEl = document.getElementById("cover");
+        coverEl.style.backgroundImage = `url('${m.cover_url}')`;
+        coverEl.textContent = "";
+      }
+
+      if (data.chapters.length === 0) {
+        emptyEl.style.display = "block";
+      } else {
+        data.chapters.forEach(ch => {
+          const a = document.createElement("a");
+          a.className = "chapter-item";
+          a.href = `/read.html?id=${ch.id}`;
+          a.innerHTML = `
+            <div>
+              <div class="num">قسمت ${ch.chapter_number}</div>
+              ${ch.title ? `<div class="title">${ch.title}</div>` : ""}
+            </div>
+            <div class="arrow">◀</div>
+          `;
+          chaptersEl.appendChild(a);
+        });
+      }
+
+    } catch {
+      loading.textContent = "ارتباط با سرور برقرار نشد.";
+    }
+  }
+
+  load();
+</script>
+
+</body>
+  </html>
