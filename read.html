@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خواندن قسمت - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: #0a0509;
+    color: white;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(10,5,9,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 13px; }
+  .topbar .chapter-label { font-size: 14px; font-weight: bold; color: #ffd1de; }
+
+  .pages { max-width: 700px; margin: 0 auto; padding-bottom: 40px; }
+
+  .pages img {
+    width: 100%;
+    display: block;
+  }
+
+  #loading, #empty { text-align: center; padding: 60px 20px; color: #b98ba0; }
+
+  .nav-bottom {
+    display: flex;
+    gap: 10px;
+    padding: 20px 16px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .nav-bottom a, .nav-bottom span {
+    flex: 1;
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .nav-bottom span {
+    background: rgba(255,255,255,0.05);
+    color: #777;
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="/index.html">← کتابخانه</a>
+    <div class="chapter-label" id="chapterLabel">🌹</div>
+  </div>
+
+  <div id="loading">در حال بارگذاری...</div>
+  <div id="empty" style="display:none;">این قسمت صفحه‌ای ندارد 🌸</div>
+
+  <div class="pages" id="pages"></div>
+
+  <div class="nav-bottom" id="navBottom" style="display:none;"></div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const chapterId = params.get("id");
+
+  const loading = document.getElementById("loading");
+  const emptyEl = document.getElementById("empty");
+  const pagesEl = document.getElementById("pages");
+  const navBottom = document.getElementById("navBottom");
+  const chapterLabel = document.getElementById("chapterLabel");
+
+  async function load() {
+    if (!chapterId) {
+      loading.textContent = "قسمت مشخص نشده.";
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/public/chapters/${chapterId}`);
+      const data = await res.json();
+
+      if (!data.success) {
+        loading.textContent = data.message || "قسمت پیدا نشد.";
+        return;
+      }
+
+      loading.style.display = "none";
+
+      const ch = data.chapter;
+      chapterLabel.textContent = `قسمت ${ch.chapter_number}`;
+
+      if (ch.pages.length === 0) {
+        emptyEl.style.display = "block";
+      } else {
+        ch.pages.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.loading = "lazy";
+          pagesEl.appendChild(img);
+        });
+      }
+
+      const siblings = data.siblings;
+      const idx = siblings.findIndex(s => s.id === ch.id);
+      const prev = idx > 0 ? siblings[idx - 1] : null;
+      const next = idx < siblings.length - 1 ? siblings[idx + 1] : null;
+
+      navBottom.style.display = "flex";
+      navBottom.innerHTML = `
+        ${next ? `<a href="/read.html?id=${next.id}">▶ قسمت بعد</a>` : `<span>آخرین قسمت</span>`}
+        ${prev ? `<a href="/read.html?id=${prev.id}">قسمت قبل ◀</a>` : `<span>اولین قسمت</span>`}
+      `;
+
+    } catch {
+      loading.textContent = "ارتباط با سرور برقرار نشد.";
+    }
+  }
+
+  load();
+</script>
+
+</body>
+  </html>
