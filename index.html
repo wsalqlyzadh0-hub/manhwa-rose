@@ -20,10 +20,25 @@ body{
   min-height:100vh;
   overflow-x:hidden;
   font-family:Tahoma,Arial,sans-serif;
+
   background:
-    radial-gradient(circle at 20% 0%,rgba(233,90,140,.25),transparent 45%),
-    radial-gradient(circle at 100% 30%,rgba(157,74,143,.25),transparent 45%),
-    radial-gradient(circle at top,#6b1f42,#1a0a17 45%,#08050a);
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(233,90,140,.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 100% 30%,
+      rgba(157,74,143,.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at top,
+      #6b1f42,
+      #1a0a17 45%,
+      #08050a
+    );
+
   color:white;
 }
 
@@ -34,10 +49,16 @@ textarea{
   font-family:inherit;
 }
 
+
+/* =========================
+   ANIMATIONS
+========================= */
+
 @keyframes float{
   0%,100%{
     transform:translateY(0) rotate(-4deg) scale(1);
   }
+
   50%{
     transform:translateY(-12px) rotate(4deg) scale(1.05);
   }
@@ -49,6 +70,7 @@ textarea{
       0 0 20px rgba(233,90,140,.6),
       0 0 40px rgba(233,90,140,.3);
   }
+
   50%{
     text-shadow:
       0 0 35px rgba(233,90,140,.95),
@@ -57,8 +79,13 @@ textarea{
 }
 
 @keyframes shimmer{
-  0%{background-position:-200% 0}
-  100%{background-position:200% 0}
+  0%{
+    background-position:-200% 0;
+  }
+
+  100%{
+    background-position:200% 0;
+  }
 }
 
 @keyframes pop-in{
@@ -66,6 +93,7 @@ textarea{
     transform:translateY(16px) scale(.94);
     opacity:0;
   }
+
   100%{
     transform:translateY(0) scale(1);
     opacity:1;
@@ -77,6 +105,7 @@ textarea{
     opacity:0;
     transform:scale(.88) translateY(20px);
   }
+
   100%{
     opacity:1;
     transform:scale(1) translateY(0);
@@ -84,8 +113,13 @@ textarea{
 }
 
 @keyframes overlay-in{
-  from{opacity:0}
-  to{opacity:1}
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
 }
 
 @keyframes ripple{
@@ -94,6 +128,7 @@ textarea{
     height:0;
     opacity:.55;
   }
+
   to{
     width:500px;
     height:500px;
@@ -102,43 +137,84 @@ textarea{
 }
 
 @keyframes button-loading{
-  0%{transform:rotate(0)}
-  100%{transform:rotate(360deg)}
+  0%{
+    transform:rotate(0);
+  }
+
+  100%{
+    transform:rotate(360deg);
+  }
 }
 
 @keyframes petal-fall{
   0%{
-    transform:translateY(-10vh) translateX(0) rotate(0);
+    transform:
+      translateY(-10vh)
+      translateX(0)
+      rotate(0);
+
     opacity:0;
   }
-  10%{opacity:.75}
+
+  10%{
+    opacity:.75;
+  }
+
   50%{
-    transform:translateY(50vh) translateX(20px) rotate(180deg);
+    transform:
+      translateY(50vh)
+      translateX(20px)
+      rotate(180deg);
+
     opacity:.65;
   }
+
   100%{
-    transform:translateY(110vh) translateX(-10px) rotate(360deg);
+    transform:
+      translateY(110vh)
+      translateX(-10px)
+      rotate(360deg);
+
     opacity:0;
   }
 }
 
+
+/* =========================
+   PETALS
+========================= */
+
 .petal{
   position:fixed;
   top:-10vh;
-  animation:petal-fall linear infinite;
+
+  animation:
+    petal-fall linear infinite;
+
   pointer-events:none;
   opacity:.6;
   z-index:0;
   user-select:none;
 }
 
+
+/* =========================
+   WRAPPER
+========================= */
+
 .wrap{
   max-width:520px;
   margin:0 auto;
   padding:30px 18px 60px;
+
   position:relative;
   z-index:1;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
   text-align:center;
@@ -148,8 +224,16 @@ header{
 .mascot{
   font-size:50px;
   display:inline-block;
-  animation:float 4s ease-in-out infinite;
-  filter:drop-shadow(0 8px 16px rgba(233,90,140,.4));
+
+  animation:
+    float 4s ease-in-out infinite;
+
+  filter:
+    drop-shadow(
+      0 8px 16px
+      rgba(233,90,140,.4)
+    );
+
   user-select:none;
 }
 
@@ -158,17 +242,23 @@ header h1{
   margin:10px 0 4px;
   font-weight:900;
   letter-spacing:1px;
-  background:linear-gradient(
-    90deg,
-    #ffd1de,
-    #ff8fae,
-    #f9c6d8,
-    #ffd1de
-  );
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffd1de,
+      #ff8fae,
+      #f9c6d8,
+      #ffd1de
+    );
+
   background-size:200% auto;
+
   -webkit-background-clip:text;
   background-clip:text;
+
   color:transparent;
+
   animation:
     shimmer 5s linear infinite,
     glow 3s ease-in-out infinite;
@@ -180,6 +270,11 @@ header p{
   margin:2px 0 0;
 }
 
+
+/* =========================
+   CATEGORIES
+========================= */
+
 .categories{
   display:flex;
   flex-direction:column;
@@ -190,15 +285,25 @@ header p{
 .cat-card{
   display:flex;
   align-items:center;
+
   gap:18px;
   padding:22px;
+
   border-radius:22px;
+
   text-decoration:none;
   color:white;
+
   position:relative;
   overflow:hidden;
-  animation:pop-in .5s ease backwards;
-  border:1px solid rgba(255,255,255,.15);
+
+  animation:
+    pop-in .5s ease backwards;
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
   cursor:pointer;
 
   transition:
@@ -210,22 +315,32 @@ header p{
 
 .cat-card::before{
   content:"";
+
   position:absolute;
   inset:0;
+
   background:
     radial-gradient(
       circle at var(--mx,50%) var(--my,50%),
       rgba(255,255,255,.18),
       transparent 30%
     );
+
   opacity:0;
-  transition:opacity .3s ease;
+
+  transition:
+    opacity .3s ease;
+
   pointer-events:none;
 }
 
 .cat-card:hover{
-  transform:translateY(-5px) scale(1.015);
-  border-color:rgba(255,255,255,.3);
+  transform:
+    translateY(-5px)
+    scale(1.015);
+
+  border-color:
+    rgba(255,255,255,.3);
 }
 
 .cat-card:hover::before{
@@ -233,46 +348,86 @@ header p{
 }
 
 .cat-card:active{
-  transform:translateY(-1px) scale(.975);
+  transform:
+    translateY(-1px)
+    scale(.975);
+
   filter:brightness(1.12);
 }
 
 .cat-action{
-  background:linear-gradient(135deg,#1a3a6b,#0d2140);
-  box-shadow:0 10px 30px rgba(13,33,64,.3);
+  background:
+    linear-gradient(
+      135deg,
+      #1a3a6b,
+      #0d2140
+    );
+
+  box-shadow:
+    0 10px 30px
+    rgba(13,33,64,.3);
 }
 
 .cat-romance{
-  background:linear-gradient(135deg,#7a5a10,#4a3608);
-  box-shadow:0 10px 30px rgba(122,90,16,.25);
+  background:
+    linear-gradient(
+      135deg,
+      #7a5a10,
+      #4a3608
+    );
+
+  box-shadow:
+    0 10px 30px
+    rgba(122,90,16,.25);
 }
 
 .cat-all{
-  background:linear-gradient(135deg,#7a2050,#4a1230);
-  box-shadow:0 10px 30px rgba(122,32,80,.3);
+  background:
+    linear-gradient(
+      135deg,
+      #7a2050,
+      #4a1230
+    );
+
+  box-shadow:
+    0 10px 30px
+    rgba(122,32,80,.3);
 }
 
 .cat-rose{
   font-size:44px;
   flex-shrink:0;
+
   position:relative;
   z-index:2;
+
   transition:
     transform .35s cubic-bezier(.2,.8,.2,1),
     filter .35s ease;
 }
 
 .cat-card:hover .cat-rose{
-  transform:scale(1.12) rotate(-8deg);
-  filter:drop-shadow(0 7px 12px rgba(255,80,140,.35));
+  transform:
+    scale(1.12)
+    rotate(-8deg);
+
+  filter:
+    drop-shadow(
+      0 7px 12px
+      rgba(255,80,140,.35)
+    );
 }
 
 .cat-rose.blue{
-  filter:hue-rotate(150deg) saturate(2.2);
+  filter:
+    hue-rotate(150deg)
+    saturate(2.2);
 }
 
 .cat-rose.yellow{
-  filter:hue-rotate(-65deg) saturate(2);
+  filter:
+    hue-rotate(-65deg)
+    saturate(2);
 }
 
 .cat-info{
@@ -296,52 +451,96 @@ header p{
   margin-right:auto;
   font-size:18px;
   opacity:.6;
+
   position:relative;
   z-index:2;
+
   transition:.3s ease;
 }
 
 .cat-card:hover .cat-arrow{
   opacity:1;
-  transform:translateX(-7px) scale(1.12);
+
+  transform:
+    translateX(-7px)
+    scale(1.12);
 }
+
+
+/* =========================
+   EXTRA BUTTONS
+========================= */
 
 .extra-buttons{
   display:flex;
   flex-direction:column;
+
   gap:14px;
+
   margin-top:26px;
 }
 
+
+/*
+   مهم:
+   استایل اصلی کارت‌ها
+*/
+
 .extra-btn{
-  display:flex;
+  display:flex !important;
   align-items:flex-start;
+
   gap:14px;
+
+  width:100% !important;
+
   padding:16px;
+
   border-radius:18px;
-  text-decoration:none;
-  color:white;
-  border:1px solid rgba(255,255,255,.13);
+
+  text-decoration:none !important;
+
+  color:white !important;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
   cursor:pointer;
+
   text-align:right;
-  width:100%;
+
   position:relative;
   overflow:hidden;
+
+  font-size:inherit;
 
   transition:
     transform .3s cubic-bezier(.2,.8,.2,1),
     box-shadow .3s ease,
-    border-color .3s ease;
+    border-color .3s ease,
+    filter .3s ease;
 }
 
 .extra-btn:hover{
-  transform:translateY(-4px) scale(1.01);
-  border-color:rgba(255,255,255,.25);
+  transform:
+    translateY(-4px)
+    scale(1.01);
+
+  border-color:
+    rgba(255,255,255,.25);
+
+  filter:brightness(1.08);
 }
 
 .extra-btn:active{
   transform:scale(.975);
 }
+
+
+/* =========================
+   SUPPORT
+========================= */
 
 .extra-btn.support{
   background:
@@ -352,33 +551,88 @@ header p{
     );
 }
 
-.extra-btn.join{
+
+/* =========================
+   JOIN
+========================= */
+
+/*
+   این قسمت مخصوص دکمه عضویت است
+*/
+
+a.extra-btn.join{
+  display:flex !important;
+
+  width:100% !important;
+
+  min-height:70px;
+
   background:
     linear-gradient(
       135deg,
-      rgba(226,73,122,.25),
-      rgba(157,74,143,.25)
-    );
+      rgba(226,73,122,.35),
+      rgba(157,74,143,.35)
+    ) !important;
+
+  color:#ffffff !important;
+
+  text-decoration:none !important;
+
+  border:
+    1px solid
+    rgba(255,255,255,.16);
+
+  visibility:visible !important;
+  opacity:1 !important;
+
+  position:relative;
+  z-index:5;
 }
+
+a.extra-btn.join:hover{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(226,73,122,.48),
+      rgba(157,74,143,.48)
+    ) !important;
+
+  box-shadow:
+    0 12px 30px
+    rgba(226,73,122,.18);
+}
+
+
+/* =========================
+   EXTRA CONTENT
+========================= */
 
 .extra-icon{
   font-size:26px;
   flex-shrink:0;
+
   position:relative;
   z-index:2;
+
   transition:.35s ease;
 }
 
 .extra-btn:hover .extra-icon{
-  transform:scale(1.15) rotate(-7deg);
+  transform:
+    scale(1.15)
+    rotate(-7deg);
 }
 
 .extra-info{
   display:flex;
   flex-direction:column;
+
   gap:4px;
+
   position:relative;
   z-index:2;
+
+  min-width:0;
 }
 
 .extra-title{
@@ -388,37 +642,84 @@ header p{
 
 .extra-sub{
   font-size:11.5px;
+
   color:#d8c3cd;
+
   line-height:1.7;
 }
 
+
+/* =========================
+   RIPPLE
+========================= */
+
+.ripple{
+  position:absolute;
+
+  width:0;
+  height:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.25);
+
+  transform:
+    translate(-50%,-50%);
+
+  pointer-events:none;
+
+  animation:
+    ripple .7s ease-out forwards;
+
+  z-index:10;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
 footer{
   text-align:center;
+
   margin-top:40px;
+
   font-size:11px;
+
   color:#8a6272;
 }
 
+
 /* =========================
-   SUPPORT MODAL
+   MODAL
 ========================= */
 
 .modal-overlay{
   display:none;
+
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.68);
+
+  background:
+    rgba(0,0,0,.68);
+
   backdrop-filter:blur(7px);
   -webkit-backdrop-filter:blur(7px);
+
   z-index:100;
+
   align-items:center;
   justify-content:center;
+
   padding:20px;
 }
 
 .modal-overlay.open{
   display:flex;
-  animation:overlay-in .25s ease;
+
+  animation:
+    overlay-in .25s ease;
 }
 
 .modal-box{
@@ -429,9 +730,14 @@ footer{
       rgba(20,9,17,.98)
     );
 
-  border:1px solid rgba(255,255,255,.15);
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
   border-radius:22px;
+
   padding:20px;
+
   width:100%;
   max-width:360px;
 
@@ -439,25 +745,39 @@ footer{
     0 25px 80px rgba(0,0,0,.55),
     0 0 35px rgba(220,70,130,.08);
 
-  animation:modal-in .35s cubic-bezier(.2,.8,.2,1);
+  animation:
+    modal-in .35s cubic-bezier(.2,.8,.2,1);
 }
 
 .modal-box h3{
   margin:0 0 14px;
+
   font-size:16px;
+
   color:#ffd1de;
 }
 
 .modal-box input,
 .modal-box textarea{
   width:100%;
+
   padding:12px;
+
   margin-bottom:10px;
+
   border-radius:11px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(0,0,0,.3);
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
+  background:
+    rgba(0,0,0,.3);
+
   color:white;
+
   font-size:13px;
+
   outline:none;
 
   transition:
@@ -468,11 +788,18 @@ footer{
 
 .modal-box input:focus,
 .modal-box textarea:focus{
-  border-color:rgba(255,120,160,.65);
-  background:rgba(0,0,0,.4);
+  border-color:
+    rgba(255,120,160,.65);
+
+  background:
+    rgba(0,0,0,.4);
+
   box-shadow:
-    0 0 0 3px rgba(226,73,122,.1),
-    0 0 20px rgba(226,73,122,.08);
+    0 0 0 3px
+    rgba(226,73,122,.1),
+
+    0 0 20px
+    rgba(226,73,122,.08);
 }
 
 .modal-box textarea{
@@ -482,31 +809,57 @@ footer{
 
 #supportMsg{
   font-size:12px;
+
   min-height:18px;
+
   margin-bottom:6px;
+
   text-align:center;
+
   color:#ff8fae;
 }
 
 .modal-send{
   width:100%;
+
   padding:12px;
+
   border:0;
+
   border-radius:11px;
-  background:linear-gradient(135deg,#e2497a,#b13564);
+
+  background:
+    linear-gradient(
+      135deg,
+      #e2497a,
+      #b13564
+    );
+
   color:white;
+
   font-weight:bold;
+
   font-size:14px;
+
   cursor:pointer;
+
   margin-bottom:8px;
-  box-shadow:0 8px 20px rgba(226,73,122,.2);
+
+  box-shadow:
+    0 8px 20px
+    rgba(226,73,122,.2);
+
   transition:.25s ease;
 }
 
 .modal-send:hover{
   transform:translateY(-2px);
+
   filter:brightness(1.1);
-  box-shadow:0 12px 28px rgba(226,73,122,.3);
+
+  box-shadow:
+    0 12px 28px
+    rgba(226,73,122,.3);
 }
 
 .modal-send:active{
@@ -520,33 +873,62 @@ footer{
 
 .modal-send.loading::after{
   content:"";
+
   width:14px;
   height:14px;
-  border:2px solid rgba(255,255,255,.4);
+
+  border:
+    2px solid
+    rgba(255,255,255,.4);
+
   border-top-color:white;
+
   border-radius:50%;
+
   display:inline-block;
+
   vertical-align:-3px;
+
   margin-right:7px;
-  animation:button-loading .7s linear infinite;
+
+  animation:
+    button-loading .7s linear infinite;
 }
 
 .modal-close{
   width:100%;
+
   padding:10px;
-  border:1px solid rgba(255,255,255,.08);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
   border-radius:11px;
-  background:rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.08);
+
   color:#ccc;
+
   font-size:13px;
+
   cursor:pointer;
+
   transition:.25s ease;
 }
 
 .modal-close:hover{
-  background:rgba(255,255,255,.13);
+  background:
+    rgba(255,255,255,.13);
+
   color:white;
 }
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:480px){
 
@@ -600,103 +982,195 @@ footer{
 </style>
 </head>
 
+
 <body>
 
 <div class="wrap">
 
+
 <header>
+
   <div class="mascot">🌹</div>
+
   <h1>MANHWA ROSE</h1>
-  <p>یک دسته رو انتخاب کن و شروع کن ✨</p>
+
+  <p>
+    یک دسته رو انتخاب کن و شروع کن ✨
+  </p>
+
 </header>
+
+
+<!-- =========================
+     CATEGORIES
+========================= -->
 
 <div class="categories">
 
-<a href="/library.html?genre=اکشن" class="cat-card cat-action">
-  <div class="cat-rose blue">🌹</div>
 
-  <div class="cat-info">
-    <h2>رز آبی</h2>
-    <p>اکشن</p>
-  </div>
+  <a
+    href="/library.html?genre=اکشن"
+    class="cat-card cat-action"
+  >
 
-  <div class="cat-arrow">◀</div>
-</a>
+    <div class="cat-rose blue">
+      🌹
+    </div>
 
-<a href="/library.html?genre=عاشقانه" class="cat-card cat-romance">
-  <div class="cat-rose yellow">🌹</div>
+    <div class="cat-info">
 
-  <div class="cat-info">
-    <h2>رز زرد</h2>
-    <p>عاشقانه</p>
-  </div>
+      <h2>
+        رز آبی
+      </h2>
 
-  <div class="cat-arrow">◀</div>
-</a>
+      <p>
+        اکشن
+      </p>
 
-<a href="/library.html" class="cat-card cat-all">
-  <div class="cat-rose">🌹</div>
+    </div>
 
-  <div class="cat-info">
-    <h2>همه</h2>
-    <p>مشاهده‌ی کل کتابخانه</p>
-  </div>
+    <div class="cat-arrow">
+      ◀
+    </div>
 
-  <div class="cat-arrow">◀</div>
-</a>
+  </a>
+
+
+  <a
+    href="/library.html?genre=عاشقانه"
+    class="cat-card cat-romance"
+  >
+
+    <div class="cat-rose yellow">
+      🌹
+    </div>
+
+    <div class="cat-info">
+
+      <h2>
+        رز زرد
+      </h2>
+
+      <p>
+        عاشقانه
+      </p>
+
+    </div>
+
+    <div class="cat-arrow">
+      ◀
+    </div>
+
+  </a>
+
+
+  <a
+    href="/library.html"
+    class="cat-card cat-all"
+  >
+
+    <div class="cat-rose">
+      🌹
+    </div>
+
+    <div class="cat-info">
+
+      <h2>
+        همه
+      </h2>
+
+      <p>
+        مشاهده‌ی کل کتابخانه
+      </p>
+
+    </div>
+
+    <div class="cat-arrow">
+      ◀
+    </div>
+
+  </a>
+
 
 </div>
+
+
+<!-- =========================
+     EXTRA BUTTONS
+========================= -->
 
 <div class="extra-buttons">
 
-<!-- SUPPORT BUTTON -->
 
-<button
-  class="extra-btn support"
-  id="supportBtn"
-  type="button"
->
-  <span class="extra-icon">🎧</span>
+  <!-- SUPPORT -->
 
-  <span class="extra-info">
-    <span class="extra-title">پشتیبانی</span>
+  <button
+    class="extra-btn support"
+    id="supportBtn"
+    type="button"
+  >
 
-    <span class="extra-sub">
-      مشکلی تو سایت داری یا سؤالی برات پیش اومده؟
-      هر وقت خواستی باهامون در ارتباط باش،
-      همیشه پاسخگوییم.
+    <span class="extra-icon">
+      🎧
     </span>
-  </span>
-</button>
 
+    <span class="extra-info">
 
-<!-- JOIN BUTTON -->
+      <span class="extra-title">
+        پشتیبانی
+      </span>
 
-<a
-  class="extra-btn join"
-  href="/join.html"
->
-  <span class="extra-icon">🌹</span>
+      <span class="extra-sub">
+        مشکلی تو سایت داری یا سؤالی برات پیش اومده؟
+        هر وقت خواستی باهامون در ارتباط باش،
+        همیشه پاسخگوییم.
+      </span>
 
-  <span class="extra-info">
-    <span class="extra-title">عضویت در تیم رز</span>
-
-    <span class="extra-sub">
-      عاشق مانهوایی و دوست داری تو ترجمه،
-      ویرایش یا آپلود بهمون کمک کنی؟
-      بیا با هم این دنیا رو بزرگ‌تر کنیم.
     </span>
-  </span>
-</a>
+
+  </button>
+
+
+  <!-- JOIN -->
+
+  <a
+    href="/join.html"
+    class="extra-btn join"
+    id="joinBtn"
+  >
+
+    <span class="extra-icon">
+      🌹
+    </span>
+
+    <span class="extra-info">
+
+      <span class="extra-title">
+        عضویت در تیم رز
+      </span>
+
+      <span class="extra-sub">
+        عاشق مانهوایی و دوست داری تو ترجمه،
+        ویرایش یا آپلود بهمون کمک کنی؟
+        بیا با هم این دنیا رو بزرگ‌تر کنیم.
+      </span>
+
+    </span>
+
+  </a>
+
 
 </div>
+
 
 <footer>
   Manhwa Rose · ساخته‌شده با عشق 🌹
 </footer>
 
 
-<!-- SUPPORT MODAL -->
+<!-- =========================
+     SUPPORT MODAL
+========================= -->
 
 <div
   class="modal-overlay"
@@ -705,7 +1179,10 @@ footer{
 
   <div class="modal-box">
 
-    <h3>🎧 ارسال پیام به پشتیبانی</h3>
+    <h3>
+      🎧 ارسال پیام به پشتیبانی
+    </h3>
+
 
     <input
       id="supportName"
@@ -714,12 +1191,15 @@ footer{
       autocomplete="name"
     >
 
+
     <textarea
       id="supportMessage"
       placeholder="پیامت رو بنویس..."
     ></textarea>
 
+
     <div id="supportMsg"></div>
+
 
     <button
       class="modal-send"
@@ -728,6 +1208,7 @@ footer{
     >
       ارسال پیام
     </button>
+
 
     <button
       class="modal-close"
@@ -740,6 +1221,7 @@ footer{
   </div>
 
 </div>
+
 
 </div>
 
@@ -758,14 +1240,21 @@ const petals = [
   "🌺"
 ];
 
+
 for(let i = 0; i < 10; i++){
 
-  const el = document.createElement("div");
+  const el =
+    document.createElement("div");
 
-  el.className = "petal";
+  el.className =
+    "petal";
 
   el.textContent =
-    petals[Math.floor(Math.random() * petals.length)];
+    petals[
+      Math.floor(
+        Math.random() * petals.length
+      )
+    ];
 
   el.style.left =
     Math.random() * 100 + "vw";
@@ -788,46 +1277,70 @@ for(let i = 0; i < 10; i++){
 ========================= */
 
 const supportBtn =
-  document.getElementById("supportBtn");
+  document.getElementById(
+    "supportBtn"
+  );
 
 const supportOverlay =
-  document.getElementById("supportOverlay");
+  document.getElementById(
+    "supportOverlay"
+  );
 
 const supportClose =
-  document.getElementById("supportClose");
+  document.getElementById(
+    "supportClose"
+  );
 
 const supportSend =
-  document.getElementById("supportSend");
+  document.getElementById(
+    "supportSend"
+  );
 
 const supportName =
-  document.getElementById("supportName");
+  document.getElementById(
+    "supportName"
+  );
 
 const supportMessage =
-  document.getElementById("supportMessage");
+  document.getElementById(
+    "supportMessage"
+  );
 
 const supportMsg =
-  document.getElementById("supportMsg");
+  document.getElementById(
+    "supportMsg"
+  );
 
 
 function openSupport(){
 
-  supportOverlay.classList.add("open");
+  supportOverlay.classList.add(
+    "open"
+  );
 
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow =
+    "hidden";
 
-  supportMsg.textContent = "";
+  supportMsg.textContent =
+    "";
 
-  setTimeout(() => {
-    supportName.focus();
-  }, 250);
+  setTimeout(
+    function(){
+      supportName.focus();
+    },
+    250
+  );
 }
 
 
 function closeSupport(){
 
-  supportOverlay.classList.remove("open");
+  supportOverlay.classList.remove(
+    "open"
+  );
 
-  document.body.style.overflow = "";
+  document.body.style.overflow =
+    "";
 
 }
 
@@ -844,31 +1357,21 @@ supportClose.addEventListener(
 );
 
 
-/* بستن با کلیک روی فضای بیرون */
+/* =========================
+   CLOSE OUTSIDE
+========================= */
 
 supportOverlay.addEventListener(
   "click",
   function(e){
 
-    if(e.target === supportOverlay){
-      closeSupport();
-    }
-
-  }
-);
-
-
-/* بستن با ESC */
-
-document.addEventListener(
-  "keydown",
-  function(e){
-
     if(
-      e.key === "Escape" &&
-      supportOverlay.classList.contains("open")
+      e.target ===
+      supportOverlay
     ){
+
       closeSupport();
+
     }
 
   }
@@ -876,7 +1379,30 @@ document.addEventListener(
 
 
 /* =========================
-   SEND SUPPORT MESSAGE
+   ESC
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(
+      e.key === "Escape" &&
+      supportOverlay.classList.contains(
+        "open"
+      )
+    ){
+
+      closeSupport();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   SEND SUPPORT
 ========================= */
 
 supportSend.addEventListener(
@@ -892,7 +1418,8 @@ supportSend.addEventListener(
 
     if(!name){
 
-      supportMsg.style.color = "#ff8fae";
+      supportMsg.style.color =
+        "#ff8fae";
 
       supportMsg.textContent =
         "لطفاً اسمت رو وارد کن 🌹";
@@ -905,7 +1432,8 @@ supportSend.addEventListener(
 
     if(!message){
 
-      supportMsg.style.color = "#ff8fae";
+      supportMsg.style.color =
+        "#ff8fae";
 
       supportMsg.textContent =
         "لطفاً پیامت رو بنویس ✨";
@@ -916,84 +1444,116 @@ supportSend.addEventListener(
     }
 
 
-    supportSend.disabled = true;
-    supportSend.classList.add("loading");
-    supportSend.textContent = "در حال ارسال";
+    supportSend.disabled =
+      true;
+
+    supportSend.classList.add(
+      "loading"
+    );
+
+    supportSend.textContent =
+      "در حال ارسال";
 
 
-    fetch("/api/public/support", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        message: message
-      })
-    })
+    fetch(
+      "/api/public/support",
+      {
+        method:"POST",
 
-    .then(function(res){
-      return res.json();
-    })
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
 
-    .then(function(data){
+        body:JSON.stringify({
+          name:name,
+          message:message
+        })
+      }
+    )
 
-      supportSend.disabled = false;
-      supportSend.classList.remove("loading");
-      supportSend.textContent = "ارسال پیام";
+    .then(
+      function(res){
+        return res.json();
+      }
+    )
 
+    .then(
+      function(data){
 
-      if(data.success){
+        supportSend.disabled =
+          false;
 
-        supportMsg.style.color = "#7dffb2";
-
-        supportMsg.textContent =
-          "پیامت ارسال شد 🌹";
-
-        supportMessage.value = "";
-        supportName.value = "";
-
-
-        setTimeout(
-          closeSupport,
-          1200
+        supportSend.classList.remove(
+          "loading"
         );
 
-      }else{
+        supportSend.textContent =
+          "ارسال پیام";
 
-        supportMsg.style.color = "#ff8fae";
 
-        supportMsg.textContent =
-          data.message ||
-          "خطا در ارسال پیام.";
+        if(data.success){
+
+          supportMsg.style.color =
+            "#7dffb2";
+
+          supportMsg.textContent =
+            "پیامت ارسال شد 🌹";
+
+          supportMessage.value =
+            "";
+
+          supportName.value =
+            "";
+
+
+          setTimeout(
+            closeSupport,
+            1200
+          );
+
+        }else{
+
+          supportMsg.style.color =
+            "#ff8fae";
+
+          supportMsg.textContent =
+            data.message ||
+            "خطا در ارسال پیام.";
+
+        }
 
       }
+    )
 
-    })
+    .catch(
+      function(){
 
-    .catch(function(){
+        supportSend.disabled =
+          false;
 
-      supportSend.disabled = false;
+        supportSend.classList.remove(
+          "loading"
+        );
 
-      supportSend.classList.remove("loading");
+        supportSend.textContent =
+          "ارسال پیام";
 
-      supportSend.textContent =
-        "ارسال پیام";
+        supportMsg.style.color =
+          "#ff8fae";
 
-      supportMsg.style.color =
-        "#ff8fae";
+        supportMsg.textContent =
+          "ارتباط با سرور برقرار نشد.";
 
-      supportMsg.textContent =
-        "ارتباط با سرور برقرار نشد.";
-
-    });
+      }
+    );
 
   }
 );
 
 
 /* =========================
-   RIPPLE EFFECT
+   RIPPLE
 ========================= */
 
 document.addEventListener(
@@ -1005,76 +1565,11 @@ document.addEventListener(
         ".cat-card, .extra-btn, .modal-send, .modal-close"
       );
 
-    if(!target) return;
+
+    if(!target){
+      return;
+    }
 
 
     const rect =
-      target.getBoundingClientRect();
-
-
-    const ripple =
-      document.createElement("span");
-
-    ripple.className = "ripple";
-
-
-    ripple.style.left =
-      (e.clientX - rect.left) + "px";
-
-    ripple.style.top =
-      (e.clientY - rect.top) + "px";
-
-
-    target.appendChild(ripple);
-
-
-    setTimeout(
-      () => ripple.remove(),
-      700
-    );
-
-  }
-);
-
-
-/* =========================
-   MOUSE LIGHT
-========================= */
-
-document.querySelectorAll(
-  ".cat-card"
-).forEach(card => {
-
-  card.addEventListener(
-    "pointermove",
-    function(e){
-
-      const rect =
-        card.getBoundingClientRect();
-
-      const x =
-        ((e.clientX - rect.left) / rect.width) * 100;
-
-      const y =
-        ((e.clientY - rect.top) / rect.height) * 100;
-
-
-      card.style.setProperty(
-        "--mx",
-        x + "%"
-      );
-
-      card.style.setProperty(
-        "--my",
-        y + "%"
-      );
-
-    }
-  );
-
-});
-
-</script>
-
-</body>
-  </html>
+      target.getBoundingClientRec
