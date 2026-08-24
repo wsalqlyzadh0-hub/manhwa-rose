@@ -4,33 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manhwa Rose</title>
+
 <style>
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  @keyframes petal-fall {
-    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0.9; }
-    50% { transform: translateY(50vh) translateX(20px) rotate(180deg); }
-    100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); opacity: 0; }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(-4deg) scale(1); }
-    50% { transform: translateY(-12px) rotate(4deg) scale(1.05); }
-  }
-
-  @keyframes glow {
-    0%, 100% { text-shadow: 0 0 20px rgba(233,90,140,0.6), 0 0 40px rgba(233,90,140,0.3); }
-    50% { text-shadow: 0 0 35px rgba(233,90,140,0.95), 0 0 65px rgba(233,90,140,0.55); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  @keyframes pop-in {
-    0% { transform: translateY(16px) scale(0.94); opacity: 0; }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -46,6 +28,150 @@
     position: relative;
   }
 
+  button,
+  a,
+  input,
+  textarea {
+    font-family: inherit;
+  }
+
+  /* =========================
+     ANIMATIONS
+  ========================= */
+
+  @keyframes petal-fall {
+    0% {
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 0.75;
+    }
+
+    50% {
+      transform: translateY(50vh) translateX(20px) rotate(180deg);
+      opacity: 0.65;
+    }
+
+    100% {
+      transform: translateY(110vh) translateX(-10px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(-4deg) scale(1);
+    }
+
+    50% {
+      transform: translateY(-12px) rotate(4deg) scale(1.05);
+    }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      text-shadow:
+        0 0 20px rgba(233,90,140,0.6),
+        0 0 40px rgba(233,90,140,0.3);
+    }
+
+    50% {
+      text-shadow:
+        0 0 35px rgba(233,90,140,0.95),
+        0 0 65px rgba(233,90,140,0.55);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes pop-in {
+    0% {
+      transform: translateY(16px) scale(0.94);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes modal-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.88) translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes ripple {
+    from {
+      width: 0;
+      height: 0;
+      opacity: 0.55;
+    }
+
+    to {
+      width: 500px;
+      height: 500px;
+      opacity: 0;
+    }
+  }
+
+  @keyframes button-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes success-pop {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    70% {
+      transform: scale(1.08);
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* =========================
+     BACKGROUND PETALS
+  ========================= */
+
   .petal {
     position: fixed;
     top: -10vh;
@@ -54,17 +180,32 @@
     pointer-events: none;
     opacity: 0.6;
     z-index: 0;
+    user-select: none;
   }
 
-  .wrap { max-width: 520px; margin: 0 auto; padding: 30px 18px 60px; position: relative; z-index: 1; }
+  /* =========================
+     MAIN
+  ========================= */
 
-  header { text-align: center; margin-bottom: 30px; }
+  .wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 30px 18px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
 
   .mascot {
     font-size: 50px;
     display: inline-block;
     animation: float 4s ease-in-out infinite;
     filter: drop-shadow(0 8px 16px rgba(233,90,140,0.4));
+    user-select: none;
   }
 
   header h1 {
@@ -72,15 +213,32 @@
     margin: 10px 0 4px;
     font-weight: 900;
     letter-spacing: 1px;
-    background: linear-gradient(90deg, #ffd1de, #ff8fae, #f9c6d8, #ffd1de);
+    background: linear-gradient(
+      90deg,
+      #ffd1de,
+      #ff8fae,
+      #f9c6d8,
+      #ffd1de
+    );
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: shimmer 5s linear infinite, glow 3s ease-in-out infinite;
+    animation:
+      shimmer 5s linear infinite,
+      glow 3s ease-in-out infinite;
   }
 
-  header p { color: #dcc2cf; font-size: 13px; margin: 2px 0 0; opacity: 0.9; }
+  header p {
+    color: #dcc2cf;
+    font-size: 13px;
+    margin: 2px 0 0;
+    opacity: 0.9;
+  }
+
+  /* =========================
+     CATEGORY BUTTONS
+  ========================= */
 
   .categories {
     display: flex;
@@ -100,60 +258,186 @@
     position: relative;
     overflow: hidden;
     animation: pop-in 0.5s ease backwards;
-    transition: transform .2s cubic-bezier(.2,.8,.2,1);
+
     border: 1px solid rgba(255,255,255,0.15);
+
+    cursor: pointer;
+
+    transition:
+      transform 0.3s cubic-bezier(.2,.8,.2,1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      filter 0.3s ease;
   }
 
-  .cat-card:active { transform: scale(.97); }
+  .cat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        circle at var(--mx, 50%) var(--my, 50%),
+        rgba(255,255,255,0.18),
+        transparent 30%
+      );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
 
   .cat-card::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-    transform: translateX(-120%);
-    transition: transform .6s ease;
+    top: 0;
+    bottom: 0;
+    width: 70%;
+    left: -100%;
+    background: linear-gradient(
+      110deg,
+      transparent,
+      rgba(255,255,255,0.18),
+      transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+    pointer-events: none;
   }
-  .cat-card:active::after { transform: translateX(120%); }
+
+  .cat-card:hover {
+    transform: translateY(-5px) scale(1.015);
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  .cat-card:hover::before {
+    opacity: 1;
+  }
+
+  .cat-card:hover::after {
+    left: 130%;
+  }
+
+  .cat-card:active {
+    transform: translateY(-1px) scale(0.975);
+    filter: brightness(1.12);
+    transition-duration: 0.08s;
+  }
+
+  .cat-card:focus-visible {
+    outline: 2px solid rgba(255,143,174,0.9);
+    outline-offset: 4px;
+  }
 
   .cat-action {
     background: linear-gradient(135deg, #1a3a6b, #0d2140);
     animation-delay: 0s;
+
+    box-shadow:
+      0 10px 30px rgba(13,33,64,0.3);
+  }
+
+  .cat-action:hover {
+    box-shadow:
+      0 15px 40px rgba(30,90,170,0.35),
+      0 0 25px rgba(70,140,255,0.12);
   }
 
   .cat-romance {
     background: linear-gradient(135deg, #7a5a10, #4a3608);
     animation-delay: 0.1s;
+
+    box-shadow:
+      0 10px 30px rgba(122,90,16,0.25);
+  }
+
+  .cat-romance:hover {
+    box-shadow:
+      0 15px 40px rgba(180,140,30,0.3),
+      0 0 25px rgba(255,210,70,0.1);
   }
 
   .cat-all {
     background: linear-gradient(135deg, #7a2050, #4a1230);
     animation-delay: 0.2s;
+
+    box-shadow:
+      0 10px 30px rgba(122,32,80,0.3);
+  }
+
+  .cat-all:hover {
+    box-shadow:
+      0 15px 40px rgba(220,60,130,0.32),
+      0 0 25px rgba(255,80,150,0.13);
   }
 
   .cat-rose {
     font-size: 44px;
     flex-shrink: 0;
+    transition:
+      transform 0.35s cubic-bezier(.2,.8,.2,1),
+      filter 0.35s ease;
+    position: relative;
+    z-index: 2;
   }
 
-  .cat-rose.blue { filter: hue-rotate(150deg) saturate(2.2); }
-  .cat-rose.yellow { filter: hue-rotate(-65deg) saturate(2); }
+  .cat-card:hover .cat-rose {
+    transform: scale(1.12) rotate(-8deg);
+    filter:
+      drop-shadow(0 7px 12px rgba(255,80,140,0.35));
+  }
 
-  .cat-info h2 { margin: 0 0 4px; font-size: 19px; }
-  .cat-info p { margin: 0; font-size: 12.5px; opacity: 0.8; }
+  .cat-rose.blue {
+    filter: hue-rotate(150deg) saturate(2.2);
+  }
+
+  .cat-rose.yellow {
+    filter: hue-rotate(-65deg) saturate(2);
+  }
+
+  .cat-info {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+  }
+
+  .cat-info h2 {
+    margin: 0 0 4px;
+    font-size: 19px;
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .cat-card:hover .cat-info h2 {
+    transform: translateX(-3px);
+    color: #fff5f8;
+  }
+
+  .cat-info p {
+    margin: 0;
+    font-size: 12.5px;
+    opacity: 0.8;
+  }
 
   .cat-arrow {
     margin-right: auto;
     font-size: 18px;
     opacity: 0.6;
+    position: relative;
+    z-index: 2;
+
+    transition:
+      transform 0.3s cubic-bezier(.2,.8,.2,1),
+      opacity 0.3s ease;
   }
 
-  footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 11px;
-    color: #8a6272;
+  .cat-card:hover .cat-arrow {
+    opacity: 1;
+    transform: translateX(-7px) scale(1.12);
   }
+
+  /* =========================
+     EXTRA BUTTONS
+  ========================= */
 
   .extra-buttons {
     display: flex;
@@ -171,223 +455,645 @@
     text-decoration: none;
     color: white;
     border: 1px solid rgba(255,255,255,0.13);
-    background: rgba(255,255,255,0.05);
     cursor: pointer;
     font-family: inherit;
     text-align: right;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+
+    transition:
+      transform 0.3s cubic-bezier(.2,.8,.2,1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      background 0.3s ease;
   }
 
-  .extra-btn.support { background: linear-gradient(135deg, rgba(58,107,122,0.35), rgba(31,69,80,0.35)); }
-  .extra-btn.join { background: linear-gradient(135deg, rgba(226,73,122,0.25), rgba(157,74,143,0.25)); }
+  .extra-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255,255,255,0.12) 50%,
+        transparent 80%
+      );
+    transform: translateX(-120%);
+    transition: transform 0.65s ease;
+    pointer-events: none;
+  }
 
-  .extra-icon { font-size: 26px; flex-shrink: 0; }
-  .extra-info { display: flex; flex-direction: column; gap: 4px; }
-  .extra-title { font-size: 14.5px; font-weight: bold; }
-  .extra-sub { font-size: 11.5px; color: #d8c3cd; line-height: 1.7; }
+  .extra-btn:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .extra-btn:hover::before {
+    transform: translateX(120%);
+  }
+
+  .extra-btn:active {
+    transform: translateY(-1px) scale(0.975);
+    filter: brightness(1.12);
+    transition-duration: 0.08s;
+  }
+
+  .extra-btn:focus-visible {
+    outline: 2px solid rgba(255,143,174,0.9);
+    outline-offset: 3px;
+  }
+
+  .extra-btn.support {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(58,107,122,0.35),
+        rgba(31,69,80,0.35)
+      );
+
+    box-shadow:
+      0 8px 25px rgba(20,80,100,0.12);
+  }
+
+  .extra-btn.support:hover {
+    box-shadow:
+      0 12px 35px rgba(40,130,150,0.2);
+  }
+
+  .extra-btn.join {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(226,73,122,0.25),
+        rgba(157,74,143,0.25)
+      );
+
+    box-shadow:
+      0 8px 25px rgba(180,50,120,0.12);
+  }
+
+  .extra-btn.join:hover {
+    box-shadow:
+      0 12px 35px rgba(230,70,140,0.22);
+  }
+
+  .extra-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+
+    transition:
+      transform 0.35s cubic-bezier(.2,.8,.2,1),
+      filter 0.35s ease;
+  }
+
+  .extra-btn:hover .extra-icon {
+    transform: scale(1.15) rotate(-7deg);
+    filter: drop-shadow(0 4px 8px rgba(255,120,170,0.3));
+  }
+
+  .extra-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .extra-title {
+    font-size: 14.5px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  .extra-btn:hover .extra-title {
+    color: #ffe4ed;
+  }
+
+  .extra-sub {
+    font-size: 11.5px;
+    color: #d8c3cd;
+    line-height: 1.7;
+  }
+
+  /* =========================
+     RIPPLE
+  ========================= */
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.35);
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    animation: ripple 0.65s ease-out forwards;
+    z-index: 10;
+  }
+
+  /* =========================
+     FOOTER
+  ========================= */
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 11px;
+    color: #8a6272;
+  }
+
+  /* =========================
+     MODAL
+  ========================= */
 
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.68);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
     z-index: 50;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    animation: overlay-in 0.25s ease;
   }
 
-  .modal-overlay.open { display: flex; }
+  .modal-overlay.open {
+    display: flex;
+  }
 
   .modal-box {
-    background: rgba(25,12,20,0.98);
+    background:
+      linear-gradient(
+        145deg,
+        rgba(35,15,28,0.98),
+        rgba(20,9,17,0.98)
+      );
+
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
+    border-radius: 22px;
     padding: 20px;
     width: 100%;
     max-width: 360px;
+
+    box-shadow:
+      0 25px 80px rgba(0,0,0,0.55),
+      0 0 35px rgba(220,70,130,0.08);
+
+    animation: modal-in 0.35s cubic-bezier(.2,.8,.2,1);
   }
 
-  .modal-box h3 { margin: 0 0 14px; font-size: 16px; color: #ffd1de; }
+  .modal-box h3 {
+    margin: 0 0 14px;
+    font-size: 16px;
+    color: #ffd1de;
+  }
 
-  .modal-box input, .modal-box textarea {
+  .modal-box input,
+  .modal-box textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 11px;
     border: 1px solid rgba(255,255,255,0.15);
     background: rgba(0,0,0,0.3);
     color: white;
     font-size: 13px;
     font-family: inherit;
+
+    outline: none;
+
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      background 0.25s ease,
+      transform 0.2s ease;
   }
 
-  .modal-box textarea { min-height: 80px; resize: vertical; }
+  .modal-box input::placeholder,
+  .modal-box textarea::placeholder {
+    color: #9f8792;
+  }
 
-  #supportMsg { font-size: 12px; color: #ff8fae; min-height: 18px; margin-bottom: 6px; text-align: center; }
+  .modal-box input:focus,
+  .modal-box textarea:focus {
+    border-color: rgba(255,120,160,0.65);
+    background: rgba(0,0,0,0.4);
+
+    box-shadow:
+      0 0 0 3px rgba(226,73,122,0.1),
+      0 0 20px rgba(226,73,122,0.08);
+  }
+
+  .modal-box textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  #supportMsg {
+    font-size: 12px;
+    color: #ff8fae;
+    min-height: 18px;
+    margin-bottom: 6px;
+    text-align: center;
+    transition: color 0.2s ease;
+  }
+
+  /* =========================
+     MODAL SEND BUTTON
+  ========================= */
 
   .modal-send {
     width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #e2497a, #b13564);
+    border-radius: 11px;
+    background:
+      linear-gradient(135deg, #e2497a, #b13564);
     color: white;
     font-weight: bold;
     font-size: 14px;
     cursor: pointer;
     margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+      0 8px 20px rgba(226,73,122,0.2);
+
+    transition:
+      transform 0.25s cubic-bezier(.2,.8,.2,1),
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
   }
+
+  .modal-send::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        110deg,
+        transparent 25%,
+        rgba(255,255,255,0.2) 50%,
+        transparent 75%
+      );
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+  }
+
+  .modal-send:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+    box-shadow:
+      0 12px 28px rgba(226,73,122,0.3);
+  }
+
+  .modal-send:hover::before {
+    transform: translateX(120%);
+  }
+
+  .modal-send:active {
+    transform: scale(0.97);
+    transition-duration: 0.08s;
+  }
+
+  .modal-send:disabled {
+    cursor: wait;
+    opacity: 0.75;
+    transform: none;
+    filter: none;
+  }
+
+  .modal-send.loading {
+    pointer-events: none;
+  }
+
+  .modal-send.loading::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: -3px;
+    margin-right: 7px;
+    animation: button-loading 0.7s linear infinite;
+  }
+
+  /* =========================
+     CLOSE BUTTON
+  ========================= */
 
   .modal-close {
     width: 100%;
     padding: 10px;
-    border: none;
-    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 11px;
     background: rgba(255,255,255,0.08);
     color: #ccc;
     font-size: 13px;
     cursor: pointer;
+
+    transition:
+      transform 0.25s ease,
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255,255,255,0.13);
+    color: white;
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+  }
+
+  .modal-close:active {
+    transform: scale(0.97);
+  }
+
+  /* =========================
+     MOBILE
+  ========================= */
+
+  @media (max-width: 480px) {
+    .wrap {
+      padding:
+        25px
+        15px
+        50px;
+    }
+
+    header {
+      margin-bottom: 25px;
+    }
+
+    .mascot {
+      font-size: 46px;
+    }
+
+    header h1 {
+      font-size: 27px;
+    }
+
+    .cat-card {
+      padding: 19px;
+      gap: 15px;
+      border-radius: 20px;
+    }
+
+    .cat-rose {
+      font-size: 39px;
+    }
+
+    .cat-info h2 {
+      font-size: 17px;
+    }
+
+    .cat-info p {
+      font-size: 11.5px;
+    }
+
+    .extra-btn {
+      padding: 15px;
+      border-radius: 17px;
+    }
+
+    .extra-icon {
+      font-size: 24px;
+    }
+
+    .extra-title {
+      font-size: 14px;
+    }
+
+    .extra-sub {
+      font-size: 11px;
+    }
+  }
+
+  /* کاهش انیمیشن برای دستگاه‌هایی که درخواست کاهش حرکت دارند */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
 
   <header>
     <div class="mascot">🌹</div>
+
     <h1>MANHWA ROSE</h1>
+
     <p>یک دسته رو انتخاب کن و شروع کن ✨</p>
   </header>
 
+
+  <!-- =========================
+       CATEGORY BUTTONS
+  ========================= -->
+
   <div class="categories">
 
-    <a href="/library.html?genre=اکشن" class="cat-card cat-action">
+    <a
+      href="/library.html?genre=اکشن"
+      class="cat-card cat-action ripple-target"
+    >
       <div class="cat-rose blue">🌹</div>
+
       <div class="cat-info">
         <h2>رز آبی</h2>
         <p>اکشن</p>
       </div>
+
       <div class="cat-arrow">◀</div>
     </a>
 
-    <a href="/library.html?genre=عاشقانه" class="cat-card cat-romance">
+
+    <a
+      href="/library.html?genre=عاشقانه"
+      class="cat-card cat-romance ripple-target"
+    >
       <div class="cat-rose yellow">🌹</div>
+
       <div class="cat-info">
         <h2>رز زرد</h2>
         <p>عاشقانه</p>
       </div>
+
       <div class="cat-arrow">◀</div>
     </a>
 
-    <a href="/library.html" class="cat-card cat-all">
+
+    <a
+      href="/library.html"
+      class="cat-card cat-all ripple-target"
+    >
       <div class="cat-rose">🌹</div>
+
       <div class="cat-info">
         <h2>همه</h2>
         <p>مشاهده‌ی کل کتابخانه</p>
       </div>
+
       <div class="cat-arrow">◀</div>
     </a>
 
   </div>
 
+
+  <!-- =========================
+       EXTRA BUTTONS
+  ========================= -->
+
   <div class="extra-buttons">
-    <button class="extra-btn support" id="supportBtn">
+
+    <button
+      class="extra-btn support ripple-target"
+      id="supportBtn"
+      type="button"
+    >
       <span class="extra-icon">🎧</span>
+
       <span class="extra-info">
         <span class="extra-title">پشتیبانی</span>
-        <span class="extra-sub">مشکلی تو سایت داری یا سؤالی برات پیش اومده؟ هر وقت خواستی باهامون در ارتباط باش، همیشه پاسخگوییم.</span>
+
+        <span class="extra-sub">
+          مشکلی تو سایت داری یا سؤالی برات پیش اومده؟
+          هر وقت خواستی باهامون در ارتباط باش،
+          همیشه پاسخگوییم.
+        </span>
       </span>
     </button>
 
-    <a class="extra-btn join" href="/join.html">
+
+    <a
+      class="extra-btn join ripple-target"
+      href="/join.html"
+    >
       <span class="extra-icon">🌹</span>
+
       <span class="extra-info">
         <span class="extra-title">عضویت در تیم رز</span>
-        <span class="extra-sub">عاشق مانهوایی و دوست داری تو ترجمه، ویرایش یا آپلود بهمون کمک کنی؟ بیا با هم این دنیا رو بزرگ‌تر کنیم.</span>
+
+        <span class="extra-sub">
+          عاشق مانهوایی و دوست داری تو ترجمه،
+          ویرایش یا آپلود بهمون کمک کنی؟
+          بیا با هم این دنیا رو بزرگ‌تر کنیم.
+        </span>
       </span>
     </a>
+
   </div>
 
-  <footer>Manhwa Rose · ساخته‌شده با عشق 🌹</footer>
 
-  <div class="modal-overlay" id="supportOverlay">
+  <footer>
+    Manhwa Rose · ساخته‌شده با عشق 🌹
+  </footer>
+
+
+  <!-- =========================
+       SUPPORT MODAL
+  ========================= -->
+
+  <div
+    class="modal-overlay"
+    id="supportOverlay"
+  >
+
     <div class="modal-box">
+
       <h3>🎧 ارسال پیام به پشتیبانی</h3>
-      <input id="supportName" placeholder="اسمت رو بنویس">
-      <textarea id="supportMessage" placeholder="پیامت رو بنویس..."></textarea>
+
+      <input
+        id="supportName"
+        type="text"
+        placeholder="اسمت رو بنویس"
+        autocomplete="name"
+      >
+
+      <textarea
+        id="supportMessage"
+        placeholder="پیامت رو بنویس..."
+      ></textarea>
+
       <div id="supportMsg"></div>
-      <button class="modal-send" id="supportSend">ارسال پیام</button>
-      <button class="modal-close" id="supportClose">بستن</button>
+
+      <button
+        class="modal-send ripple-target"
+        id="supportSend"
+        type="button"
+      >
+        ارسال پیام
+      </button>
+
+      <button
+        class="modal-close ripple-target"
+        id="supportClose"
+        type="button"
+      >
+        بستن
+      </button>
+
     </div>
+
   </div>
 
 </div>
 
+
 <script>
-  const petals = ["🌸","🌹","🥀","💮","🌺"];
+
+  /* =========================
+     FALLING PETALS
+  ========================= */
+
+  const petals = [
+    "🌸",
+    "🌹",
+    "🥀",
+    "💮",
+    "🌺"
+  ];
+
   for (let i = 0; i < 10; i++) {
+
     const el = document.createElement("div");
+
     el.className = "petal";
-    el.textContent = petals[Math.floor(Math.random() * petals.length)];
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (9 + Math.random() * 12) + "s";
-    el.style.animationDelay = (Math.random() * 10) + "s";
-    el.style.fontSize = (12 + Math.random() * 14) + "px";
-    document.body.appendChild(el);
-  }
 
-  const supportBtn = document.getElementById("supportBtn");
-  const supportOverlay = document.getElementById("supportOverlay");
-  const supportClose = document.getElementById("supportClose");
-  const supportSend = document.getElementById("supportSend");
-  const supportMsg = document.getElementById("supportMsg");
+    el.textContent =
+      petals[
+        Math.floor(
+          Math.random() * petals.length
+        )
+      ];
 
-  supportBtn.addEventListener("click", () => supportOverlay.classList.add("open"));
-  supportClose.addEventListener("click", () => supportOverlay.classList.remove("open"));
-  supportOverlay.addEventListener("click", (e) => {
-    if (e.target === supportOverlay) supportOverlay.classList.remove("open");
-  });
+    el.style.left =
+      Math.random() * 100 + "vw";
 
-  supportSend.addEventListener("click", async () => {
-    const name = document.getElementById("supportName").value.trim();
-    const message = document.getElementById("supportMessage").value.trim();
+    el.style.animationDuration =
+      (9 + Math.random() * 12) + "s";
 
-    if (!name || !message) {
-      supportMsg.textContent = "لطفاً اسم و پیام رو بنویس.";
-      return;
-    }
+    el.style.animationDelay =
+      (Math.random() * 10) + "s";
 
-    supportSend.disabled = true;
-
-    try {
-      const res = await fetch("/api/public/support", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, message })
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        supportMsg.style.color = "#8fe0a0";
-        supportMsg.textContent = "پیامت ارسال شد ✅";
-        document.getElementById("supportName").value = "";
-        document.getElementById("supportMessage").value = "";
-        setTimeout(() => supportOverlay.classList.remove("open"), 1200);
-      } else {
-        supportMsg.style.color = "#ff8fae";
-        supportMsg.textContent = data.message || "خطا در ارسال.";
-      }
-    } catch {
-      supportMsg.style.color = "#ff8fae";
-      supportMsg.textContent = "ارتباط با سرور برقرار نشد.";
-    }
-
-    supportSend.disabled = false;
-  });
-</script>
-
-</body>
- </html>
+    el.style.fontSize =
+      (12 + Math.random() * 14
