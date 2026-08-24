@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عضویت در تیم رز - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 16px 60px;
+  }
+
+  .wrap { max-width: 540px; margin: 0 auto; }
+
+  .topbar { margin-bottom: 18px; }
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+
+  header { text-align: center; margin-bottom: 24px; }
+  header .emoji { font-size: 44px; }
+  header h1 {
+    font-size: 24px;
+    margin: 10px 0 6px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p { color: #dcc2cf; font-size: 13px; margin: 0; }
+
+  .role-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+
+  .role-card h2 {
+    font-size: 15px;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .role-card p {
+    font-size: 12.5px;
+    color: #d8c3cd;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .section-title {
+    font-size: 16px;
+    color: #ffd1de;
+    margin: 28px 0 14px;
+  }
+
+  .test-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .test-card .icon { font-size: 26px; }
+  .test-card .info { flex: 1; }
+  .test-card .info h3 { font-size: 14px; margin: 0 0 3px; }
+  .test-card .info p { font-size: 11.5px; color: #c9a5b6; margin: 0; }
+
+  .test-card a.download-btn {
+    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 9px 14px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .test-card .no-file {
+    font-size: 11px;
+    color: #776;
+  }
+
+  .send-box {
+    margin-top: 26px;
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 20px 16px;
+  }
+
+  .send-box p { font-size: 12.5px; color: #d8c3cd; margin: 0 0 14px; line-height: 1.8; }
+
+  .send-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #e2497a, #b13564);
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar"><a href="/index.html">← بازگشت</a></div>
+
+  <header>
+    <div class="emoji">🌹</div>
+    <h1>عضویت در تیم رز</h1>
+    <p>عاشق مانهوایی؟ بیا با هم این دنیا رو بزرگ‌تر کنیم</p>
+  </header>
+
+  <div class="role-card">
+    <h2>🌍 مترجم</h2>
+    <p>مترجم متن اصلی مانهوا (معمولاً انگلیسی یا کره‌ای) رو به فارسی روان و قابل‌فهم برمی‌گردونه، بدون اینکه حس و حال داستان رو از دست بده.</p>
+  </div>
+
+  <div class="role-card">
+    <h2>🧹 کلینر</h2>
+    <p>کلینر یعنی کسی که تصاویر خام مانهوا رو تمیز می‌کنه؛ حباب‌های متن و نوشته‌های زبان اصلی رو از روی تصویر پاک می‌کنه تا آماده بشه برای تایپ متن فارسی.</p>
+  </div>
+
+  <div class="role-card">
+    <h2>✍️ تایپیست</h2>
+    <p>تایپیست متن ترجمه‌شده رو با فونت و استایل مناسب داخل حباب‌های تمیزشده می‌نویسه، طوری که مثل قسمت اصلی زبان خودش به‌نظر برسه.</p>
+  </div>
+
+  <div class="section-title">📝 تست بگیر</div>
+
+  <div class="test-card">
+    <div class="icon">🌍</div>
+    <div class="info">
+      <h3>تست ترجمه</h3>
+      <p>یک صفحه برای ترجمه</p>
+    </div>
+    <div id="translateLink"></div>
+  </div>
+
+  <div class="test-card">
+    <div class="icon">🧹</div>
+    <div class="info">
+      <h3>تست کلین</h3>
+      <p>یک صفحه برای تمیزکاری</p>
+    </div>
+    <div id="cleanLink"></div>
+  </div>
+
+  <div class="test-card">
+    <div class="icon">✍️</div>
+    <div class="info">
+      <h3>تست تایپ</h3>
+      <p>یک صفحه برای تایپ</p>
+    </div>
+    <div id="typeLink"></div>
+  </div>
+
+  <div class="send-box">
+    <p>بعد از انجام تست، نتیجه‌ی کارت رو برای ما بفرست تا بررسیش کنیم 🌹</p>
+    <a class="send-btn" href="https://t.me/RoseGangx_bot" target="_blank">📩 ارسال نتیجه‌ی تست</a>
+  </div>
+
+</div>
+
+<script>
+  async function loadTestFiles() {
+    try {
+      const res = await fetch("/api/public/test-files");
+      const data = await res.json();
+      if (!data.success) return;
+
+      const map = {
+        translate: document.getElementById("translateLink"),
+        clean: document.getElementById("cleanLink"),
+        type: document.getElementById("typeLink")
+      };
+
+      Object.keys(map).forEach(type => {
+        const url = data.files[type];
+        if (url) {
+          map[type].innerHTML = `<a class="download-btn" href="${url}" target="_blank">دانلود</a>`;
+        } else {
+          map[type].innerHTML = `<span class="no-file">به‌زودی</span>`;
+        }
+      });
+
+    } catch {}
+  }
+
+  loadTestFiles();
+</script>
+
+</body>
+  </html>
