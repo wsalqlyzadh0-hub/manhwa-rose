@@ -61,8 +61,6 @@
     to { width: 420px; height: 420px; opacity: 0; }
   }
 
-  /* ---------- TOP BAR ---------- */
-
   .topbar {
     position: sticky;
     top: 0;
@@ -96,8 +94,6 @@
     font-weight: bold;
     color: #ffd1de;
   }
-
-  /* ---------- SETTINGS BUTTON ---------- */
 
   .settings-btn {
     position: relative;
@@ -134,8 +130,6 @@
 
   .settings-btn.active .gear { animation: gearOpen .45s cubic-bezier(.2,.8,.2,1); }
   .settings-btn:not(.active) .gear { animation: gearClose .25s ease; }
-
-  /* ---------- SETTINGS PANEL ---------- */
 
   .settings-panel {
     position: fixed;
@@ -192,8 +186,6 @@
     line-height: 1.6;
   }
 
-  /* ---------- SWITCH ---------- */
-
   .switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
   .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
 
@@ -231,8 +223,6 @@
     box-shadow: 0 2px 8px rgba(226,73,122,.25);
     animation: toggleOn .28s ease;
   }
-
-  /* ---------- SLIDERS ---------- */
 
   .slider-block { margin-bottom: 14px; }
   .slider-block:last-child { margin-bottom: 0; }
@@ -297,8 +287,6 @@
     animation: fadeIn .25s ease;
   }
 
-  /* ---------- FULLSCREEN BUTTON ---------- */
-
   .fullscreen-option {
     margin-top: 4px;
     padding-top: 14px;
@@ -351,8 +339,6 @@
   .fullscreen-icon { font-size: 18px; transition: transform .3s ease; }
   .fullscreen-btn:hover .fullscreen-icon { transform: scale(1.15); }
 
-  /* ---------- PAGES ---------- */
-
   .pages {
     max-width: 700px;
     margin: 0 auto;
@@ -373,8 +359,6 @@
     color: #b98ba0;
     animation: fadeIn .4s ease;
   }
-
-  /* ---------- BOTTOM NAV ---------- */
 
   .nav-bottom {
     display: flex;
@@ -414,8 +398,6 @@
     border-color: rgba(255,255,255,.06);
   }
 
-  /* ---------- RIPPLE ---------- */
-
   .ripple {
     position: absolute;
     border-radius: 50%;
@@ -426,8 +408,6 @@
     animation: ripple .65s ease-out forwards;
     z-index: 20;
   }
-
-  /* ---------- FULLSCREEN MODE ---------- */
 
   body.fullscreen-mode { background: #000; }
 
@@ -539,9 +519,9 @@
   const fullscreenIcon = document.getElementById("fullscreenIcon");
 
   let nextChapterId = null;
+  let prevChapterId = null;
   let autoNextTriggered = false;
 
-  /* ---------- load saved settings ---------- */
   autoNextToggle.checked = localStorage.getItem("mr_auto_next") === "1";
   autoScrollToggle.checked = localStorage.getItem("mr_auto_scroll") === "1";
   speedSlider.value = localStorage.getItem("mr_scroll_speed") || "50";
@@ -551,7 +531,6 @@
   speedBlock.style.display = autoScrollToggle.checked ? "block" : "none";
   pagesEl.style.maxWidth = zoomSlider.value + "%";
 
-  /* ---------- settings panel toggle ---------- */
   function openSettings() {
     settingsPanel.classList.add("open");
     settingsBtn.classList.add("active");
@@ -581,7 +560,6 @@
 
   settingsPanel.addEventListener("click", (e) => e.stopPropagation());
 
-  /* ---------- toggles ---------- */
   autoNextToggle.addEventListener("change", () => {
     localStorage.setItem("mr_auto_next", autoNextToggle.checked ? "1" : "0");
   });
@@ -602,7 +580,6 @@
     pagesEl.style.maxWidth = zoomSlider.value + "%";
   });
 
-  /* ---------- fullscreen ---------- */
   fullscreenBtn.addEventListener("click", () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen?.().catch(() => {});
@@ -632,7 +609,6 @@
     }
   });
 
-  /* ---------- auto scroll loop ---------- */
   let scrollPaused = false;
   let pauseTimeout = null;
 
@@ -671,7 +647,6 @@
     }
   }, { passive: true });
 
-  /* ---------- ripple effect ---------- */
   document.addEventListener("click", (e) => {
     const target = e.target.closest(".settings-btn, .fullscreen-btn, .nav-bottom a");
     if (!target) return;
@@ -682,3 +657,29 @@
     ripple.style.left = (e.clientX - rect.left) + "px";
     ripple.style.top = (e.clientY - rect.top) + "px";
     target.style.position = "relative";
+    target.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 650);
+  });
+
+  function renderNav() {
+    navBottom.innerHTML = "";
+    navBottom.style.display = "flex";
+
+    if (prevChapterId) {
+      navBottom.innerHTML += `<a href="/read.html?id=${prevChapterId}">◀ قسمت قبل</a>`;
+    } else {
+      navBottom.innerHTML += `<span>قسمت قبل</span>`;
+    }
+
+    if (nextChapterId) {
+      navBottom.innerHTML += `<a href="/read.html?id=${nextChapterId}">قسمت بعد ▶</a>`;
+    } else {
+      navBottom.innerHTML += `<span>قسمت بعد</span>`;
+    }
+  }
+
+  function renderPages(pages) {
+    pagesEl.innerHTML = "";
+
+    pages.forEach((url, i) => {
+      const img =
