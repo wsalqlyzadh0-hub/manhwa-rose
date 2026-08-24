@@ -1,678 +1,125 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مدیریت مانهوا - Manhwa Rose</title>
-
 <style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-:root {
-  --pink: #e2497a;
-  --pink-light: #ff8fae;
-  --purple: #9d4a8f;
-  --bg: #08050a;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Tahoma, Arial, sans-serif;
-  color: white;
-  padding: 20px 14px 60px;
-  overflow-x: hidden;
-
-  background:
-    radial-gradient(circle at 15% 5%, rgba(226,73,122,.28), transparent 35%),
-    radial-gradient(circle at 90% 20%, rgba(157,74,143,.25), transparent 35%),
-    radial-gradient(circle at 50% 100%, rgba(226,73,122,.12), transparent 40%),
-    linear-gradient(145deg, #6b1f42 0%, #1a0a17 45%, #08050a 100%);
-}
-
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-  filter: blur(70px);
-  opacity: .35;
-  animation: ambientFloat 8s ease-in-out infinite;
-}
-
-body::before {
-  top: 5%;
-  right: -100px;
-  background: #e2497a;
-}
-
-body::after {
-  bottom: 5%;
-  left: -100px;
-  background: #8d3b82;
-  animation-delay: -4s;
-}
-
-@keyframes ambientFloat {
-  0%,100% {
-    transform: translate(0,0) scale(1);
-  }
-
-  50% {
-    transform: translate(-20px,25px) scale(1.15);
-  }
-}
-
-.petal {
-  position: fixed;
-  top: -40px;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0;
-  animation: petalFall linear infinite;
-}
-
-@keyframes petalFall {
-  0% {
-    transform: translateY(-50px) translateX(0) rotate(0deg);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: .5;
-  }
-
-  50% {
-    transform: translateY(50vh) translateX(35px) rotate(180deg);
-  }
-
-  90% {
-    opacity: .35;
-  }
-
-  100% {
-    transform: translateY(110vh) translateX(-30px) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-.wrap {
-  max-width: 480px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  animation: topbarIn .65s cubic-bezier(.2,.8,.2,1) both;
-}
-
-@keyframes topbarIn {
-  from {
-    opacity: 0;
-    transform: translateY(-18px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.topbar a {
-  color: #ffb3c9;
-  text-decoration: none;
-  font-size: 14px;
-  position: relative;
-  transition: color .25s ease, transform .25s ease;
-}
-
-.topbar a::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -5px;
-  width: 0;
-  height: 2px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, #ff8fae, #e2497a);
-  transition: width .3s ease;
-}
-
-.topbar a:hover {
-  color: white;
-  transform: translateX(-3px);
-}
-
-.topbar a:hover::after {
-  width: 100%;
-}
-
-.topbar span {
-  font-size: 22px;
-  display: inline-block;
-  filter: drop-shadow(0 0 10px rgba(226,73,122,.6));
-  animation: roseFloat 3s ease-in-out infinite;
-}
-
-@keyframes roseFloat {
-  0%,100% {
-    transform: translateY(0) rotate(-5deg);
-  }
-
-  50% {
-    transform: translateY(-5px) rotate(5deg);
-  }
-}
-
-h1 {
-  font-size: 24px;
-  text-align: center;
-  margin: 0 0 20px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffd1de,
-      #ff8fae,
-      #ffffff,
-      #ff8fae,
-      #ffd1de
-    );
-
-  background-size: 300% auto;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-
-  animation:
-    titleShimmer 5s linear infinite,
-    titleIn .7s .1s cubic-bezier(.2,.8,.2,1) both;
-}
-
-@keyframes titleShimmer {
-  from {
-    background-position: 0% center;
-  }
-
-  to {
-    background-position: 300% center;
-  }
-}
-
-@keyframes titleIn {
-  from {
-    opacity: 0;
-    transform: scale(.85) translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-#message {
-  text-align: center;
-  min-height: 20px;
-  margin-bottom: 10px;
-  color: #ff8fae;
-  font-size: 13px;
-  transition: opacity .3s ease, transform .3s ease;
-}
-
-.card {
-  position: relative;
-  overflow: hidden;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.09),
-      rgba(255,255,255,.035)
-    );
-
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 22px;
-  padding: 18px;
-  margin-bottom: 18px;
-
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-
-  box-shadow:
-    0 15px 50px rgba(0,0,0,.25),
-    inset 0 1px rgba(255,255,255,.06);
-
-  animation:
-    cardIn .7s .2s cubic-bezier(.2,.8,.2,1) both;
-
-  transition:
-    transform .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 80%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.08),
-      transparent
-    );
-
-  transform: skewX(-18deg);
-  animation: cardShine 7s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes cardShine {
-  0%, 55% {
-    left: -120%;
-  }
-
-  75%,100% {
-    left: 140%;
-  }
-}
-
-@keyframes cardIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px) scale(.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-label {
-  font-size: 12px;
-  color: #e8b8c8;
-  display: block;
-  margin: 0 0 5px;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 11px;
-
-  border-radius: 12px;
-
-  border: 1px solid rgba(255,255,255,.13);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,0,0,.38),
-      rgba(255,255,255,.035)
-    );
-
-  color: white;
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-
-  transition:
-    border-color .25s ease,
-    box-shadow .25s ease,
-    transform .2s ease,
-    background .25s ease;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #9d7b8b;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: rgba(226,73,122,.8);
-
-  box-shadow:
-    0 0 0 3px rgba(226,73,122,.11),
-    0 8px 25px rgba(226,73,122,.08);
-
-  background: rgba(0,0,0,.45);
-  transform: translateY(-1px);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 65px;
-}
-
-button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-  color: white;
-  font-family: inherit;
-
-  position: relative;
-  overflow: hidden;
-
-  transition:
-    transform .18s cubic-bezier(.2,.8,.2,1),
-    filter .2s ease,
-    box-shadow .25s ease;
-}
-
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -130%;
-  width: 80%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.25),
-      transparent
-    );
-
-  transform: skewX(-20deg);
-  transition: left .55s ease;
-}
-
-button:hover::before {
-  left: 140%;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-button:active {
-  transform: scale(.95);
-  filter: brightness(.95);
-}
-
-button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.btn-save {
-  width: 100%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e2497a,
-      #b13564,
-      #8d315d
-    );
-
-  background-size: 200% 200%;
-
-  box-shadow:
-    0 8px 25px rgba(226,73,122,.22),
-    inset 0 1px rgba(255,255,255,.18);
-
-  animation: saveGlow 4s ease-in-out infinite;
-}
-
-@keyframes saveGlow {
-  0%,100% {
-    background-position: 0% 50%;
-    box-shadow:
-      0 8px 25px rgba(226,73,122,.22),
-      inset 0 1px rgba(255,255,255,.18);
-  }
-
-  50% {
-    background-position: 100% 50%;
-    box-shadow:
-      0 10px 35px rgba(226,73,122,.38),
-      inset 0 1px rgba(255,255,255,.22);
-  }
-}
-
-.manga-item {
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  gap: 12px;
-  align-items: center;
-
-  padding: 12px;
-  border-radius: 17px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.07),
-      rgba(255,255,255,.025)
-    );
-
-  margin-bottom: 10px;
-
-  border: 1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 8px 25px rgba(0,0,0,.12);
-
-  animation:
-    itemIn .55s cubic-bezier(.2,.8,.2,1) both;
-
-  transition:
-    transform .3s cubic-bezier(.2,.8,.2,1),
-    border-color .3s ease,
-    background .3s ease,
-    box-shadow .3s ease;
-}
-
-.manga-item:hover {
-  transform: translateY(-3px) scale(1.01);
-
-  border-color:
-    rgba(226,73,122,.28);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(226,73,122,.10),
-      rgba(255,255,255,.035)
-    );
-
-  box-shadow:
-    0 14px 35px rgba(0,0,0,.22),
-    0 0 20px rgba(226,73,122,.06);
-}
-
-@keyframes itemIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.manga-item img {
-  width: 52px;
-  height: 68px;
-
-  object-fit: cover;
-  border-radius: 10px;
-
-  background: rgba(255,255,255,.1);
-  flex-shrink: 0;
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,.3);
-
-  transition:
-    transform .35s cubic-bezier(.2,.8,.2,1),
-    box-shadow .35s ease;
-}
-
-.manga-item:hover img {
-  transform:
-    scale(1.07)
-    rotate(-2deg);
-
-  box-shadow:
-    0 8px 22px rgba(226,73,122,.18);
-}
-
-.manga-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.manga-info .title {
-  font-weight: bold;
-  font-size: 15px;
-  margin-bottom: 3px;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.manga-info .meta {
-  font-size: 12px;
-  color: #d8a8bb;
-}
-
-.manga-actions {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.manga-actions button {
-  padding: 8px 10px;
-  font-size: 13px;
-  min-width: 38px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.18);
-}
-
-.btn-edit {
-  background:
-    linear-gradient(
-      135deg,
-      #5b3470,
-      #3d244b
-    );
-}
-
-.btn-delete {
-  background:
-    linear-gradient(
-      135deg,
-      #8b3044,
-      #5b202f
-    );
-}
-
-#empty {
-  text-align: center;
-  color: #b98ba0;
-  font-size: 14px;
-  padding: 25px;
-
-  border-radius: 16px;
-  border: 1px dashed rgba(255,255,255,.1);
-
-  background: rgba(255,255,255,.025);
-}
-
-@media (max-width: 430px) {
+  * { box-sizing: border-box; }
 
   body {
-    padding-left: 10px;
-    padding-right: 10px;
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 14px 60px;
   }
 
-  .card {
-    padding: 15px;
-    border-radius: 20px;
+  .wrap { max-width: 480px; margin: 0 auto; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 
-  .manga-item {
-    padding: 10px;
-    gap: 9px;
-  }
-
-  .manga-item img {
-    width: 48px;
-    height: 63px;
-  }
-
-  .manga-actions {
-    gap: 4px;
-  }
-
-  .manga-actions button {
-    min-width: 36px;
-    padding: 8px;
+  .topbar a {
+    color: #ffb3c9;
+    text-decoration: none;
+    font-size: 14px;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 24px;
+    text-align: center;
+    margin: 0 0 20px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
+  .card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(12px);
   }
-}
+
+  input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  textarea { resize: vertical; min-height: 60px; }
+
+  button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    transition: transform .15s ease, filter .15s ease;
+  }
+
+  button:active { transform: scale(.97); }
+
+  .btn-save {
+    width: 100%;
+    background: linear-gradient(135deg, #e2497a, #b13564);
+  }
+
+  .btn-save:hover { filter: brightness(1.1); }
+
+  .manga-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .manga-item img {
+    width: 52px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  .manga-info { flex: 1; min-width: 0; }
+  .manga-info .title { font-weight: bold; font-size: 15px; margin-bottom: 2px; }
+  .manga-info .meta { font-size: 12px; color: #d8a8bb; }
+
+  .manga-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .manga-actions button { padding: 8px 10px; font-size: 13px; }
+
+  .btn-edit { background: #4a2a55; }
+  .btn-delete { background: #7a2a3a; }
+
+  #message { text-align: center; min-height: 20px; margin-bottom: 10px; color: #ff8fae; font-size: 13px; }
+  #empty { text-align: center; color: #b98ba0; font-size: 14px; padding: 20px; }
+
+  label { font-size: 12px; color: #e8b8c8; display: block; margin-bottom: 4px; }
 </style>
 </head>
-
 <body>
 
 <div class="wrap">
@@ -687,9 +134,7 @@ button:disabled {
   <div id="message"></div>
 
   <div class="card" id="formCard">
-
     <input type="hidden" id="editId">
-
     <label>عنوان</label>
     <input id="title" placeholder="اسم مانهوا">
 
@@ -701,547 +146,173 @@ button:disabled {
 
     <label>دسته‌بندی</label>
     <select id="genre">
-      <option value="اکشن">🔵 اکشن</option>
-      <option value="عاشقانه">🟡 عاشقانه</option>
+      <option value="اکشن">🔵 اکشن (رز آبی)</option>
+      <option value="عاشقانه">🟡 عاشقانه (رز زرد)</option>
       <option value="فانتزی">فانتزی</option>
       <option value="درام">درام</option>
       <option value="کمدی">کمدی</option>
       <option value="ماجراجویی">ماجراجویی</option>
       <option value="ترسناک">ترسناک</option>
     </select>
-
     <label>وضعیت</label>
     <select id="status">
       <option value="ongoing">در حال انتشار</option>
       <option value="completed">تمام‌شده</option>
     </select>
 
-    <button class="btn-save" id="saveBtn">
-      ➕ افزودن مانهوا
-    </button>
-
+    <button class="btn-save" id="saveBtn">➕ افزودن مانهوا</button>
   </div>
 
   <div id="list"></div>
-
-  <div id="empty" style="display:none;">
-    هنوز مانهوایی اضافه نکردی 🌸
-  </div>
+  <div id="empty" style="display:none;">هنوز مانهوایی اضافه نکردی 🌸</div>
 
 </div>
 
 <script>
+  const listEl = document.getElementById("list");
+  const emptyEl = document.getElementById("empty");
+  const messageEl = document.getElementById("message");
+  const saveBtn = document.getElementById("saveBtn");
+  const editIdEl = document.getElementById("editId");
 
-/* =========================
-   PETALS
-========================= */
+  const fields = ["title", "description", "cover_url", "genre", "status"];
 
-const petals = ["🌸","🌹","🥀","💮","🌺"];
-
-for (let i = 0; i < 9; i++) {
-
-  const petal = document.createElement("div");
-
-  petal.className = "petal";
-
-  petal.textContent =
-    petals[Math.floor(Math.random() * petals.length)];
-
-  petal.style.left =
-    Math.random() * 100 + "vw";
-
-  petal.style.fontSize =
-    (11 + Math.random() * 12) + "px";
-
-  petal.style.animationDuration =
-    (10 + Math.random() * 12) + "s";
-
-  petal.style.animationDelay =
-    (Math.random() * 10) + "s";
-
-  document.body.appendChild(petal);
-}
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const listEl = document.getElementById("list");
-const emptyEl = document.getElementById("empty");
-const messageEl = document.getElementById("message");
-const saveBtn = document.getElementById("saveBtn");
-const editIdEl = document.getElementById("editId");
-
-const fields = [
-  "title",
-  "description",
-  "cover_url",
-  "genre",
-  "status"
-];
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-let messageTimer;
-
-function showMessage(text) {
-
-  clearTimeout(messageTimer);
-
-  messageEl.textContent = text;
-
-  messageEl.style.opacity = "1";
-  messageEl.style.transform = "translateY(0)";
-
-  messageTimer = setTimeout(() => {
-
-    messageEl.style.opacity = "0";
-    messageEl.style.transform = "translateY(-5px");
-
-  }, 3000);
-}
-
-
-/* =========================
-   RESET FORM
-========================= */
-
-function resetForm() {
-
-  editIdEl.value = "";
-
-  document.getElementById("title").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("cover_url").value = "";
-
-  document.getElementById("genre").value = "اکشن";
-  document.getElementById("status").value = "ongoing";
-
-  saveBtn.textContent =
-    "➕ افزودن مانهوا";
-}
-
-
-/* =========================
-   AUTH
-========================= */
-
-async function checkAuth() {
-
-  try {
-
-    const res = await fetch(
-      "/api/check-auth",
-      {
-        method: "GET",
-        credentials: "include"
-      }
-    );
-
-    const data = await res.json();
-
-    if (!data.authenticated) {
-
-      window.location.href =
-        "/admin.html";
-
-      return false;
-    }
-
-    return true;
-
-  } catch (error) {
-
-    console.error(error);
-
-    window.location.href =
-      "/admin.html";
-
-    return false;
+  function showMessage(text) {
+    messageEl.textContent = text;
+    setTimeout(() => { messageEl.textContent = ""; }, 3000);
   }
-}
 
+  function resetForm() {
+    editIdEl.value = "";
+    fields.forEach(f => document.getElementById(f).value = "");
+    document.getElementById("status").value = "ongoing";
+    saveBtn.textContent = "➕ افزودن مانهوا";
+  }
 
-/* =========================
-   LOAD MANGA
-========================= */
+  async function checkAuth() {
+    try {
+      const res = await fetch("/api/check-auth", { credentials: "include" });
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = "/admin.html";
+    } catch {
+      window.location.href = "/admin.html";
+    }
+  }
 
-async function loadManga() {
+  async function loadManga() {
+    try {
+      const res = await fetch("/api/manga", { credentials: "include" });
+      const data = await res.json();
 
-  try {
-
-    const res = await fetch(
-      "/api/manga",
-      {
-        method: "GET",
-        credentials: "include"
+      if (!data.success) {
+        showMessage(data.message || "خطا در بارگذاری.");
+        return;
       }
-    );
 
-    const data = await res.json();
+      listEl.innerHTML = "";
 
-    if (!data.success) {
+      if (data.manga.length === 0) {
+        emptyEl.style.display = "block";
+        return;
+      }
+      emptyEl.style.display = "none";
 
-      showMessage(
-        data.message ||
-        "خطا در بارگذاری مانهوا."
-      );
-
-      return;
-    }
-
-    listEl.innerHTML = "";
-
-    if (!Array.isArray(data.manga) || data.manga.length === 0) {
-
-      emptyEl.style.display = "block";
-
-      return;
-    }
-
-    emptyEl.style.display = "none";
-
-
-    data.manga.forEach((m, index) => {
-
-      const item =
-        document.createElement("div");
-
-      item.className =
-        "manga-item";
-
-      item.style.animationDelay =
-        Math.min(index * 0.07, 0.5) + "s";
-
-
-      item.innerHTML = `
-
-        <img
-          src="${m.cover_url || ""}"
-          onerror="this.style.display='none'"
-        >
-
-        <div class="manga-info">
-
-          <div class="title"></div>
-
-          <div class="meta">
-            ${m.genre || "بدون ژانر"}
-            ·
-            ${
-              m.status === "completed"
-              ? "تمام‌شده"
-              : "در حال انتشار"
-            }
+      data.manga.forEach(m => {
+        const item = document.createElement("div");
+        item.className = "manga-item";
+        item.innerHTML = `
+          <img src="${m.cover_url || ''}" onerror="this.style.display='none'">
+          <div class="manga-info">
+            <div class="title">${m.title}</div>
+            <div class="meta">${m.genre || 'بدون ژانر'} · ${m.status === 'completed' ? 'تمام‌شده' : 'در حال انتشار'}</div>
           </div>
+          <div class="manga-actions">
+            <button class="btn-edit">✏️</button>
+            <button class="btn-delete">🗑️</button>
+          </div>
+        `;
+        item.querySelector(".btn-edit").addEventListener("click", () => editManga(m));
+        item.querySelector(".btn-delete").addEventListener("click", () => deleteManga(m.id, m.title));
+        listEl.appendChild(item);
+      });
 
-        </div>
-
-        <div class="manga-actions">
-
-          <button
-            class="btn-edit"
-            type="button"
-            title="ویرایش"
-          >
-            ✏️
-          </button>
-
-          <button
-            class="btn-delete"
-            type="button"
-            title="حذف"
-          >
-            🗑️
-          </button>
-
-        </div>
-      `;
-
-      item.querySelector(".title").textContent =
-        m.title || "بدون عنوان";
-
-
-      item
-        .querySelector(".btn-edit")
-        .addEventListener(
-          "click",
-          () => editManga(m)
-        );
-
-
-      item
-        .querySelector(".btn-delete")
-        .addEventListener(
-          "click",
-          () => deleteManga(m.id, m.title)
-        );
-
-
-      listEl.appendChild(item);
-
-    });
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "ارتباط با سرور برقرار نشد."
-    );
-  }
-}
-
-
-/* =========================
-   EDIT
-========================= */
-
-function editManga(m) {
-
-  editIdEl.value = m.id;
-
-  document.getElementById("title").value =
-    m.title || "";
-
-  document.getElementById("description").value =
-    m.description || "";
-
-  document.getElementById("cover_url").value =
-    m.cover_url || "";
-
-  document.getElementById("genre").value =
-    m.genre || "اکشن";
-
-  document.getElementById("status").value =
-    m.status || "ongoing";
-
-
-  saveBtn.textContent =
-    "💾 ذخیره تغییرات";
-
-
-  document
-    .getElementById("formCard")
-    .scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-
-  setTimeout(() => {
-
-    document
-      .getElementById("title")
-      .focus();
-
-  }, 500);
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-async function deleteManga(id, title) {
-
-  if (
-    !confirm(
-      `مطمئنی می‌خوای "${title}" رو حذف کنی؟ قسمت‌هاش هم پاک میشن.`
-    )
-  ) {
-    return;
+    } catch (e) {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
   }
 
+  function editManga(m) {
+    editIdEl.value = m.id;
+    document.getElementById("title").value = m.title;
+    document.getElementById("description").value = m.description || "";
+    document.getElementById("cover_url").value = m.cover_url || "";
+    document.getElementById("genre").value = m.genre || "";
+    document.getElementById("status").value = m.status || "ongoing";
+    saveBtn.textContent = "💾 ذخیره تغییرات";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-  try {
+  async function deleteManga(id, title) {
+    if (!confirm(`مطمئنی می‌خوای "${title}" رو حذف کنی؟ قسمت‌هاش هم پاک میشن.`)) return;
 
-    const res = await fetch(
-      `/api/manga/${id}`,
-      {
-        method: "DELETE",
-        credentials: "include"
+    try {
+      const res = await fetch(`/api/manga/${id}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      if (data.success) {
+        showMessage("حذف شد.");
+        loadManga();
+      } else {
+        showMessage(data.message || "خطا در حذف.");
       }
-    );
-
-    const data =
-      await res.json();
-
-
-    if (res.ok && data.success) {
-
-      showMessage(
-        "مانهوا حذف شد. 🗑️"
-      );
-
-      await loadManga();
-
-    } else {
-
-      showMessage(
-        data.message ||
-        "خطا در حذف مانهوا."
-      );
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
     }
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "ارتباط با سرور برقرار نشد."
-    );
   }
-}
 
-
-/* =========================
-   SAVE / ADD / UPDATE
-========================= */
-
-saveBtn.addEventListener(
-  "click",
-  async () => {
-
-    const title =
-      document
-        .getElementById("title")
-        .value
-        .trim();
-
-
-    if (!title) {
-
-      showMessage(
-        "عنوان الزامی است."
-      );
-
-      document
-        .getElementById("title")
-        .focus();
-
-      return;
-    }
-
+  saveBtn.addEventListener("click", async () => {
+    const title = document.getElementById("title").value.trim();
+    if (!title) { showMessage("عنوان الزامی است."); return; }
 
     const body = {
-
-      title: title,
-
-      description:
-        document
-          .getElementById("description")
-          .value
-          .trim(),
-
-      cover_url:
-        document
-          .getElementById("cover_url")
-          .value
-          .trim(),
-
-      genre:
-        document
-          .getElementById("genre")
-          .value,
-
-      status:
-        document
-          .getElementById("status")
-          .value
+      title,
+      description: document.getElementById("description").value,
+      cover_url: document.getElementById("cover_url").value,
+      genre: document.getElementById("genre").value,
+      status: document.getElementById("status").value
     };
 
-
-    const editId =
-      editIdEl.value.trim();
-
+    const id = editIdEl.value;
+    const url = id ? `/api/manga/${id}` : "/api/manga";
+    const method = id ? "PUT" : "POST";
 
     saveBtn.disabled = true;
 
-    saveBtn.textContent =
-      editId
-      ? "💾 در حال ذخیره..."
-      : "➕ در حال افزودن...";
-
-
     try {
+      const res = await fetch(url, {
+        method,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
 
-      const url =
-        editId
-        ? `/api/manga/${editId}`
-        : "/api/manga";
-
-
-      const method =
-        editId
-        ? "PUT"
-        : "POST";
-
-
-      const res =
-        await fetch(
-          url,
-          {
-            method: method,
-            credentials: "include",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body:
-              JSON.stringify(body)
-          }
-        );
-
-
-      const data =
-        await res.json();
-
-
-      if (res.ok && data.success) {
-
-        showMessage(
-          editId
-          ? "مانهوا با موفقیت ویرایش شد. 🌹"
-          : "مانهوا با موفقیت اضافه شد. 🌹"
-        );
-
-
+      if (data.success) {
+        showMessage(id ? "بروزرسانی شد ✅" : "اضافه شد ✅");
         resetForm();
-
-        await loadManga();
-
-
+        loadManga();
       } else {
-
-        showMessage(
-          data.message ||
-          "عملیات انجام نشد."
-        );
+        showMessage(data.message || "خطا.");
       }
+    } catch {
+      showMessage("ارتباط با سرور برقرار نشد.");
+    }
 
+    saveBtn.disabled = false;
+  });
 
-    } catch (error) {
+  checkAuth();
+  loadManga();
+</script>
 
-      console.error(error);
-
-      showMessage(
-        "ارتباط با سرور برقرار نشد."
-      );
-
-
-    } finally {
-
-      saveBtn.disabled = false;
-
-      if (!editIdEl.value) {
-
-        saveBtn.textContent =
-      
+</body>
+</html>
