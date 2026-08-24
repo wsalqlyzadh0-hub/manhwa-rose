@@ -649,6 +649,8 @@ footer{
 
 <div class="extra-buttons">
 
+<!-- SUPPORT BUTTON -->
+
 <button
   class="extra-btn support"
   id="supportBtn"
@@ -668,6 +670,9 @@ footer{
 </button>
 
 
+<!-- JOIN BUTTON -->
+
+<a
   class="extra-btn join"
   href="/join.html"
 >
@@ -690,7 +695,8 @@ footer{
   Manhwa Rose · ساخته‌شده با عشق 🌹
 </footer>
 
-<!-- SUPPORT -->
+
+<!-- SUPPORT MODAL -->
 
 <div
   class="modal-overlay"
@@ -736,6 +742,7 @@ footer{
 </div>
 
 </div>
+
 
 <script>
 
@@ -869,7 +876,7 @@ document.addEventListener(
 
 
 /* =========================
-   SEND SUPPORT MESSAGE (REAL API CALL)
+   SEND SUPPORT MESSAGE
 ========================= */
 
 supportSend.addEventListener(
@@ -913,46 +920,73 @@ supportSend.addEventListener(
     supportSend.classList.add("loading");
     supportSend.textContent = "در حال ارسال";
 
+
     fetch("/api/public/support", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name, message: message })
-    })
-      .then(function(res){ return res.json(); })
-      .then(function(data){
-
-        supportSend.disabled = false;
-        supportSend.classList.remove("loading");
-        supportSend.textContent = "ارسال پیام";
-
-        if(data.success){
-
-          supportMsg.style.color = "#7dffb2";
-          supportMsg.textContent = "پیامت ارسال شد 🌹";
-
-          supportMessage.value = "";
-          supportName.value = "";
-
-          setTimeout(closeSupport, 1200);
-
-        } else {
-
-          supportMsg.style.color = "#ff8fae";
-          supportMsg.textContent =
-            data.message || "خطا در ارسال پیام.";
-        }
-
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        message: message
       })
-      .catch(function(){
+    })
 
-        supportSend.disabled = false;
-        supportSend.classList.remove("loading");
-        supportSend.textContent = "ارسال پیام";
+    .then(function(res){
+      return res.json();
+    })
+
+    .then(function(data){
+
+      supportSend.disabled = false;
+      supportSend.classList.remove("loading");
+      supportSend.textContent = "ارسال پیام";
+
+
+      if(data.success){
+
+        supportMsg.style.color = "#7dffb2";
+
+        supportMsg.textContent =
+          "پیامت ارسال شد 🌹";
+
+        supportMessage.value = "";
+        supportName.value = "";
+
+
+        setTimeout(
+          closeSupport,
+          1200
+        );
+
+      }else{
 
         supportMsg.style.color = "#ff8fae";
+
         supportMsg.textContent =
-          "ارتباط با سرور برقرار نشد.";
-      });
+          data.message ||
+          "خطا در ارسال پیام.";
+
+      }
+
+    })
+
+    .catch(function(){
+
+      supportSend.disabled = false;
+
+      supportSend.classList.remove("loading");
+
+      supportSend.textContent =
+        "ارسال پیام";
+
+      supportMsg.style.color =
+        "#ff8fae";
+
+      supportMsg.textContent =
+        "ارتباط با سرور برقرار نشد.";
+
+    });
 
   }
 );
@@ -1023,6 +1057,7 @@ document.querySelectorAll(
 
       const y =
         ((e.clientY - rect.top) / rect.height) * 100;
+
 
       card.style.setProperty(
         "--mx",
