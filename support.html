@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پیام‌های پشتیبانی - Manhwa Rose</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+    color: white;
+    padding: 20px 14px 60px;
+  }
+
+  .wrap { max-width: 480px; margin: 0 auto; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    margin: 0 0 20px;
+    background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .msg-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+
+  .msg-card .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .msg-card .name { font-weight: bold; font-size: 14px; color: #ffd1de; }
+  .msg-card .time { font-size: 10.5px; color: #a88; }
+  .msg-card .text { font-size: 13px; line-height: 1.8; color: #e8d4dc; white-space: pre-wrap; }
+
+  .msg-card .del-btn {
+    background: #7a2a3a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  #empty, #loading { text-align: center; color: #b98ba0; padding: 40px 20px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="/admin.html">← بازگشت به پنل</a>
+    <span>🌹</span>
+  </div>
+
+  <h1>🎧 پیام‌های پشتیبانی</h1>
+
+  <div id="loading">در حال بارگذاری...</div>
+  <div id="list"></div>
+  <div id="empty" style="display:none;">پیامی وجود ندارد 🌸</div>
+
+</div>
+
+<script>
+  const listEl = document.getElementById("list");
+  const emptyEl = document.getElementById("empty");
+  const loadingEl = document.getElementById("loading");
+
+  async function checkAuth() {
+    try {
+      const res = await fetch("/api/check-auth", { credentials: "include" });
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = "/admin.html";
+    } catch {
+      window.location.href = "/admin.html";
+    }
+  }
+
+  function formatTime(ts) {
+    const d = new Date(ts * 1000);
+    return d.toLocaleString("fa-IR");
+  }
+
+  async function loadMessages() {
+    try {
+      const res = await fetch("/api/support", { credentials: "include" });
+      const data = await res.json();
+      loadingEl.style.display = "none";
+
+      if (!data.success) return;
+
+      if (data.messages.length === 0) {
+        emptyEl.style.display = "block";
+        return;
+      }
+
+      data.messages.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "msg-card";
+        card.innerHTML = `
+          <div class="head">
+            <span class="name">👤 ${m.name}</span>
+            <span class="time">${formatTime(m.created_at)}</span>
+          </div>
+          <div class="text">${m.message}</div>
+          <button class="del-btn">حذف</button>
+        `;
+        card.querySelector(".del-btn").addEventListener("click", () => deleteMessage(m.id, card));
+        listEl.appendChild(card);
+      });
+
+    } catch {
+      loadingEl.textContent = "ارتباط با سرور برقرار نشد.";
+    }
+  }
+
+  async function deleteMessage(id, card) {
+    if (!confirm("این پیام حذف بشه؟")) return;
+    try {
+      const res = await fetch(`/api/support/${id}`, { method: "DELETE", credentials: "include" });
+      const data = await res.json();
+      if (data.success) card.remove();
+    } catch {}
+  }
+
+  checkAuth();
+  loadMessages();
+</script>
+
+</body>
+</html>
