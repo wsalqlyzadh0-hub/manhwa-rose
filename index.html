@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Manhwa Rose</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -19,7 +22,11 @@ body{
   margin:0;
   min-height:100vh;
   overflow-x:hidden;
-  font-family:Tahoma,Arial,sans-serif;
+
+  font-family:
+    Tahoma,
+    Arial,
+    sans-serif;
 
   background:
     radial-gradient(
@@ -55,16 +62,25 @@ textarea{
 ========================= */
 
 @keyframes float{
+
   0%,100%{
-    transform:translateY(0) rotate(-4deg) scale(1);
+    transform:
+      translateY(0)
+      rotate(-4deg)
+      scale(1);
   }
 
   50%{
-    transform:translateY(-12px) rotate(4deg) scale(1.05);
+    transform:
+      translateY(-12px)
+      rotate(4deg)
+      scale(1.05);
   }
+
 }
 
 @keyframes glow{
+
   0%,100%{
     text-shadow:
       0 0 20px rgba(233,90,140,.6),
@@ -76,9 +92,11 @@ textarea{
       0 0 35px rgba(233,90,140,.95),
       0 0 65px rgba(233,90,140,.55);
   }
+
 }
 
 @keyframes shimmer{
+
   0%{
     background-position:-200% 0;
   }
@@ -86,33 +104,51 @@ textarea{
   100%{
     background-position:200% 0;
   }
+
 }
 
 @keyframes pop-in{
+
   0%{
-    transform:translateY(16px) scale(.94);
+    transform:
+      translateY(16px)
+      scale(.94);
+
     opacity:0;
   }
 
   100%{
-    transform:translateY(0) scale(1);
+    transform:
+      translateY(0)
+      scale(1);
+
     opacity:1;
   }
+
 }
 
 @keyframes modal-in{
+
   0%{
     opacity:0;
-    transform:scale(.88) translateY(20px);
+
+    transform:
+      scale(.88)
+      translateY(20px);
   }
 
   100%{
     opacity:1;
-    transform:scale(1) translateY(0);
+
+    transform:
+      scale(1)
+      translateY(0);
   }
+
 }
 
 @keyframes overlay-in{
+
   from{
     opacity:0;
   }
@@ -120,9 +156,11 @@ textarea{
   to{
     opacity:1;
   }
+
 }
 
 @keyframes ripple{
+
   from{
     width:0;
     height:0;
@@ -134,9 +172,11 @@ textarea{
     height:500px;
     opacity:0;
   }
+
 }
 
 @keyframes button-loading{
+
   0%{
     transform:rotate(0);
   }
@@ -144,9 +184,11 @@ textarea{
   100%{
     transform:rotate(360deg);
   }
+
 }
 
 @keyframes petal-fall{
+
   0%{
     transform:
       translateY(-10vh)
@@ -177,6 +219,7 @@ textarea{
 
     opacity:0;
   }
+
 }
 
 
@@ -185,16 +228,24 @@ textarea{
 ========================= */
 
 .petal{
+
   position:fixed;
+
   top:-10vh;
 
   animation:
-    petal-fall linear infinite;
+    petal-fall
+    linear
+    infinite;
 
   pointer-events:none;
+
   opacity:.6;
+
   z-index:0;
+
   user-select:none;
+
 }
 
 
@@ -203,12 +254,20 @@ textarea{
 ========================= */
 
 .wrap{
+
   max-width:520px;
+
   margin:0 auto;
-  padding:30px 18px 60px;
+
+  padding:
+    30px
+    18px
+    60px;
 
   position:relative;
+
   z-index:1;
+
 }
 
 
@@ -217,16 +276,24 @@ textarea{
 ========================= */
 
 header{
+
   text-align:center;
+
   margin-bottom:30px;
+
 }
 
 .mascot{
+
   font-size:50px;
+
   display:inline-block;
 
   animation:
-    float 4s ease-in-out infinite;
+    float
+    4s
+    ease-in-out
+    infinite;
 
   filter:
     drop-shadow(
@@ -235,12 +302,20 @@ header{
     );
 
   user-select:none;
+
 }
 
 header h1{
+
   font-size:30px;
-  margin:10px 0 4px;
+
+  margin:
+    10px
+    0
+    4px;
+
   font-weight:900;
+
   letter-spacing:1px;
 
   background:
@@ -255,6 +330,7 @@ header h1{
   background-size:200% auto;
 
   -webkit-background-clip:text;
+
   background-clip:text;
 
   color:transparent;
@@ -262,12 +338,20 @@ header h1{
   animation:
     shimmer 5s linear infinite,
     glow 3s ease-in-out infinite;
+
 }
 
 header p{
+
   color:#dcc2cf;
+
   font-size:13px;
-  margin:2px 0 0;
+
+  margin:
+    2px
+    0
+    0;
+
 }
 
 
@@ -276,29 +360,42 @@ header p{
 ========================= */
 
 .categories{
+
   display:flex;
+
   flex-direction:column;
+
   gap:18px;
+
   margin-top:30px;
+
 }
 
 .cat-card{
+
   display:flex;
+
   align-items:center;
 
   gap:18px;
+
   padding:22px;
 
   border-radius:22px;
 
   text-decoration:none;
+
   color:white;
 
   position:relative;
+
   overflow:hidden;
 
   animation:
-    pop-in .5s ease backwards;
+    pop-in
+    .5s
+    ease
+    backwards;
 
   border:
     1px solid
@@ -311,17 +408,22 @@ header p{
     box-shadow .3s ease,
     border-color .3s ease,
     filter .3s ease;
+
 }
 
 .cat-card::before{
+
   content:"";
 
   position:absolute;
+
   inset:0;
 
   background:
     radial-gradient(
-      circle at var(--mx,50%) var(--my,50%),
+      circle at
+      var(--mx,50%)
+      var(--my,50%),
       rgba(255,255,255,.18),
       transparent 30%
     );
@@ -332,30 +434,39 @@ header p{
     opacity .3s ease;
 
   pointer-events:none;
+
 }
 
 .cat-card:hover{
+
   transform:
     translateY(-5px)
     scale(1.015);
 
   border-color:
     rgba(255,255,255,.3);
+
 }
 
 .cat-card:hover::before{
+
   opacity:1;
+
 }
 
 .cat-card:active{
+
   transform:
     translateY(-1px)
     scale(.975);
 
-  filter:brightness(1.12);
+  filter:
+    brightness(1.12);
+
 }
 
 .cat-action{
+
   background:
     linear-gradient(
       135deg,
@@ -366,9 +477,11 @@ header p{
   box-shadow:
     0 10px 30px
     rgba(13,33,64,.3);
+
 }
 
 .cat-romance{
+
   background:
     linear-gradient(
       135deg,
@@ -379,9 +492,11 @@ header p{
   box-shadow:
     0 10px 30px
     rgba(122,90,16,.25);
+
 }
 
 .cat-all{
+
   background:
     linear-gradient(
       135deg,
@@ -392,21 +507,27 @@ header p{
   box-shadow:
     0 10px 30px
     rgba(122,32,80,.3);
+
 }
 
 .cat-rose{
+
   font-size:44px;
+
   flex-shrink:0;
 
   position:relative;
+
   z-index:2;
 
   transition:
     transform .35s cubic-bezier(.2,.8,.2,1),
     filter .35s ease;
+
 }
 
 .cat-card:hover .cat-rose{
+
   transform:
     scale(1.12)
     rotate(-8deg);
@@ -416,54 +537,80 @@ header p{
       0 7px 12px
       rgba(255,80,140,.35)
     );
+
 }
 
 .cat-rose.blue{
+
   filter:
     hue-rotate(150deg)
     saturate(2.2);
+
 }
 
 .cat-rose.yellow{
+
   filter:
     hue-rotate(-65deg)
     saturate(2);
+
 }
 
 .cat-info{
+
   position:relative;
+
   z-index:2;
+
   min-width:0;
+
 }
 
 .cat-info h2{
-  margin:0 0 4px;
+
+  margin:
+    0
+    0
+    4px;
+
   font-size:19px;
+
 }
 
 .cat-info p{
+
   margin:0;
+
   font-size:12.5px;
+
   opacity:.8;
+
 }
 
 .cat-arrow{
+
   margin-right:auto;
+
   font-size:18px;
+
   opacity:.6;
 
   position:relative;
+
   z-index:2;
 
   transition:.3s ease;
+
 }
 
 .cat-card:hover .cat-arrow{
+
   opacity:1;
 
   transform:
     translateX(-7px)
     scale(1.12);
+
 }
 
 
@@ -472,22 +619,21 @@ header p{
 ========================= */
 
 .extra-buttons{
+
   display:flex;
+
   flex-direction:column;
 
   gap:14px;
 
   margin-top:26px;
+
 }
 
-
-/*
-   مهم:
-   استایل اصلی کارت‌ها
-*/
-
 .extra-btn{
+
   display:flex !important;
+
   align-items:flex-start;
 
   gap:14px;
@@ -511,6 +657,7 @@ header p{
   text-align:right;
 
   position:relative;
+
   overflow:hidden;
 
   font-size:inherit;
@@ -520,9 +667,11 @@ header p{
     box-shadow .3s ease,
     border-color .3s ease,
     filter .3s ease;
+
 }
 
 .extra-btn:hover{
+
   transform:
     translateY(-4px)
     scale(1.01);
@@ -530,37 +679,41 @@ header p{
   border-color:
     rgba(255,255,255,.25);
 
-  filter:brightness(1.08);
+  filter:
+    brightness(1.08);
+
 }
 
 .extra-btn:active{
-  transform:scale(.975);
+
+  transform:
+    scale(.975);
+
 }
 
 
 /* =========================
-   SUPPORT
+   SUPPORT BUTTON
 ========================= */
 
 .extra-btn.support{
+
   background:
     linear-gradient(
       135deg,
       rgba(58,107,122,.35),
       rgba(31,69,80,.35)
     );
+
 }
 
 
 /* =========================
-   JOIN
+   JOIN BUTTON
 ========================= */
 
-/*
-   این قسمت مخصوص دکمه عضویت است
-*/
-
 a.extra-btn.join{
+
   display:flex !important;
 
   width:100% !important;
@@ -574,22 +727,22 @@ a.extra-btn.join{
       rgba(157,74,143,.35)
     ) !important;
 
-  color:#ffffff !important;
+  color:#fff !important;
 
   text-decoration:none !important;
 
-  border:
-    1px solid
-    rgba(255,255,255,.16);
-
   visibility:visible !important;
+
   opacity:1 !important;
 
   position:relative;
+
   z-index:5;
+
 }
 
 a.extra-btn.join:hover{
+
   background:
     linear-gradient(
       135deg,
@@ -600,6 +753,7 @@ a.extra-btn.join:hover{
   box-shadow:
     0 12px 30px
     rgba(226,73,122,.18);
+
 }
 
 
@@ -608,44 +762,59 @@ a.extra-btn.join:hover{
 ========================= */
 
 .extra-icon{
+
   font-size:26px;
+
   flex-shrink:0;
 
   position:relative;
+
   z-index:2;
 
   transition:.35s ease;
+
 }
 
 .extra-btn:hover .extra-icon{
+
   transform:
     scale(1.15)
     rotate(-7deg);
+
 }
 
 .extra-info{
+
   display:flex;
+
   flex-direction:column;
 
   gap:4px;
 
   position:relative;
+
   z-index:2;
 
   min-width:0;
+
 }
 
 .extra-title{
+
   font-size:14.5px;
+
   font-weight:bold;
+
 }
 
 .extra-sub{
+
   font-size:11.5px;
 
   color:#d8c3cd;
 
   line-height:1.7;
+
 }
 
 
@@ -654,9 +823,11 @@ a.extra-btn.join:hover{
 ========================= */
 
 .ripple{
+
   position:absolute;
 
   width:0;
+
   height:0;
 
   border-radius:50%;
@@ -672,7 +843,8 @@ a.extra-btn.join:hover{
   animation:
     ripple .7s ease-out forwards;
 
-  z-index:10;
+  z-index:20;
+
 }
 
 
@@ -681,6 +853,7 @@ a.extra-btn.join:hover{
 ========================= */
 
 footer{
+
   text-align:center;
 
   margin-top:40px;
@@ -688,6 +861,7 @@ footer{
   font-size:11px;
 
   color:#8a6272;
+
 }
 
 
@@ -696,33 +870,43 @@ footer{
 ========================= */
 
 .modal-overlay{
+
   display:none;
 
   position:fixed;
+
   inset:0;
 
   background:
     rgba(0,0,0,.68);
 
   backdrop-filter:blur(7px);
+
   -webkit-backdrop-filter:blur(7px);
 
   z-index:100;
 
   align-items:center;
+
   justify-content:center;
 
   padding:20px;
+
 }
 
 .modal-overlay.open{
+
   display:flex;
 
   animation:
-    overlay-in .25s ease;
+    overlay-in
+    .25s
+    ease;
+
 }
 
 .modal-box{
+
   background:
     linear-gradient(
       145deg,
@@ -739,26 +923,39 @@ footer{
   padding:20px;
 
   width:100%;
+
   max-width:360px;
 
   box-shadow:
-    0 25px 80px rgba(0,0,0,.55),
-    0 0 35px rgba(220,70,130,.08);
+    0 25px 80px
+    rgba(0,0,0,.55),
+
+    0 0 35px
+    rgba(220,70,130,.08);
 
   animation:
-    modal-in .35s cubic-bezier(.2,.8,.2,1);
+    modal-in
+    .35s
+    cubic-bezier(.2,.8,.2,1);
+
 }
 
 .modal-box h3{
-  margin:0 0 14px;
+
+  margin:
+    0
+    0
+    14px;
 
   font-size:16px;
 
   color:#ffd1de;
+
 }
 
 .modal-box input,
 .modal-box textarea{
+
   width:100%;
 
   padding:12px;
@@ -784,10 +981,12 @@ footer{
     border-color .25s ease,
     box-shadow .25s ease,
     background .25s ease;
+
 }
 
 .modal-box input:focus,
 .modal-box textarea:focus{
+
   border-color:
     rgba(255,120,160,.65);
 
@@ -800,14 +999,19 @@ footer{
 
     0 0 20px
     rgba(226,73,122,.08);
+
 }
 
 .modal-box textarea{
+
   min-height:100px;
+
   resize:vertical;
+
 }
 
 #supportMsg{
+
   font-size:12px;
 
   min-height:18px;
@@ -817,9 +1021,11 @@ footer{
   text-align:center;
 
   color:#ff8fae;
+
 }
 
 .modal-send{
+
   width:100%;
 
   padding:12px;
@@ -850,31 +1056,44 @@ footer{
     rgba(226,73,122,.2);
 
   transition:.25s ease;
+
 }
 
 .modal-send:hover{
-  transform:translateY(-2px);
 
-  filter:brightness(1.1);
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.1);
 
   box-shadow:
     0 12px 28px
     rgba(226,73,122,.3);
+
 }
 
 .modal-send:active{
-  transform:scale(.97);
+
+  transform:
+    scale(.97);
+
 }
 
 .modal-send:disabled{
+
   cursor:wait;
+
   opacity:.75;
+
 }
 
 .modal-send.loading::after{
+
   content:"";
 
   width:14px;
+
   height:14px;
 
   border:
@@ -892,10 +1111,15 @@ footer{
   margin-right:7px;
 
   animation:
-    button-loading .7s linear infinite;
+    button-loading
+    .7s
+    linear
+    infinite;
+
 }
 
 .modal-close{
+
   width:100%;
 
   padding:10px;
@@ -916,13 +1140,16 @@ footer{
   cursor:pointer;
 
   transition:.25s ease;
+
 }
 
 .modal-close:hover{
+
   background:
     rgba(255,255,255,.13);
 
   color:white;
+
 }
 
 
@@ -933,66 +1160,105 @@ footer{
 @media(max-width:480px){
 
   .wrap{
-    padding:25px 15px 50px;
+
+    padding:
+      25px
+      15px
+      50px;
+
   }
 
   .mascot{
+
     font-size:46px;
+
   }
 
   header h1{
+
     font-size:27px;
+
   }
 
   .cat-card{
+
     padding:19px;
+
     gap:15px;
+
     border-radius:20px;
+
   }
 
   .cat-rose{
+
     font-size:39px;
+
   }
 
   .cat-info h2{
+
     font-size:17px;
+
   }
 
   .cat-info p{
+
     font-size:11.5px;
+
   }
 
   .extra-btn{
+
     padding:15px;
+
     border-radius:17px;
+
   }
 
   .extra-icon{
+
     font-size:24px;
+
   }
 
   .extra-title{
+
     font-size:14px;
+
   }
 
   .extra-sub{
+
     font-size:11px;
+
   }
+
 }
+
 </style>
 </head>
 
 
 <body>
 
+
 <div class="wrap">
 
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
-  <div class="mascot">🌹</div>
+  <div class="mascot">
+    🌹
+  </div>
 
-  <h1>MANHWA ROSE</h1>
+  <h1>
+    MANHWA ROSE
+  </h1>
 
   <p>
     یک دسته رو انتخاب کن و شروع کن ✨
@@ -1163,6 +1429,10 @@ footer{
 </div>
 
 
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
   Manhwa Rose · ساخته‌شده با عشق 🌹
 </footer>
@@ -1177,9 +1447,14 @@ footer{
   id="supportOverlay"
 >
 
-  <div class="modal-box">
+  <div
+    class="modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="supportTitle"
+  >
 
-    <h3>
+    <h3 id="supportTitle">
       🎧 ارسال پیام به پشتیبانی
     </h3>
 
@@ -1228,348 +1503,270 @@ footer{
 
 <script>
 
-/* =========================
-   PETALS
-========================= */
-
-const petals = [
-  "🌸",
-  "🌹",
-  "🥀",
-  "💮",
-  "🌺"
-];
-
-
-for(let i = 0; i < 10; i++){
-
-  const el =
-    document.createElement("div");
-
-  el.className =
-    "petal";
-
-  el.textContent =
-    petals[
-      Math.floor(
-        Math.random() * petals.length
-      )
-    ];
-
-  el.style.left =
-    Math.random() * 100 + "vw";
-
-  el.style.animationDuration =
-    (9 + Math.random() * 12) + "s";
-
-  el.style.animationDelay =
-    (Math.random() * 10) + "s";
-
-  el.style.fontSize =
-    (12 + Math.random() * 14) + "px";
-
-  document.body.appendChild(el);
-}
-
-
-/* =========================
-   SUPPORT
-========================= */
-
-const supportBtn =
-  document.getElementById(
-    "supportBtn"
-  );
-
-const supportOverlay =
-  document.getElementById(
-    "supportOverlay"
-  );
-
-const supportClose =
-  document.getElementById(
-    "supportClose"
-  );
-
-const supportSend =
-  document.getElementById(
-    "supportSend"
-  );
-
-const supportName =
-  document.getElementById(
-    "supportName"
-  );
-
-const supportMessage =
-  document.getElementById(
-    "supportMessage"
-  );
-
-const supportMsg =
-  document.getElementById(
-    "supportMsg"
-  );
-
-
-function openSupport(){
-
-  supportOverlay.classList.add(
-    "open"
-  );
-
-  document.body.style.overflow =
-    "hidden";
-
-  supportMsg.textContent =
-    "";
-
-  setTimeout(
-    function(){
-      supportName.focus();
-    },
-    250
-  );
-}
-
-
-function closeSupport(){
-
-  supportOverlay.classList.remove(
-    "open"
-  );
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-supportBtn.addEventListener(
-  "click",
-  openSupport
-);
-
-
-supportClose.addEventListener(
-  "click",
-  closeSupport
-);
-
-
-/* =========================
-   CLOSE OUTSIDE
-========================= */
-
-supportOverlay.addEventListener(
-  "click",
-  function(e){
-
-    if(
-      e.target ===
-      supportOverlay
-    ){
-
-      closeSupport();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   ESC
-========================= */
+/* =====================================================
+   همه JS بعد از آماده شدن کامل صفحه اجرا می‌شود
+===================================================== */
 
 document.addEventListener(
-  "keydown",
-  function(e){
-
-    if(
-      e.key === "Escape" &&
-      supportOverlay.classList.contains(
-        "open"
-      )
-    ){
-
-      closeSupport();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   SEND SUPPORT
-========================= */
-
-supportSend.addEventListener(
-  "click",
+  "DOMContentLoaded",
   function(){
 
-    const name =
-      supportName.value.trim();
+    /* =========================
+       PETALS
+    ========================= */
 
-    const message =
-      supportMessage.value.trim();
+    const petals = [
+      "🌸",
+      "🌹",
+      "🥀",
+      "💮",
+      "🌺"
+    ];
 
 
-    if(!name){
+    for(
+      let i = 0;
+      i < 10;
+      i++
+    ){
 
-      supportMsg.style.color =
-        "#ff8fae";
+      const el =
+        document.createElement("div");
 
-      supportMsg.textContent =
-        "لطفاً اسمت رو وارد کن 🌹";
+      el.className =
+        "petal";
 
-      supportName.focus();
+      el.textContent =
+        petals[
+          Math.floor(
+            Math.random() *
+            petals.length
+          )
+        ];
 
-      return;
+      el.style.left =
+        Math.random() *
+        100 +
+        "vw";
+
+      el.style.animationDuration =
+        (
+          9 +
+          Math.random() *
+          12
+        ) +
+        "s";
+
+      el.style.animationDelay =
+        (
+          Math.random() *
+          10
+        ) +
+        "s";
+
+      el.style.fontSize =
+        (
+          12 +
+          Math.random() *
+          14
+        ) +
+        "px";
+
+      document.body.appendChild(
+        el
+      );
+
     }
 
 
-    if(!message){
+    /* =========================
+       SUPPORT ELEMENTS
+    ========================= */
 
-      supportMsg.style.color =
-        "#ff8fae";
+    const supportBtn =
+      document.getElementById(
+        "supportBtn"
+      );
+
+    const supportOverlay =
+      document.getElementById(
+        "supportOverlay"
+      );
+
+    const supportClose =
+      document.getElementById(
+        "supportClose"
+      );
+
+    const supportSend =
+      document.getElementById(
+        "supportSend"
+      );
+
+    const supportName =
+      document.getElementById(
+        "supportName"
+      );
+
+    const supportMessage =
+      document.getElementById(
+        "supportMessage"
+      );
+
+    const supportMsg =
+      document.getElementById(
+        "supportMsg"
+      );
+
+
+    /* =========================
+       OPEN SUPPORT
+    ========================= */
+
+    function openSupport(){
+
+      supportOverlay.classList.add(
+        "open"
+      );
+
+      document.body.style.overflow =
+        "hidden";
 
       supportMsg.textContent =
-        "لطفاً پیامت رو بنویس ✨";
+        "";
 
-      supportMessage.focus();
+      supportSend.disabled =
+        false;
 
-      return;
-    }
+      supportSend.classList.remove(
+        "loading"
+      );
 
-
-    supportSend.disabled =
-      true;
-
-    supportSend.classList.add(
-      "loading"
-    );
-
-    supportSend.textContent =
-      "در حال ارسال";
+      supportSend.textContent =
+        "ارسال پیام";
 
 
-    fetch(
-      "/api/public/support",
-      {
-        method:"POST",
+      setTimeout(
+        function(){
 
-        headers:{
-          "Content-Type":
-            "application/json"
+          supportName.focus();
+
         },
+        250
+      );
 
-        body:JSON.stringify({
-          name:name,
-          message:message
-        })
-      }
-    )
-
-    .then(
-      function(res){
-        return res.json();
-      }
-    )
-
-    .then(
-      function(data){
-
-        supportSend.disabled =
-          false;
-
-        supportSend.classList.remove(
-          "loading"
-        );
-
-        supportSend.textContent =
-          "ارسال پیام";
+    }
 
 
-        if(data.success){
+    /* =========================
+       CLOSE SUPPORT
+    ========================= */
 
-          supportMsg.style.color =
-            "#7dffb2";
+    function closeSupport(){
 
-          supportMsg.textContent =
-            "پیامت ارسال شد 🌹";
+      supportOverlay.classList.remove(
+        "open"
+      );
 
-          supportMessage.value =
-            "";
+      document.body.style.overflow =
+        "";
 
-          supportName.value =
-            "";
+    }
 
 
-          setTimeout(
-            closeSupport,
-            1200
-          );
+    /* =========================
+       SUPPORT CLICK
+    ========================= */
 
-        }else{
+    if(supportBtn){
 
-          supportMsg.style.color =
-            "#ff8fae";
+      supportBtn.addEventListener(
+        "click",
+        function(e){
 
-          supportMsg.textContent =
-            data.message ||
-            "خطا در ارسال پیام.";
+          e.preventDefault();
+
+          openSupport();
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       CLOSE BUTTON
+    ========================= */
+
+    if(supportClose){
+
+      supportClose.addEventListener(
+        "click",
+        function(e){
+
+          e.preventDefault();
+
+          closeSupport();
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       CLICK OUTSIDE
+    ========================= */
+
+    if(supportOverlay){
+
+      supportOverlay.addEventListener(
+        "click",
+        function(e){
+
+          if(
+            e.target ===
+            supportOverlay
+          ){
+
+            closeSupport();
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       ESC
+    ========================= */
+
+    document.addEventListener(
+      "keydown",
+      function(e){
+
+        if(
+          e.key === "Escape" &&
+          supportOverlay.classList.contains(
+            "open"
+          )
+        ){
+
+          closeSupport();
 
         }
 
       }
-    )
-
-    .catch(
-      function(){
-
-        supportSend.disabled =
-          false;
-
-        supportSend.classList.remove(
-          "loading"
-        );
-
-        supportSend.textContent =
-          "ارسال پیام";
-
-        supportMsg.style.color =
-          "#ff8fae";
-
-        supportMsg.textContent =
-          "ارتباط با سرور برقرار نشد.";
-
-      }
     );
 
-  }
-);
 
+    /* =========================
+       SEND SUPPORT MESSAGE
+    ========================= */
 
-/* =========================
-   RIPPLE
-========================= */
+    if(supportSend){
 
-document.addEventListener(
-  "click",
-  function(e){
-
-    const target =
-      e.target.closest(
-        ".cat-card, .extra-btn, .modal-send, .modal-close"
-      );
-
-
-    if(!target){
-      return;
-    }
-
-
-    const rect =
-      target.getBoundingClientRec
+      supportSend.addEventListener(
+        "
