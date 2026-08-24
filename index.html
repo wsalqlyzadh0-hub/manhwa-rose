@@ -667,7 +667,7 @@ footer{
   </span>
 </button>
 
-<a
+
   class="extra-btn join"
   href="/join.html"
 >
@@ -869,7 +869,7 @@ document.addEventListener(
 
 
 /* =========================
-   SEND SUPPORT MESSAGE
+   SEND SUPPORT MESSAGE (REAL API CALL)
 ========================= */
 
 supportSend.addEventListener(
@@ -909,37 +909,50 @@ supportSend.addEventListener(
     }
 
 
-    /*
-      فعلاً فقط ظاهر و عملکرد فرم آماده است.
-      برای ارسال واقعی باید آدرس API / Worker
-      پشتیبانی سایتت را اینجا وصل کنیم.
-    */
-
     supportSend.disabled = true;
-
     supportSend.classList.add("loading");
-
     supportSend.textContent = "در حال ارسال";
 
+    fetch("/api/public/support", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name, message: message })
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
 
-    setTimeout(function(){
+        supportSend.disabled = false;
+        supportSend.classList.remove("loading");
+        supportSend.textContent = "ارسال پیام";
 
-      supportSend.disabled = false;
+        if(data.success){
 
-      supportSend.classList.remove("loading");
+          supportMsg.style.color = "#7dffb2";
+          supportMsg.textContent = "پیامت ارسال شد 🌹";
 
-      supportSend.textContent = "ارسال پیام";
+          supportMessage.value = "";
+          supportName.value = "";
 
+          setTimeout(closeSupport, 1200);
 
-      supportMsg.style.color = "#7dffb2";
+        } else {
 
-      supportMsg.textContent =
-        "پیامت آماده‌ی ارسال شد 🌹";
+          supportMsg.style.color = "#ff8fae";
+          supportMsg.textContent =
+            data.message || "خطا در ارسال پیام.";
+        }
 
+      })
+      .catch(function(){
 
-      supportMessage.value = "";
+        supportSend.disabled = false;
+        supportSend.classList.remove("loading");
+        supportSend.textContent = "ارسال پیام";
 
-    }, 900);
+        supportMsg.style.color = "#ff8fae";
+        supportMsg.textContent =
+          "ارتباط با سرور برقرار نشد.";
+      });
 
   }
 );
@@ -1029,4 +1042,4 @@ document.querySelectorAll(
 </script>
 
 </body>
- </html>
+  </html>
