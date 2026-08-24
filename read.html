@@ -2,19 +2,10 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خواندن قسمت - Manhwa Rose</title>
-
 <style>
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    background: #0a0509;
-  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   body {
     margin: 0;
@@ -22,43 +13,6 @@
     font-family: Tahoma, Arial, sans-serif;
     background: #0a0509;
     color: white;
-    overflow-x: hidden;
-  }
-
-  button, input {
-    font-family: inherit;
-  }
-
-  @keyframes gearOpen {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(100deg) scale(1.15); }
-    100% { transform: rotate(180deg) scale(1); }
-  }
-
-  @keyframes gearClose {
-    0% { transform: rotate(180deg) scale(1); }
-    100% { transform: rotate(0deg) scale(1); }
-  }
-
-  @keyframes toggleOn {
-    0% { transform: scale(.85); }
-    60% { transform: scale(1.12); }
-    100% { transform: scale(1); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes buttonShine {
-    0% { transform: translateX(-130%); }
-    100% { transform: translateX(130%); }
-  }
-
-  @keyframes ripple {
-    from { width: 0; height: 0; opacity: .5; }
-    to { width: 420px; height: 420px; opacity: 0; }
   }
 
   .topbar {
@@ -68,160 +22,92 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 58px;
-    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 16px;
-    background: rgba(10,5,9,.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    transition: background .3s ease, box-shadow .3s ease, transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+    padding: 12px 16px;
+    background: rgba(10,5,9,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  .topbar a {
-    color: #ffb3c9;
-    text-decoration: none;
-    font-size: 13px;
-    transition: color .25s ease, transform .25s ease;
-  }
-
-  .topbar a:hover {
-    color: #ffd1de;
-    transform: translateX(3px);
-  }
-
-  .chapter-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffd1de;
-  }
+  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 13px; }
+  .topbar .chapter-label { font-size: 14px; font-weight: bold; color: #ffd1de; }
 
   .settings-btn {
-    position: relative;
-    background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
-    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
     color: white;
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 5px 18px rgba(0,0,0,.2);
-    transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
-
-  .settings-btn:hover {
-    transform: translateY(-2px) scale(1.04);
-    background: linear-gradient(145deg, rgba(226,73,122,.2), rgba(255,255,255,.07));
-    border-color: rgba(255,143,174,.35);
-    box-shadow: 0 8px 25px rgba(226,73,122,.15);
-  }
-
-  .settings-btn:active { transform: scale(.9); transition-duration: .08s; }
-
-  .settings-btn.active {
-    background: linear-gradient(135deg, rgba(226,73,122,.35), rgba(177,53,100,.25));
-    border-color: rgba(255,143,174,.45);
-    box-shadow: 0 0 25px rgba(226,73,122,.18);
-  }
-
-  .settings-btn.active .gear { animation: gearOpen .45s cubic-bezier(.2,.8,.2,1); }
-  .settings-btn:not(.active) .gear { animation: gearClose .25s ease; }
 
   .settings-panel {
     position: fixed;
-    top: 68px;
+    top: 58px;
     left: 12px;
     z-index: 25;
-    width: 280px;
-    max-width: calc(100vw - 24px);
-    background: linear-gradient(145deg, rgba(29,13,23,.98), rgba(16,8,14,.98));
-    border: 1px solid rgba(255,255,255,.14);
-    border-radius: 18px;
-    padding: 17px;
-    box-shadow: 0 25px 70px rgba(0,0,0,.55), 0 0 35px rgba(226,73,122,.08);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-12px) scale(.94);
-    pointer-events: none;
-    transition: opacity .22s ease, transform .28s cubic-bezier(.2,.8,.2,1), visibility .22s ease;
+    width: 260px;
+    max-width: 80vw;
+    background: rgba(20,10,17,0.97);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    backdrop-filter: blur(14px);
+    display: none;
   }
 
-  .settings-panel.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-  }
-
-  .settings-panel::before {
-    content: "";
-    position: absolute;
-    top: -7px;
-    left: 17px;
-    width: 13px;
-    height: 13px;
-    background: #1d0d17;
-    border-left: 1px solid rgba(255,255,255,.14);
-    border-top: 1px solid rgba(255,255,255,.14);
-    transform: rotate(45deg);
-  }
+  .settings-panel.open { display: block; }
 
   .settings-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
   }
 
-  .settings-row .label {
-    font-size: 12.5px;
-    color: #f0d0dc;
-    line-height: 1.6;
+  .settings-row .label { font-size: 12.5px; color: #f0d0dc; }
+
+  .switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
   }
 
-  .switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
-  .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
 
-  .slider-toggle {
+  .switch .slider-toggle {
     position: absolute;
     inset: 0;
-    background: rgba(255,255,255,.13);
-    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,0.15);
     border-radius: 999px;
     cursor: pointer;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
-    transition: background .3s ease, box-shadow .3s ease;
+    transition: background .2s ease;
   }
 
-  .slider-toggle::before {
+  .switch .slider-toggle::before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 2px;
-    top: 2px;
-    background: linear-gradient(145deg, #fff, #eee);
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
     border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,.25);
-    transition: transform .32s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+    transition: transform .2s ease;
   }
 
   .switch input:checked + .slider-toggle {
     background: linear-gradient(135deg, #e2497a, #b13564);
-    box-shadow: 0 0 14px rgba(226,73,122,.28);
   }
 
   .switch input:checked + .slider-toggle::before {
-    transform: translateX(-20px);
-    box-shadow: 0 2px 8px rgba(226,73,122,.25);
-    animation: toggleOn .28s ease;
+    transform: translateX(-18px);
   }
 
   .slider-block { margin-bottom: 14px; }
@@ -230,140 +116,35 @@
   .slider-block .label {
     font-size: 12.5px;
     color: #f0d0dc;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-  }
-
-  .slider-block .label span:last-child {
-    color: #ff8fae;
-    font-weight: bold;
-    min-width: 28px;
-    text-align: left;
   }
 
   .slider-block input[type="range"] {
     width: 100%;
-    height: 5px;
-    appearance: none;
-    -webkit-appearance: none;
-    background: linear-gradient(90deg, #e2497a, #b13564);
-    border-radius: 999px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .slider-block input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #e2497a;
-    border: 3px solid #ffd1de;
-    box-shadow: 0 3px 12px rgba(226,73,122,.4);
-    transition: transform .2s ease, box-shadow .2s ease;
-  }
-
-  .slider-block input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
-    box-shadow: 0 4px 18px rgba(226,73,122,.55);
-  }
-
-  .slider-block input[type="range"]::-moz-range-thumb {
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    background: #e2497a;
-    border: 3px solid #ffd1de;
-    box-shadow: 0 3px 12px rgba(226,73,122,.4);
+    accent-color: #e2497a;
   }
 
   .sub-slider {
     margin-top: 10px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255,255,255,.08);
-    animation: fadeIn .25s ease;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 
-  .fullscreen-option {
-    margin-top: 4px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(255,255,255,.08);
-  }
-
-  .fullscreen-btn {
-    width: 100%;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 12px;
-    padding: 11px 13px;
-    background: linear-gradient(135deg, rgba(226,73,122,.15), rgba(157,74,143,.12));
-    color: #f8d9e3;
-    font-size: 12.5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    position: relative;
-    transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s ease, border-color .25s ease, box-shadow .25s ease;
-  }
-
-  .fullscreen-btn::before {
-    content: "";
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 45%;
-    left: -70%;
-    background: linear-gradient(100deg, transparent, rgba(255,255,255,.13), transparent);
-    transform: skewX(-20deg);
-  }
-
-  .fullscreen-btn:hover::before { animation: buttonShine .65s ease; }
-
-  .fullscreen-btn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, rgba(226,73,122,.25), rgba(157,74,143,.2));
-    border-color: rgba(255,143,174,.3);
-    box-shadow: 0 7px 20px rgba(226,73,122,.12);
-  }
-
-  .fullscreen-btn:active { transform: scale(.96); transition-duration: .08s; }
-
-  .fullscreen-btn.active {
-    background: linear-gradient(135deg, rgba(226,73,122,.4), rgba(157,74,143,.3));
-    border-color: rgba(255,143,174,.5);
-  }
-
-  .fullscreen-icon { font-size: 18px; transition: transform .3s ease; }
-  .fullscreen-btn:hover .fullscreen-icon { transform: scale(1.15); }
-
-  .pages {
-    max-width: 700px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-    transition: max-width .35s cubic-bezier(.2,.8,.2,1);
-  }
+  .pages { max-width: 700px; margin: 0 auto; padding-bottom: 40px; transition: max-width .2s ease; }
 
   .pages img {
     width: 100%;
     display: block;
-    opacity: 0;
-    animation: fadeIn .45s ease forwards;
   }
 
-  #loading, #empty {
-    text-align: center;
-    padding: 60px 20px;
-    color: #b98ba0;
-    animation: fadeIn .4s ease;
-  }
+  #loading, #empty { text-align: center; padding: 60px 20px; color: #b98ba0; }
 
   .nav-bottom {
     display: flex;
     gap: 10px;
-    padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px));
+    padding: 20px 16px 40px;
     max-width: 700px;
     margin: 0 auto;
   }
@@ -378,77 +159,20 @@
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
-    border: 1px solid rgba(255,255,255,.1);
-    position: relative;
-    overflow: hidden;
-    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, filter .25s ease;
   }
-
-  .nav-bottom a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 9px 25px rgba(157,74,143,.25);
-    filter: brightness(1.1);
-  }
-
-  .nav-bottom a:active { transform: scale(.96); transition-duration: .08s; }
 
   .nav-bottom span {
-    background: rgba(255,255,255,.05);
+    background: rgba(255,255,255,0.05);
     color: #777;
-    border-color: rgba(255,255,255,.06);
-  }
-
-  .ripple {
-    position: absolute;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255,255,255,.3);
-    pointer-events: none;
-    width: 0; height: 0;
-    animation: ripple .65s ease-out forwards;
-    z-index: 20;
-  }
-
-  body.fullscreen-mode { background: #000; }
-
-  body.fullscreen-mode .topbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-
-  body.fullscreen-mode .topbar.peek {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  body.fullscreen-mode .pages { max-width: 100% !important; padding-top: 20px; }
-
-  @media (max-width: 480px) {
-    .topbar { padding-left: 12px; padding-right: 12px; }
-    .settings-panel { top: 67px; left: 10px; width: 285px; max-width: calc(100vw - 20px); }
-    .nav-bottom { gap: 8px; padding-left: 12px; padding-right: 12px; }
-    .nav-bottom a, .nav-bottom span { padding: 13px 8px; font-size: 12px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: .01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: .01ms !important;
-    }
   }
 </style>
 </head>
 <body>
 
-  <div class="topbar" id="topbar">
+  <div class="topbar">
     <a href="/index.html">← کتابخانه</a>
     <div class="chapter-label" id="chapterLabel">🌹</div>
-    <button class="settings-btn" id="settingsBtn" type="button" aria-label="تنظیمات" aria-expanded="false">
-      <span class="gear">⚙️</span>
-    </button>
+    <button class="settings-btn" id="settingsBtn">⚙️</button>
   </div>
 
   <div class="settings-panel" id="settingsPanel">
@@ -479,13 +203,6 @@
       <input type="range" id="zoomSlider" min="20" max="100" value="100">
     </div>
 
-    <div class="fullscreen-option">
-      <button class="fullscreen-btn" id="fullscreenBtn" type="button">
-        <span>تمام صفحه</span>
-        <span class="fullscreen-icon" id="fullscreenIcon">⛶</span>
-      </button>
-    </div>
-
   </div>
 
   <div id="loading">در حال بارگذاری...</div>
@@ -504,7 +221,6 @@
   const pagesEl = document.getElementById("pages");
   const navBottom = document.getElementById("navBottom");
   const chapterLabel = document.getElementById("chapterLabel");
-  const topbar = document.getElementById("topbar");
 
   const settingsBtn = document.getElementById("settingsBtn");
   const settingsPanel = document.getElementById("settingsPanel");
@@ -515,13 +231,11 @@
   const speedVal = document.getElementById("speedVal");
   const zoomSlider = document.getElementById("zoomSlider");
   const zoomVal = document.getElementById("zoomVal");
-  const fullscreenBtn = document.getElementById("fullscreenBtn");
-  const fullscreenIcon = document.getElementById("fullscreenIcon");
 
   let nextChapterId = null;
-  let prevChapterId = null;
   let autoNextTriggered = false;
 
+  // ---- load saved settings ----
   autoNextToggle.checked = localStorage.getItem("mr_auto_next") === "1";
   autoScrollToggle.checked = localStorage.getItem("mr_auto_scroll") === "1";
   speedSlider.value = localStorage.getItem("mr_scroll_speed") || "50";
@@ -531,35 +245,21 @@
   speedBlock.style.display = autoScrollToggle.checked ? "block" : "none";
   pagesEl.style.maxWidth = zoomSlider.value + "%";
 
-  function openSettings() {
-    settingsPanel.classList.add("open");
-    settingsBtn.classList.add("active");
-    settingsBtn.setAttribute("aria-expanded", "true");
-  }
-
-  function closeSettings() {
-    settingsPanel.classList.remove("open");
-    settingsBtn.classList.remove("active");
-    settingsBtn.setAttribute("aria-expanded", "false");
-  }
-
+  // ---- settings panel toggle ----
   settingsBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (settingsPanel.classList.contains("open")) {
-      closeSettings();
-    } else {
-      openSettings();
-    }
+    settingsPanel.classList.toggle("open");
   });
 
   document.addEventListener("click", (e) => {
-    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn && !settingsBtn.contains(e.target)) {
-      closeSettings();
+    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
+      settingsPanel.classList.remove("open");
     }
   });
 
   settingsPanel.addEventListener("click", (e) => e.stopPropagation());
 
+  // ---- toggles ----
   autoNextToggle.addEventListener("change", () => {
     localStorage.setItem("mr_auto_next", autoNextToggle.checked ? "1" : "0");
   });
@@ -580,35 +280,7 @@
     pagesEl.style.maxWidth = zoomSlider.value + "%";
   });
 
-  fullscreenBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen?.().catch(() => {});
-      document.body.classList.add("fullscreen-mode");
-      fullscreenBtn.classList.add("active");
-      fullscreenIcon.textContent = "⛶";
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      document.body.classList.remove("fullscreen-mode");
-      fullscreenBtn.classList.remove("active");
-    }
-    closeSettings();
-  });
-
-  document.addEventListener("fullscreenchange", () => {
-    if (!document.fullscreenElement) {
-      document.body.classList.remove("fullscreen-mode");
-      fullscreenBtn.classList.remove("active");
-    }
-  });
-
-  document.addEventListener("click", (e) => {
-    if (document.body.classList.contains("fullscreen-mode") && e.clientY < 70) {
-      topbar.classList.add("peek");
-      clearTimeout(window._peekTimeout);
-      window._peekTimeout = setTimeout(() => topbar.classList.remove("peek"), 2500);
-    }
-  });
-
+  // ---- auto scroll loop ----
   let scrollPaused = false;
   let pauseTimeout = null;
 
@@ -618,7 +290,8 @@
       const pxPerFrame = 0.15 + (speed / 100) * 4.5;
       window.scrollBy(0, pxPerFrame);
 
-      const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
 
       if (nearBottom && autoNextToggle.checked && nextChapterId && !autoNextTriggered) {
         autoNextTriggered = true;
@@ -639,47 +312,69 @@
     pauseTimeout = setTimeout(() => { scrollPaused = false; }, 900);
   }, { passive: true });
 
+  // ---- manual scroll near bottom also triggers auto-next (even without auto-scroll) ----
   window.addEventListener("scroll", () => {
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
+    const nearBottom =
+      window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
+
     if (nearBottom && autoNextToggle.checked && nextChapterId && !autoNextTriggered) {
       autoNextTriggered = true;
       window.location.href = `/read.html?id=${nextChapterId}`;
     }
   }, { passive: true });
 
-  document.addEventListener("click", (e) => {
-    const target = e.target.closest(".settings-btn, .fullscreen-btn, .nav-bottom a");
-    if (!target) return;
-
-    const rect = target.getBoundingClientRect();
-    const ripple = document.createElement("span");
-    ripple.className = "ripple";
-    ripple.style.left = (e.clientX - rect.left) + "px";
-    ripple.style.top = (e.clientY - rect.top) + "px";
-    target.style.position = "relative";
-    target.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 650);
-  });
-
-  function renderNav() {
-    navBottom.innerHTML = "";
-    navBottom.style.display = "flex";
-
-    if (prevChapterId) {
-      navBottom.innerHTML += `<a href="/read.html?id=${prevChapterId}">◀ قسمت قبل</a>`;
-    } else {
-      navBottom.innerHTML += `<span>قسمت قبل</span>`;
+  // ---- load chapter data ----
+  async function load() {
+    if (!chapterId) {
+      loading.textContent = "قسمت مشخص نشده.";
+      return;
     }
 
-    if (nextChapterId) {
-      navBottom.innerHTML += `<a href="/read.html?id=${nextChapterId}">قسمت بعد ▶</a>`;
-    } else {
-      navBottom.innerHTML += `<span>قسمت بعد</span>`;
+    try {
+      const res = await fetch(`/api/public/chapters/${chapterId}`);
+      const data = await res.json();
+
+      if (!data.success) {
+        loading.textContent = data.message || "قسمت پیدا نشد.";
+        return;
+      }
+
+      loading.style.display = "none";
+
+      const ch = data.chapter;
+      chapterLabel.textContent = `قسمت ${ch.chapter_number}`;
+
+      if (ch.pages.length === 0) {
+        emptyEl.style.display = "block";
+      } else {
+        ch.pages.forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.loading = "lazy";
+          pagesEl.appendChild(img);
+        });
+      }
+
+      const siblings = data.siblings;
+      const idx = siblings.findIndex(s => s.id === ch.id);
+      const prev = idx > 0 ? siblings[idx - 1] : null;
+      const next = idx < siblings.length - 1 ? siblings[idx + 1] : null;
+
+      nextChapterId = next ? next.id : null;
+
+      navBottom.style.display = "flex";
+      navBottom.innerHTML = `
+        ${next ? `<a href="/read.html?id=${next.id}">▶ قسمت بعد</a>` : `<span>آخرین قسمت</span>`}
+        ${prev ? `<a href="/read.html?id=${prev.id}">قسمت قبل ◀</a>` : `<span>اولین قسمت</span>`}
+      `;
+
+    } catch {
+      loading.textContent = "ارتباط با سرور برقرار نشد.";
     }
   }
 
-  function renderPages(pages) {
-    pagesEl.innerHTML = "";
+  load();
+</script>
 
-    pages.forEach((url, i) => {
-      const img =
+</body>
+</html>
