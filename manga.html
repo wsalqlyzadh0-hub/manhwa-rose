@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,10 +38,6 @@ body {
     linear-gradient(145deg, #6b1f42 0%, #1a0a17 45%, #08050a 100%);
 }
 
-/* =========================
-   BACKGROUND PARTICLES
-========================= */
-
 body::before,
 body::after {
   content: "";
@@ -72,14 +69,11 @@ body::after {
   0%,100% {
     transform: translate(0,0) scale(1);
   }
+
   50% {
     transform: translate(-20px,25px) scale(1.15);
   }
 }
-
-/* =========================
-   FLOATING PETALS
-========================= */
 
 .petal {
   position: fixed;
@@ -114,10 +108,6 @@ body::after {
   }
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .wrap {
   max-width: 480px;
   margin: 0 auto;
@@ -125,16 +115,11 @@ body::after {
   z-index: 2;
 }
 
-/* =========================
-   TOP BAR
-========================= */
-
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
-
   animation: topbarIn .65s cubic-bezier(.2,.8,.2,1) both;
 }
 
@@ -155,9 +140,7 @@ body::after {
   text-decoration: none;
   font-size: 14px;
   position: relative;
-  transition:
-    color .25s ease,
-    transform .25s ease;
+  transition: color .25s ease, transform .25s ease;
 }
 
 .topbar a::after {
@@ -197,10 +180,6 @@ body::after {
     transform: translateY(-5px) rotate(5deg);
   }
 }
-
-/* =========================
-   TITLE
-========================= */
 
 h1 {
   font-size: 24px;
@@ -250,25 +229,14 @@ h1 {
   }
 }
 
-/* =========================
-   MESSAGE
-========================= */
-
 #message {
   text-align: center;
   min-height: 20px;
   margin-bottom: 10px;
   color: #ff8fae;
   font-size: 13px;
-
-  transition:
-    opacity .3s ease,
-    transform .3s ease;
+  transition: opacity .3s ease, transform .3s ease;
 }
-
-/* =========================
-   CARD
-========================= */
 
 .card {
   position: relative;
@@ -345,16 +313,11 @@ h1 {
   }
 }
 
-/* =========================
-   FORM
-========================= */
-
 label {
   font-size: 12px;
   color: #e8b8c8;
   display: block;
   margin: 0 0 5px;
-  transition: color .25s ease;
 }
 
 input,
@@ -362,7 +325,6 @@ textarea,
 select {
   width: 100%;
   padding: 12px;
-
   margin-bottom: 11px;
 
   border-radius: 12px;
@@ -379,7 +341,6 @@ select {
   color: white;
   font-size: 14px;
   font-family: inherit;
-
   outline: none;
 
   transition:
@@ -404,7 +365,6 @@ select:focus {
     0 8px 25px rgba(226,73,122,.08);
 
   background: rgba(0,0,0,.45);
-
   transform: translateY(-1px);
 }
 
@@ -412,10 +372,6 @@ textarea {
   resize: vertical;
   min-height: 65px;
 }
-
-/* =========================
-   ALL BUTTONS
-========================= */
 
 button {
   border: none;
@@ -476,10 +432,6 @@ button:disabled {
   transform: none !important;
 }
 
-/* =========================
-   SAVE BUTTON
-========================= */
-
 .btn-save {
   width: 100%;
 
@@ -497,8 +449,7 @@ button:disabled {
     0 8px 25px rgba(226,73,122,.22),
     inset 0 1px rgba(255,255,255,.18);
 
-  animation:
-    saveGlow 4s ease-in-out infinite;
+  animation: saveGlow 4s ease-in-out infinite;
 }
 
 @keyframes saveGlow {
@@ -517,10 +468,6 @@ button:disabled {
   }
 }
 
-/* =========================
-   MANGA LIST
-========================= */
-
 .manga-item {
   position: relative;
   overflow: hidden;
@@ -530,7 +477,6 @@ button:disabled {
   align-items: center;
 
   padding: 12px;
-
   border-radius: 17px;
 
   background:
@@ -555,28 +501,6 @@ button:disabled {
     border-color .3s ease,
     background .3s ease,
     box-shadow .3s ease;
-}
-
-.manga-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      110deg,
-      transparent 20%,
-      rgba(255,255,255,.06) 50%,
-      transparent 80%
-    );
-
-  transform: translateX(-120%);
-  transition: transform .7s ease;
-  pointer-events: none;
-}
-
-.manga-item:hover::after {
-  transform: translateX(120%);
 }
 
 .manga-item:hover {
@@ -609,20 +533,14 @@ button:disabled {
   }
 }
 
-/* =========================
-   COVER
-========================= */
-
 .manga-item img {
   width: 52px;
   height: 68px;
 
   object-fit: cover;
-
   border-radius: 10px;
 
   background: rgba(255,255,255,.1);
-
   flex-shrink: 0;
 
   box-shadow:
@@ -642,10 +560,6 @@ button:disabled {
     0 8px 22px rgba(226,73,122,.18);
 }
 
-/* =========================
-   INFO
-========================= */
-
 .manga-info {
   flex: 1;
   min-width: 0;
@@ -659,22 +573,12 @@ button:disabled {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  transition: color .25s ease;
-}
-
-.manga-item:hover .title {
-  color: #ffb3c9;
 }
 
 .manga-info .meta {
   font-size: 12px;
   color: #d8a8bb;
 }
-
-/* =========================
-   ACTION BUTTONS
-========================= */
 
 .manga-actions {
   display: flex;
@@ -685,11 +589,8 @@ button:disabled {
 .manga-actions button {
   padding: 8px 10px;
   font-size: 13px;
-
   min-width: 38px;
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,.18);
+  box-shadow: 0 5px 15px rgba(0,0,0,.18);
 }
 
 .btn-edit {
@@ -701,11 +602,6 @@ button:disabled {
     );
 }
 
-.btn-edit:hover {
-  box-shadow:
-    0 7px 20px rgba(157,74,143,.3);
-}
-
 .btn-delete {
   background:
     linear-gradient(
@@ -714,15 +610,6 @@ button:disabled {
       #5b202f
     );
 }
-
-.btn-delete:hover {
-  box-shadow:
-    0 7px 20px rgba(139,48,68,.3);
-}
-
-/* =========================
-   EMPTY
-========================= */
 
 #empty {
   text-align: center;
@@ -734,26 +621,7 @@ button:disabled {
   border: 1px dashed rgba(255,255,255,.1);
 
   background: rgba(255,255,255,.025);
-
-  animation:
-    emptyIn .6s ease both;
 }
-
-@keyframes emptyIn {
-  from {
-    opacity: 0;
-    transform: scale(.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* =========================
-   MOBILE
-========================= */
 
 @media (max-width: 430px) {
 
@@ -791,11 +659,8 @@ button:disabled {
   }
 }
 
-/* =========================
-   REDUCED MOTION
-========================= */
-
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -836,8 +701,8 @@ button:disabled {
 
     <label>دسته‌بندی</label>
     <select id="genre">
-      <option value="اکشن">🔵 اکشن (رز آبی)</option>
-      <option value="عاشقانه">🟡 عاشقانه (رز زرد)</option>
+      <option value="اکشن">🔵 اکشن</option>
+      <option value="عاشقانه">🟡 عاشقانه</option>
       <option value="فانتزی">فانتزی</option>
       <option value="درام">درام</option>
       <option value="کمدی">کمدی</option>
@@ -902,20 +767,11 @@ for (let i = 0; i < 9; i++) {
    ELEMENTS
 ========================= */
 
-const listEl =
-  document.getElementById("list");
-
-const emptyEl =
-  document.getElementById("empty");
-
-const messageEl =
-  document.getElementById("message");
-
-const saveBtn =
-  document.getElementById("saveBtn");
-
-const editIdEl =
-  document.getElementById("editId");
+const listEl = document.getElementById("list");
+const emptyEl = document.getElementById("empty");
+const messageEl = document.getElementById("message");
+const saveBtn = document.getElementById("saveBtn");
+const editIdEl = document.getElementById("editId");
 
 const fields = [
   "title",
@@ -944,7 +800,7 @@ function showMessage(text) {
   messageTimer = setTimeout(() => {
 
     messageEl.style.opacity = "0";
-    messageEl.style.transform = "translateY(-5px)";
+    messageEl.style.transform = "translateY(-5px");
 
   }, 3000);
 }
@@ -958,12 +814,12 @@ function resetForm() {
 
   editIdEl.value = "";
 
-  fields.forEach(f => {
-    document.getElementById(f).value = "";
-  });
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("cover_url").value = "";
 
-  document.getElementById("status").value =
-    "ongoing";
+  document.getElementById("genre").value = "اکشن";
+  document.getElementById("status").value = "ongoing";
 
   saveBtn.textContent =
     "➕ افزودن مانهوا";
@@ -981,6 +837,7 @@ async function checkAuth() {
     const res = await fetch(
       "/api/check-auth",
       {
+        method: "GET",
         credentials: "include"
       }
     );
@@ -988,14 +845,23 @@ async function checkAuth() {
     const data = await res.json();
 
     if (!data.authenticated) {
+
       window.location.href =
         "/admin.html";
+
+      return false;
     }
 
-  } catch {
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
 
     window.location.href =
       "/admin.html";
+
+    return false;
   }
 }
 
@@ -1011,6 +877,7 @@ async function loadManga() {
     const res = await fetch(
       "/api/manga",
       {
+        method: "GET",
         credentials: "include"
       }
     );
@@ -1021,7 +888,7 @@ async function loadManga() {
 
       showMessage(
         data.message ||
-        "خطا در بارگذاری."
+        "خطا در بارگذاری مانهوا."
       );
 
       return;
@@ -1029,16 +896,14 @@ async function loadManga() {
 
     listEl.innerHTML = "";
 
-    if (data.manga.length === 0) {
+    if (!Array.isArray(data.manga) || data.manga.length === 0) {
 
-      emptyEl.style.display =
-        "block";
+      emptyEl.style.display = "block";
 
       return;
     }
 
-    emptyEl.style.display =
-      "none";
+    emptyEl.style.display = "none";
 
 
     data.manga.forEach((m, index) => {
@@ -1056,18 +921,16 @@ async function loadManga() {
       item.innerHTML = `
 
         <img
-          src="${m.cover_url || ''}"
+          src="${m.cover_url || ""}"
           onerror="this.style.display='none'"
         >
 
         <div class="manga-info">
 
-          <div class="title">
-            ${m.title}
-          </div>
+          <div class="title"></div>
 
           <div class="meta">
-            ${m.genre || 'بدون ژانر'}
+            ${m.genre || "بدون ژانر"}
             ·
             ${
               m.status === "completed"
@@ -1082,6 +945,7 @@ async function loadManga() {
 
           <button
             class="btn-edit"
+            type="button"
             title="ویرایش"
           >
             ✏️
@@ -1089,6 +953,7 @@ async function loadManga() {
 
           <button
             class="btn-delete"
+            type="button"
             title="حذف"
           >
             🗑️
@@ -1096,6 +961,9 @@ async function loadManga() {
 
         </div>
       `;
+
+      item.querySelector(".title").textContent =
+        m.title || "بدون عنوان";
 
 
       item
@@ -1110,11 +978,7 @@ async function loadManga() {
         .querySelector(".btn-delete")
         .addEventListener(
           "click",
-          () =>
-            deleteManga(
-              m.id,
-              m.title
-            )
+          () => deleteManga(m.id, m.title)
         );
 
 
@@ -1123,12 +987,13 @@ async function loadManga() {
     });
 
 
-  } catch (e) {
+  } catch (error) {
+
+    console.error(error);
 
     showMessage(
       "ارتباط با سرور برقرار نشد."
     );
-
   }
 }
 
@@ -1142,7 +1007,7 @@ function editManga(m) {
   editIdEl.value = m.id;
 
   document.getElementById("title").value =
-    m.title;
+    m.title || "";
 
   document.getElementById("description").value =
     m.description || "";
@@ -1151,7 +1016,7 @@ function editManga(m) {
     m.cover_url || "";
 
   document.getElementById("genre").value =
-    m.genre || "";
+    m.genre || "اکشن";
 
   document.getElementById("status").value =
     m.status || "ongoing";
@@ -1183,16 +1048,15 @@ function editManga(m) {
    DELETE
 ========================= */
 
-async function deleteManga(
-  id,
-  title
-) {
+async function deleteManga(id, title) {
 
   if (
     !confirm(
       `مطمئنی می‌خوای "${title}" رو حذف کنی؟ قسمت‌هاش هم پاک میشن.`
     )
-  ) return;
+  ) {
+    return;
+  }
 
 
   try {
@@ -1209,35 +1073,35 @@ async function deleteManga(
       await res.json();
 
 
-    if (data.success) {
+    if (res.ok && data.success) {
 
       showMessage(
-        "حذف شد. 🗑️"
+        "مانهوا حذف شد. 🗑️"
       );
 
-      loadManga();
+      await loadManga();
 
     } else {
 
       showMessage(
         data.message ||
-        "خطا در حذف."
+        "خطا در حذف مانهوا."
       );
-
     }
 
-  } catch {
+  } catch (error) {
+
+    console.error(error);
 
     showMessage(
       "ارتباط با سرور برقرار نشد."
     );
-
   }
 }
 
 
 /* =========================
-   SAVE
+   SAVE / ADD / UPDATE
 ========================= */
 
 saveBtn.addEventListener(
@@ -1267,9 +1131,117 @@ saveBtn.addEventListener(
 
     const body = {
 
-      title,
+      title: title,
 
       description:
         document
           .getElementById("description")
-          .v
+          .value
+          .trim(),
+
+      cover_url:
+        document
+          .getElementById("cover_url")
+          .value
+          .trim(),
+
+      genre:
+        document
+          .getElementById("genre")
+          .value,
+
+      status:
+        document
+          .getElementById("status")
+          .value
+    };
+
+
+    const editId =
+      editIdEl.value.trim();
+
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent =
+      editId
+      ? "💾 در حال ذخیره..."
+      : "➕ در حال افزودن...";
+
+
+    try {
+
+      const url =
+        editId
+        ? `/api/manga/${editId}`
+        : "/api/manga";
+
+
+      const method =
+        editId
+        ? "PUT"
+        : "POST";
+
+
+      const res =
+        await fetch(
+          url,
+          {
+            method: method,
+            credentials: "include",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify(body)
+          }
+        );
+
+
+      const data =
+        await res.json();
+
+
+      if (res.ok && data.success) {
+
+        showMessage(
+          editId
+          ? "مانهوا با موفقیت ویرایش شد. 🌹"
+          : "مانهوا با موفقیت اضافه شد. 🌹"
+        );
+
+
+        resetForm();
+
+        await loadManga();
+
+
+      } else {
+
+        showMessage(
+          data.message ||
+          "عملیات انجام نشد."
+        );
+      }
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "ارتباط با سرور برقرار نشد."
+      );
+
+
+    } finally {
+
+      saveBtn.disabled = false;
+
+      if (!editIdEl.value) {
+
+        saveBtn.textContent =
+      
