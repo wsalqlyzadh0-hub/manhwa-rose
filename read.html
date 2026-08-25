@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خواندن قسمت - Manhwa Rose</title>
+
 <style>
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
 
   body {
     margin: 0;
@@ -28,8 +32,17 @@
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 13px; }
-  .topbar .chapter-label { font-size: 14px; font-weight: bold; color: #ffd1de; }
+  .topbar a {
+    color: #ffb3c9;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .topbar .chapter-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffd1de;
+  }
 
   .settings-btn {
     background: rgba(255,255,255,0.08);
@@ -61,7 +74,9 @@
     display: none;
   }
 
-  .settings-panel.open { display: block; }
+  .settings-panel.open {
+    display: block;
+  }
 
   .settings-row {
     display: flex;
@@ -70,7 +85,10 @@
     margin-bottom: 14px;
   }
 
-  .settings-row .label { font-size: 12.5px; color: #f0d0dc; }
+  .settings-row .label {
+    font-size: 12.5px;
+    color: #f0d0dc;
+  }
 
   .switch {
     position: relative;
@@ -79,7 +97,11 @@
     flex-shrink: 0;
   }
 
-  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
   .switch .slider-toggle {
     position: absolute;
@@ -110,8 +132,13 @@
     transform: translateX(-18px);
   }
 
-  .slider-block { margin-bottom: 14px; }
-  .slider-block:last-child { margin-bottom: 0; }
+  .slider-block {
+    margin-bottom: 14px;
+  }
+
+  .slider-block:last-child {
+    margin-bottom: 0;
+  }
 
   .slider-block .label {
     font-size: 12.5px;
@@ -132,14 +159,67 @@
     border-top: 1px solid rgba(255,255,255,0.08);
   }
 
-  .pages { max-width: 700px; margin: 0 auto; padding-bottom: 40px; transition: max-width .2s ease; }
+  /* =========================
+     FULLSCREEN BUTTON
+  ========================= */
+
+  .fullscreen-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 12px;
+    margin-top: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 11px;
+    background: linear-gradient(
+      135deg,
+      rgba(226,73,122,.25),
+      rgba(157,74,143,.25)
+    );
+    color: white;
+    font-family: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition:
+      transform .2s ease,
+      background .2s ease,
+      border-color .2s ease;
+  }
+
+  .fullscreen-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.25);
+    background: linear-gradient(
+      135deg,
+      rgba(226,73,122,.35),
+      rgba(157,74,143,.35)
+    );
+  }
+
+  .fullscreen-btn:active {
+    transform: scale(.97);
+  }
+
+  .pages {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    transition: max-width .2s ease;
+  }
 
   .pages img {
     width: 100%;
     display: block;
   }
 
-  #loading, #empty { text-align: center; padding: 60px 20px; color: #b98ba0; }
+  #loading,
+  #empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #b98ba0;
+  }
 
   .nav-bottom {
     display: flex;
@@ -149,7 +229,8 @@
     margin: 0 auto;
   }
 
-  .nav-bottom a, .nav-bottom span {
+  .nav-bottom a,
+  .nav-bottom span {
     flex: 1;
     text-align: center;
     padding: 14px;
@@ -165,216 +246,881 @@
     background: rgba(255,255,255,0.05);
     color: #777;
   }
+
+  /* =========================
+     FULLSCREEN MODE
+  ========================= */
+
+  body.fullscreen-mode .topbar {
+    display: none;
+  }
+
+  body.fullscreen-mode .pages {
+    max-width: 100% !important;
+  }
+
+  body.fullscreen-mode {
+    background: #000;
+  }
+
+  @media (max-width: 480px) {
+
+    .settings-panel {
+      width: 250px;
+      max-width: calc(100vw - 24px);
+    }
+
+  }
 </style>
 </head>
+
 <body>
 
   <div class="topbar">
-    <a href="/index.html">← کتابخانه</a>
-    <div class="chapter-label" id="chapterLabel">🌹</div>
-    <button class="settings-btn" id="settingsBtn">⚙️</button>
+
+    <a href="/index.html">
+      ← کتابخانه
+    </a>
+
+    <div class="chapter-label" id="chapterLabel">
+      🌹
+    </div>
+
+    <button
+      class="settings-btn"
+      id="settingsBtn"
+      type="button"
+      aria-label="تنظیمات"
+    >
+      ⚙️
+    </button>
+
   </div>
 
-  <div class="settings-panel" id="settingsPanel">
+
+  <!-- SETTINGS -->
+
+  <div
+    class="settings-panel"
+    id="settingsPanel"
+  >
 
     <div class="settings-row">
-      <span class="label">رفتن خودکار به قسمت بعد</span>
+
+      <span class="label">
+        رفتن خودکار به قسمت بعد
+      </span>
+
       <label class="switch">
-        <input type="checkbox" id="autoNextToggle">
+
+        <input
+          type="checkbox"
+          id="autoNextToggle"
+        >
+
         <span class="slider-toggle"></span>
+
       </label>
+
     </div>
+
 
     <div class="settings-row">
-      <span class="label">اسکرول خودکار</span>
+
+      <span class="label">
+        اسکرول خودکار
+      </span>
+
       <label class="switch">
-        <input type="checkbox" id="autoScrollToggle">
+
+        <input
+          type="checkbox"
+          id="autoScrollToggle"
+        >
+
         <span class="slider-toggle"></span>
+
       </label>
+
     </div>
 
-    <div class="sub-slider" id="speedBlock" style="display:none;">
-      <div class="label"><span>سرعت اسکرول</span><span id="speedVal">50</span></div>
-      <input type="range" id="speedSlider" min="1" max="100" value="50">
+
+    <div
+      class="sub-slider"
+      id="speedBlock"
+      style="display:none;"
+    >
+
+      <div class="label">
+
+        <span>
+          سرعت اسکرول
+        </span>
+
+        <span id="speedVal">
+          50
+        </span>
+
+      </div>
+
+      <input
+        type="range"
+        id="speedSlider"
+        min="1"
+        max="100"
+        value="50"
+      >
+
     </div>
+
 
     <div class="slider-block sub-slider">
-      <div class="label"><span>اندازه‌ی نمایش</span><span id="zoomVal">100</span></div>
-      <input type="range" id="zoomSlider" min="20" max="100" value="100">
+
+      <div class="label">
+
+        <span>
+          اندازه‌ی نمایش
+        </span>
+
+        <span id="zoomVal">
+          100
+        </span>
+
+      </div>
+
+      <input
+        type="range"
+        id="zoomSlider"
+        min="20"
+        max="100"
+        value="100"
+      >
+
     </div>
+
+
+    <!-- FULLSCREEN -->
+
+    <button
+      class="fullscreen-btn"
+      id="fullscreenBtn"
+      type="button"
+    >
+      🖥️ ورود به حالت تمام‌صفحه
+    </button>
 
   </div>
 
-  <div id="loading">در حال بارگذاری...</div>
-  <div id="empty" style="display:none;">این قسمت صفحه‌ای ندارد 🌸</div>
 
-  <div class="pages" id="pages"></div>
+  <div id="loading">
+    در حال بارگذاری...
+  </div>
 
-  <div class="nav-bottom" id="navBottom" style="display:none;"></div>
+
+  <div
+    id="empty"
+    style="display:none;"
+  >
+    این قسمت صفحه‌ای ندارد 🌸
+  </div>
+
+
+  <div
+    class="pages"
+    id="pages"
+  ></div>
+
+
+  <div
+    class="nav-bottom"
+    id="navBottom"
+    style="display:none;"
+  ></div>
+
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const chapterId = params.get("id");
 
-  const loading = document.getElementById("loading");
-  const emptyEl = document.getElementById("empty");
-  const pagesEl = document.getElementById("pages");
-  const navBottom = document.getElementById("navBottom");
-  const chapterLabel = document.getElementById("chapterLabel");
+  /* =========================
+     URL PARAMS
+  ========================= */
 
-  const settingsBtn = document.getElementById("settingsBtn");
-  const settingsPanel = document.getElementById("settingsPanel");
-  const autoNextToggle = document.getElementById("autoNextToggle");
-  const autoScrollToggle = document.getElementById("autoScrollToggle");
-  const speedBlock = document.getElementById("speedBlock");
-  const speedSlider = document.getElementById("speedSlider");
-  const speedVal = document.getElementById("speedVal");
-  const zoomSlider = document.getElementById("zoomSlider");
-  const zoomVal = document.getElementById("zoomVal");
+  const params =
+    new URLSearchParams(window.location.search);
+
+  const chapterId =
+    params.get("id");
+
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const loading =
+    document.getElementById("loading");
+
+  const emptyEl =
+    document.getElementById("empty");
+
+  const pagesEl =
+    document.getElementById("pages");
+
+  const navBottom =
+    document.getElementById("navBottom");
+
+  const chapterLabel =
+    document.getElementById("chapterLabel");
+
+
+  const settingsBtn =
+    document.getElementById("settingsBtn");
+
+  const settingsPanel =
+    document.getElementById("settingsPanel");
+
+
+  const autoNextToggle =
+    document.getElementById("autoNextToggle");
+
+  const autoScrollToggle =
+    document.getElementById("autoScrollToggle");
+
+
+  const speedBlock =
+    document.getElementById("speedBlock");
+
+  const speedSlider =
+    document.getElementById("speedSlider");
+
+  const speedVal =
+    document.getElementById("speedVal");
+
+
+  const zoomSlider =
+    document.getElementById("zoomSlider");
+
+  const zoomVal =
+    document.getElementById("zoomVal");
+
+
+  const fullscreenBtn =
+    document.getElementById("fullscreenBtn");
+
 
   let nextChapterId = null;
+
   let autoNextTriggered = false;
 
-  // ---- load saved settings ----
-  autoNextToggle.checked = localStorage.getItem("mr_auto_next") === "1";
-  autoScrollToggle.checked = localStorage.getItem("mr_auto_scroll") === "1";
-  speedSlider.value = localStorage.getItem("mr_scroll_speed") || "50";
-  zoomSlider.value = localStorage.getItem("mr_zoom") || "100";
-  speedVal.textContent = speedSlider.value;
-  zoomVal.textContent = zoomSlider.value;
-  speedBlock.style.display = autoScrollToggle.checked ? "block" : "none";
-  pagesEl.style.maxWidth = zoomSlider.value + "%";
 
-  // ---- settings panel toggle ----
-  settingsBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    settingsPanel.classList.toggle("open");
-  });
+  /* =========================
+     SAVED SETTINGS
+  ========================= */
 
-  document.addEventListener("click", (e) => {
-    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
-      settingsPanel.classList.remove("open");
+  autoNextToggle.checked =
+    localStorage.getItem("mr_auto_next") === "1";
+
+
+  autoScrollToggle.checked =
+    localStorage.getItem("mr_auto_scroll") === "1";
+
+
+  speedSlider.value =
+    localStorage.getItem("mr_scroll_speed") || "50";
+
+
+  zoomSlider.value =
+    localStorage.getItem("mr_zoom") || "100";
+
+
+  speedVal.textContent =
+    speedSlider.value;
+
+
+  zoomVal.textContent =
+    zoomSlider.value;
+
+
+  speedBlock.style.display =
+    autoScrollToggle.checked
+      ? "block"
+      : "none";
+
+
+  pagesEl.style.maxWidth =
+    zoomSlider.value + "%";
+
+
+  /* =========================
+     SETTINGS PANEL
+  ========================= */
+
+  settingsBtn.addEventListener(
+    "click",
+    (e) => {
+
+      e.stopPropagation();
+
+      settingsPanel.classList.toggle("open");
+
     }
-  });
+  );
 
-  settingsPanel.addEventListener("click", (e) => e.stopPropagation());
 
-  // ---- toggles ----
-  autoNextToggle.addEventListener("change", () => {
-    localStorage.setItem("mr_auto_next", autoNextToggle.checked ? "1" : "0");
-  });
+  document.addEventListener(
+    "click",
+    (e) => {
 
-  autoScrollToggle.addEventListener("change", () => {
-    localStorage.setItem("mr_auto_scroll", autoScrollToggle.checked ? "1" : "0");
-    speedBlock.style.display = autoScrollToggle.checked ? "block" : "none";
-  });
+      if (
+        !settingsPanel.contains(e.target) &&
+        e.target !== settingsBtn
+      ) {
 
-  speedSlider.addEventListener("input", () => {
-    speedVal.textContent = speedSlider.value;
-    localStorage.setItem("mr_scroll_speed", speedSlider.value);
-  });
+        settingsPanel.classList.remove("open");
 
-  zoomSlider.addEventListener("input", () => {
-    zoomVal.textContent = zoomSlider.value;
-    localStorage.setItem("mr_zoom", zoomSlider.value);
-    pagesEl.style.maxWidth = zoomSlider.value + "%";
-  });
-
-  // ---- auto scroll loop ----
-  let scrollPaused = false;
-  let pauseTimeout = null;
-
-  function autoScrollTick() {
-    if (autoScrollToggle.checked && !scrollPaused) {
-      const speed = Number(speedSlider.value);
-      const pxPerFrame = 0.15 + (speed / 100) * 4.5;
-      window.scrollBy(0, pxPerFrame);
-
-      const nearBottom =
-        window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
-
-      if (nearBottom && autoNextToggle.checked && nextChapterId && !autoNextTriggered) {
-        autoNextTriggered = true;
-        window.location.href = `/read.html?id=${nextChapterId}`;
       }
+
     }
-    requestAnimationFrame(autoScrollTick);
-  }
-  requestAnimationFrame(autoScrollTick);
+  );
 
-  document.addEventListener("touchstart", () => {
-    scrollPaused = true;
-    clearTimeout(pauseTimeout);
-  }, { passive: true });
 
-  document.addEventListener("touchend", () => {
-    clearTimeout(pauseTimeout);
-    pauseTimeout = setTimeout(() => { scrollPaused = false; }, 900);
-  }, { passive: true });
+  settingsPanel.addEventListener(
+    "click",
+    (e) => {
 
-  // ---- manual scroll near bottom also triggers auto-next (even without auto-scroll) ----
-  window.addEventListener("scroll", () => {
-    const nearBottom =
-      window.innerHeight + window.scrollY >= document.body.scrollHeight - 40;
+      e.stopPropagation();
 
-    if (nearBottom && autoNextToggle.checked && nextChapterId && !autoNextTriggered) {
-      autoNextTriggered = true;
-      window.location.href = `/read.html?id=${nextChapterId}`;
     }
-  }, { passive: true });
+  );
 
-  // ---- load chapter data ----
-  async function load() {
-    if (!chapterId) {
-      loading.textContent = "قسمت مشخص نشده.";
-      return;
+
+  /* =========================
+     AUTO NEXT
+  ========================= */
+
+  autoNextToggle.addEventListener(
+    "change",
+    () => {
+
+      localStorage.setItem(
+        "mr_auto_next",
+        autoNextToggle.checked
+          ? "1"
+          : "0"
+      );
+
     }
+  );
+
+
+  /* =========================
+     AUTO SCROLL
+  ========================= */
+
+  autoScrollToggle.addEventListener(
+    "change",
+    () => {
+
+      localStorage.setItem(
+        "mr_auto_scroll",
+        autoScrollToggle.checked
+          ? "1"
+          : "0"
+      );
+
+      speedBlock.style.display =
+        autoScrollToggle.checked
+          ? "block"
+          : "none";
+
+    }
+  );
+
+
+  /* =========================
+     SPEED
+  ========================= */
+
+  speedSlider.addEventListener(
+    "input",
+    () => {
+
+      speedVal.textContent =
+        speedSlider.value;
+
+      localStorage.setItem(
+        "mr_scroll_speed",
+        speedSlider.value
+      );
+
+    }
+  );
+
+
+  /* =========================
+     ZOOM
+  ========================= */
+
+  zoomSlider.addEventListener(
+    "input",
+    () => {
+
+      zoomVal.textContent =
+        zoomSlider.value;
+
+      localStorage.setItem(
+        "mr_zoom",
+        zoomSlider.value
+      );
+
+      pagesEl.style.maxWidth =
+        zoomSlider.value + "%";
+
+    }
+  );
+
+
+  /* =========================
+     FULLSCREEN
+  ========================= */
+
+  async function enterFullscreen() {
 
     try {
-      const res = await fetch(`/api/public/chapters/${chapterId}`);
-      const data = await res.json();
+
+      if (document.documentElement.requestFullscreen) {
+
+        await document.documentElement.requestFullscreen();
+
+      } else if (document.documentElement.webkitRequestFullscreen) {
+
+        document.documentElement.webkitRequestFullscreen();
+
+      }
+
+      document.body.classList.add(
+        "fullscreen-mode"
+      );
+
+      fullscreenBtn.textContent =
+        "⛶ خروج از حالت تمام‌صفحه";
+
+      settingsPanel.classList.remove(
+        "open"
+      );
+
+    } catch (error) {
+
+      document.body.classList.add(
+        "fullscreen-mode"
+      );
+
+      fullscreenBtn.textContent =
+        "⛶ خروج از حالت تمام‌صفحه";
+
+      settingsPanel.classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+
+
+  async function exitFullscreen() {
+
+    try {
+
+      if (document.exitFullscreen) {
+
+        await document.exitFullscreen();
+
+      } else if (document.webkitExitFullscreen) {
+
+        document.webkitExitFullscreen();
+
+      }
+
+    } catch (error) {}
+
+    document.body.classList.remove(
+      "fullscreen-mode"
+    );
+
+    fullscreenBtn.textContent =
+      "🖥️ ورود به حالت تمام‌صفحه";
+
+  }
+
+
+  fullscreenBtn.addEventListener(
+    "click",
+    async () => {
+
+      const isFullscreen =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.body.classList.contains(
+          "fullscreen-mode"
+        );
+
+      if (isFullscreen) {
+
+        await exitFullscreen();
+
+      } else {
+
+        await enterFullscreen();
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     FULLSCREEN CHANGE
+  ========================= */
+
+  function updateFullscreenButton() {
+
+    const isFullscreen =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement;
+
+    if (isFullscreen) {
+
+      document.body.classList.add(
+        "fullscreen-mode"
+      );
+
+      fullscreenBtn.textContent =
+        "⛶ خروج از حالت تمام‌صفحه";
+
+    } else {
+
+      document.body.classList.remove(
+        "fullscreen-mode"
+      );
+
+      fullscreenBtn.textContent =
+        "🖥️ ورود به حالت تمام‌صفحه";
+
+    }
+
+  }
+
+
+  document.addEventListener(
+    "fullscreenchange",
+    updateFullscreenButton
+  );
+
+
+  document.addEventListener(
+    "webkitfullscreenchange",
+    updateFullscreenButton
+  );
+
+
+  /* =========================
+     AUTO SCROLL
+  ========================= */
+
+  let scrollPaused = false;
+
+  let pauseTimeout = null;
+
+
+  function autoScrollTick() {
+
+    if (
+      autoScrollToggle.checked &&
+      !scrollPaused
+    ) {
+
+      const speed =
+        Number(speedSlider.value);
+
+      const pxPerFrame =
+        0.15 +
+        (speed / 100) * 4.5;
+
+
+      window.scrollBy(
+        0,
+        pxPerFrame
+      );
+
+
+      const nearBottom =
+        window.innerHeight +
+        window.scrollY >=
+        document.body.scrollHeight - 40;
+
+
+      if (
+        nearBottom &&
+        autoNextToggle.checked &&
+        nextChapterId &&
+        !autoNextTriggered
+      ) {
+
+        autoNextTriggered = true;
+
+        window.location.href =
+          `/read.html?id=${nextChapterId}`;
+
+      }
+
+    }
+
+    requestAnimationFrame(
+      autoScrollTick
+    );
+
+  }
+
+
+  requestAnimationFrame(
+    autoScrollTick
+  );
+
+
+  /* =========================
+     TOUCH PAUSE
+  ========================= */
+
+  document.addEventListener(
+    "touchstart",
+    () => {
+
+      scrollPaused = true;
+
+      clearTimeout(
+        pauseTimeout
+      );
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  document.addEventListener(
+    "touchend",
+    () => {
+
+      clearTimeout(
+        pauseTimeout
+      );
+
+      pauseTimeout =
+        setTimeout(
+          () => {
+
+            scrollPaused = false;
+
+          },
+          900
+        );
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  /* =========================
+     MANUAL SCROLL
+  ========================= */
+
+  window.addEventListener(
+    "scroll",
+    () => {
+
+      const nearBottom =
+        window.innerHeight +
+        window.scrollY >=
+        document.body.scrollHeight - 40;
+
+
+      if (
+        nearBottom &&
+        autoNextToggle.checked &&
+        nextChapterId &&
+        !autoNextTriggered
+      ) {
+
+        autoNextTriggered = true;
+
+        window.location.href =
+          `/read.html?id=${nextChapterId}`;
+
+      }
+
+    },
+    {
+      passive: true
+    }
+  );
+
+
+  /* =========================
+     LOAD CHAPTER
+  ========================= */
+
+  async function load() {
+
+    if (!chapterId) {
+
+      loading.textContent =
+        "قسمت مشخص نشده.";
+
+      return;
+
+    }
+
+
+    try {
+
+      const res =
+        await fetch(
+          `/api/public/chapters/${chapterId}`
+        );
+
+
+      const data =
+        await res.json();
+
 
       if (!data.success) {
-        loading.textContent = data.message || "قسمت پیدا نشد.";
+
+        loading.textContent =
+          data.message ||
+          "قسمت پیدا نشد.";
+
         return;
+
       }
 
-      loading.style.display = "none";
 
-      const ch = data.chapter;
-      chapterLabel.textContent = `قسمت ${ch.chapter_number}`;
+      loading.style.display =
+        "none";
 
-      if (ch.pages.length === 0) {
-        emptyEl.style.display = "block";
+
+      const ch =
+        data.chapter;
+
+
+      chapterLabel.textContent =
+        `قسمت ${ch.chapter_number}`;
+
+
+      if (
+        ch.pages.length === 0
+      ) {
+
+        emptyEl.style.display =
+          "block";
+
       } else {
-        ch.pages.forEach(src => {
-          const img = document.createElement("img");
-          img.src = src;
-          img.loading = "lazy";
-          pagesEl.appendChild(img);
-        });
+
+        ch.pages.forEach(
+          src => {
+
+            const img =
+              document.createElement(
+                "img"
+              );
+
+            img.src = src;
+
+            img.loading = "lazy";
+
+            pagesEl.appendChild(
+              img
+            );
+
+          }
+        );
+
       }
 
-      const siblings = data.siblings;
-      const idx = siblings.findIndex(s => s.id === ch.id);
-      const prev = idx > 0 ? siblings[idx - 1] : null;
-      const next = idx < siblings.length - 1 ? siblings[idx + 1] : null;
 
-      nextChapterId = next ? next.id : null;
+      /* =========================
+         CHAPTER NAVIGATION
+      ========================= */
 
-      navBottom.style.display = "flex";
+      const siblings =
+        data.siblings;
+
+
+      const idx =
+        siblings.findIndex(
+          s => s.id === ch.id
+        );
+
+
+      const prev =
+        idx > 0
+          ? siblings[idx - 1]
+          : null;
+
+
+      const next =
+        idx < siblings.length - 1
+          ? siblings[idx + 1]
+          : null;
+
+
+      nextChapterId =
+        next
+          ? next.id
+          : null;
+
+
+      navBottom.style.display =
+        "flex";
+
+
       navBottom.innerHTML = `
-        ${next ? `<a href="/read.html?id=${next.id}">▶ قسمت بعد</a>` : `<span>آخرین قسمت</span>`}
-        ${prev ? `<a href="/read.html?id=${prev.id}">قسمت قبل ◀</a>` : `<span>اولین قسمت</span>`}
+
+        ${
+          next
+            ? `<a href="/read.html?id=${next.id}">
+                ▶ قسمت بعد
+              </a>`
+            : `<span>
+                آخرین قسمت
+              </span>`
+        }
+
+        ${
+          prev
+            ? `<a href="/read.html?id=${prev.id}">
+                قسمت قبل ◀
+              </a>`
+            : `<span>
+                اولین قسمت
+              </span>`
+        }
+
       `;
 
     } catch {
-      loading.textContent = "ارتباط با سرور برقرار نشد.";
+
+      loading.textContent =
+        "ارتباط با سرور برقرار نشد.";
+
     }
+
   }
 
+
   load();
+
 </script>
 
 </body>
-</html>
+ </html>
