@@ -11,7 +11,9 @@
  -webkit-tap-highlight-color:transparent;
 }
 
-html{scroll-behavior:smooth}
+html{
+ scroll-behavior:smooth;
+}
 
 body{
  margin:0;
@@ -19,11 +21,13 @@ body{
  overflow-x:hidden;
  font-family:Tahoma,Arial,sans-serif;
  color:#fff;
+
  background:
  radial-gradient(circle at 10% 0%,rgba(255,70,140,.25),transparent 35%),
  radial-gradient(circle at 100% 20%,rgba(110,60,255,.18),transparent 35%),
  radial-gradient(circle at 50% 100%,rgba(255,40,120,.15),transparent 40%),
  linear-gradient(145deg,#0b0409,#210b1b 45%,#080408);
+
  background-attachment:fixed;
 }
 
@@ -55,91 +59,225 @@ body:after{
 }
 
 @keyframes orb1{
- 0%,100%{transform:translate(0,0) scale(1)}
- 50%{transform:translate(-25px,35px) scale(1.15)}
+ 0%,100%{
+  transform:translate(0,0) scale(1);
+ }
+ 50%{
+  transform:translate(-25px,35px) scale(1.15);
+ }
 }
 
 @keyframes orb2{
- 0%,100%{transform:translate(0,0) scale(1)}
- 50%{transform:translate(35px,-25px) scale(1.15)}
+ 0%,100%{
+  transform:translate(0,0) scale(1);
+ }
+ 50%{
+  transform:translate(35px,-25px) scale(1.15);
+ }
 }
+
+/* =========================
+   ACCOUNT BUTTON
+========================= */
+
+.topAccount{
+ position:fixed;
+
+ top:calc(14px + env(safe-area-inset-top));
+ right:14px;
+
+ width:46px;
+ height:46px;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+ z-index:9998;
+
+ border-radius:50%;
+
+ text-decoration:none;
+
+ font-size:21px;
+
+ background:rgba(255,255,255,.08);
+
+ border:1px solid rgba(255,255,255,.15);
+
+ box-shadow:
+ 0 8px 25px rgba(0,0,0,.35),
+ inset 0 1px 0 rgba(255,255,255,.12);
+
+ backdrop-filter:blur(14px);
+ -webkit-backdrop-filter:blur(14px);
+
+ transition:
+ transform .2s ease,
+ background .2s ease,
+ box-shadow .2s ease;
+}
+
+.topAccount:active{
+ transform:scale(.9);
+
+ background:rgba(255,70,140,.22);
+
+ box-shadow:
+ 0 5px 18px rgba(255,50,130,.25);
+}
+
+.topAccount:hover{
+ background:rgba(255,255,255,.13);
+}
+
+/* =========================
+   PETALS
+========================= */
 
 .petal{
  position:fixed;
  top:-50px;
+
  z-index:1;
+
  pointer-events:none;
+
  animation:fall linear infinite;
+
  opacity:0;
 }
 
 @keyframes fall{
  0%{
-  transform:translateY(-10vh) translateX(0) rotate(0);
+  transform:
+   translateY(-10vh)
+   translateX(0)
+   rotate(0);
+
   opacity:0;
  }
- 10%{opacity:.65}
- 50%{
-  transform:translateY(55vh) translateX(30px) rotate(180deg);
+
+ 10%{
+  opacity:.65;
  }
+
+ 50%{
+  transform:
+   translateY(55vh)
+   translateX(30px)
+   rotate(180deg);
+ }
+
  100%{
-  transform:translateY(115vh) translateX(-25px) rotate(360deg);
+  transform:
+   translateY(115vh)
+   translateX(-25px)
+   rotate(360deg);
+
   opacity:0;
  }
 }
 
+/* =========================
+   MAIN
+========================= */
+
 .wrap{
  width:100%;
  max-width:520px;
+
  margin:auto;
+
  padding:
- calc(24px + env(safe-area-inset-top))
+ calc(30px + env(safe-area-inset-top))
  15px
  calc(50px + env(safe-area-inset-bottom));
+
  position:relative;
+
  z-index:2;
 }
 
 header{
  text-align:center;
+
  margin-bottom:28px;
+
  animation:headerIn .7s ease both;
 }
 
 @keyframes headerIn{
- from{opacity:0;transform:translateY(25px) scale(.95)}
- to{opacity:1;transform:none}
+ from{
+  opacity:0;
+  transform:translateY(25px) scale(.95);
+ }
+
+ to{
+  opacity:1;
+  transform:none;
+ }
 }
 
 .logo{
  width:88px;
  height:88px;
+
  margin:0 auto 12px;
+
  display:flex;
  align-items:center;
  justify-content:center;
+
  border-radius:50%;
- background:radial-gradient(circle,rgba(255,100,160,.25),transparent 70%);
- box-shadow:0 0 35px rgba(255,60,130,.22);
+
+ background:
+ radial-gradient(
+  circle,
+  rgba(255,100,160,.25),
+  transparent 70%
+ );
+
+ box-shadow:
+ 0 0 35px rgba(255,60,130,.22);
+
  animation:logoFloat 4s ease-in-out infinite;
 }
 
 .logo span{
  font-size:55px;
- filter:drop-shadow(0 7px 15px rgba(255,30,110,.5));
+
+ filter:
+ drop-shadow(
+ 0 7px 15px rgba(255,30,110,.5)
+ );
 }
 
 @keyframes logoFloat{
- 0%,100%{transform:translateY(0) rotate(-3deg)}
- 50%{transform:translateY(-7px) rotate(3deg)}
+ 0%,100%{
+  transform:
+   translateY(0)
+   rotate(-3deg);
+ }
+
+ 50%{
+  transform:
+   translateY(-7px)
+   rotate(3deg);
+ }
 }
 
 h1{
  margin:0;
+
  font-size:30px;
+
  letter-spacing:1px;
+
  font-weight:900;
- background:linear-gradient(
+
+ background:
+ linear-gradient(
   90deg,
   #ffd4e3,
   #ff6f9f,
@@ -147,96 +285,179 @@ h1{
   #ff83ad,
   #ffd4e3
  );
+
  background-size:300%;
+
  -webkit-background-clip:text;
  background-clip:text;
+
  color:transparent;
+
  animation:shine 5s linear infinite;
 }
 
 @keyframes shine{
- from{background-position:0}
- to{background-position:300%}
+ from{
+  background-position:0;
+ }
+
+ to{
+  background-position:300%;
+ }
 }
 
 header p{
  margin:8px 0 0;
+
  color:#cbb4c4;
+
  font-size:12px;
 }
+
+/* =========================
+   LABEL
+========================= */
 
 .label{
  display:flex;
  align-items:center;
+
  gap:9px;
+
  margin-bottom:13px;
+
  color:#d8bdca;
+
  font-size:11px;
+
  font-weight:bold;
 }
 
 .label:before,
 .label:after{
  content:"";
+
  height:1px;
+
  flex:1;
- background:linear-gradient(to right,transparent,rgba(255,100,160,.45));
+
+ background:
+ linear-gradient(
+  to right,
+  transparent,
+  rgba(255,100,160,.45)
+ );
 }
 
 .label:before{
- background:linear-gradient(to left,transparent,rgba(255,100,160,.45));
+ background:
+ linear-gradient(
+  to left,
+  transparent,
+  rgba(255,100,160,.45)
+ );
 }
+
+/* =========================
+   CATEGORY CARDS
+========================= */
 
 .categories{
  display:flex;
+
  flex-direction:column;
+
  gap:13px;
 }
 
 .card{
  min-height:102px;
+
  display:flex;
+
  align-items:center;
+
  gap:14px;
+
  padding:16px;
+
  position:relative;
+
  overflow:hidden;
+
  border-radius:23px;
+
  color:white;
+
  text-decoration:none;
+
  border:1px solid rgba(255,255,255,.11);
+
  box-shadow:
  0 14px 35px rgba(0,0,0,.28),
- inset 0 1px 0 rgba(255,255,255,.08);
+  inset 0 1px 0 rgba(255,255,255,.08);
+
  backdrop-filter:blur(12px);
  -webkit-backdrop-filter:blur(12px);
+
  opacity:0;
- animation:cardIn .6s ease forwards;
- transition:transform .22s ease,filter .22s ease;
+
+ animation:
+  cardIn .6s ease forwards;
+
+ transition:
+  transform .22s ease,
+  filter .22s ease;
 }
 
-.card:nth-child(1){animation-delay:.1s}
-.card:nth-child(2){animation-delay:.2s}
-.card:nth-child(3){animation-delay:.3s}
+.card:nth-child(1){
+ animation-delay:.1s;
+}
+
+.card:nth-child(2){
+ animation-delay:.2s;
+}
+
+.card:nth-child(3){
+ animation-delay:.3s;
+}
 
 @keyframes cardIn{
- from{opacity:0;transform:translateY(20px) scale(.96)}
- to{opacity:1;transform:none}
+ from{
+  opacity:0;
+
+  transform:
+   translateY(20px)
+   scale(.96);
+ }
+
+ to{
+  opacity:1;
+
+  transform:none;
+ }
 }
 
 .card:before{
  content:"";
+
  position:absolute;
+
  width:180%;
  height:100%;
+
  top:0;
+
  right:-190%;
- background:linear-gradient(
+
+ background:
+ linear-gradient(
   110deg,
   transparent 40%,
   rgba(255,255,255,.1),
   transparent 60%
  );
+
  transition:right .7s ease;
 }
 
@@ -247,128 +468,209 @@ header p{
 
 .card:active{
  transform:scale(.975);
+
  filter:brightness(1.1);
 }
 
 .action{
- background:linear-gradient(135deg,rgba(38,86,160,.82),rgba(8,25,55,.94));
- border-color:rgba(100,170,255,.22);
+ background:
+ linear-gradient(
+  135deg,
+  rgba(38,86,160,.82),
+  rgba(8,25,55,.94)
+ );
+
+ border-color:
+ rgba(100,170,255,.22);
 }
 
 .romance{
- background:linear-gradient(135deg,rgba(140,96,20,.84),rgba(58,37,5,.94));
- border-color:rgba(255,215,90,.2);
+ background:
+ linear-gradient(
+  135deg,
+  rgba(140,96,20,.84),
+  rgba(58,37,5,.94)
+ );
+
+ border-color:
+ rgba(255,215,90,.2);
 }
 
 .all{
- background:linear-gradient(135deg,rgba(150,38,90,.84),rgba(60,10,40,.94));
- border-color:rgba(255,105,170,.22);
+ background:
+ linear-gradient(
+  135deg,
+  rgba(150,38,90,.84),
+  rgba(60,10,40,.94)
+ );
+
+ border-color:
+ rgba(255,105,170,.22);
 }
 
 .rose{
  width:60px;
  height:60px;
+
  flex:0 0 60px;
+
  display:flex;
+
  align-items:center;
  justify-content:center;
+
  border-radius:18px;
- background:rgba(255,255,255,.08);
- border:1px solid rgba(255,255,255,.1);
- box-shadow:inset 0 0 18px rgba(255,255,255,.04);
+
+ background:
+ rgba(255,255,255,.08);
+
+ border:
+ 1px solid rgba(255,255,255,.1);
+
+ box-shadow:
+ inset 0 0 18px rgba(255,255,255,.04);
+
  font-size:36px;
+
  transition:.25s;
 }
 
 .card:active .rose{
- transform:scale(1.1) rotate(-7deg);
+ transform:
+  scale(1.1)
+  rotate(-7deg);
 }
 
 .blue{
  filter:
  hue-rotate(150deg)
  saturate(2.2)
- drop-shadow(0 0 9px rgba(70,150,255,.35));
+ drop-shadow(
+  0 0 9px rgba(70,150,255,.35)
+ );
 }
 
 .yellow{
  filter:
  hue-rotate(-65deg)
  saturate(2)
- drop-shadow(0 0 9px rgba(255,210,60,.3));
+ drop-shadow(
+  0 0 9px rgba(255,210,60,.3)
+ );
 }
 
 .info{
  min-width:0;
+
  flex:1;
 }
 
 .info h2{
  margin:0 0 5px;
+
  font-size:17px;
+
  font-weight:800;
 }
 
 .info p{
  margin:0;
+
  color:#d9c9d2;
+
  font-size:10.5px;
 }
 
 .arrow{
  width:34px;
  height:34px;
+
  flex:0 0 34px;
+
  display:flex;
+
  align-items:center;
  justify-content:center;
+
  border-radius:50%;
- background:rgba(255,255,255,.07);
+
+ background:
+ rgba(255,255,255,.07);
+
  color:#eadde4;
+
  font-size:14px;
+
  transition:.25s;
 }
 
 .card:active .arrow{
  transform:translateX(-4px);
- background:rgba(255,255,255,.14);
+
+ background:
+ rgba(255,255,255,.14);
 }
+
+/* =========================
+   EXTRA BUTTONS
+========================= */
 
 .extra{
  display:flex;
+
  flex-direction:column;
+
  gap:12px;
+
  margin-top:21px;
 }
 
 .extraBtn{
  min-height:76px;
+
  width:100%;
+
  display:flex;
+
  align-items:center;
+
  gap:13px;
+
  padding:14px;
+
  border-radius:19px;
- border:1px solid rgba(255,255,255,.1);
+
+ border:
+ 1px solid rgba(255,255,255,.1);
+
  color:#fff;
+
  text-decoration:none;
- background:rgba(255,255,255,.045);
+
+ background:
+ rgba(255,255,255,.045);
+
  box-shadow:
  0 10px 25px rgba(0,0,0,.2),
- inset 0 1px 0 rgba(255,255,255,.05);
+  inset 0 1px 0 rgba(255,255,255,.05);
+
  backdrop-filter:blur(10px);
  -webkit-backdrop-filter:blur(10px);
+
  transition:.22s;
+
  cursor:pointer;
 }
 
 .extraBtn:active{
  transform:scale(.975);
+
  filter:brightness(1.1);
 }
 
 .support{
- background:linear-gradient(
+ background:
+ linear-gradient(
   135deg,
   rgba(40,105,120,.5),
   rgba(18,52,63,.65)
@@ -376,7 +678,8 @@ header p{
 }
 
 .join{
- background:linear-gradient(
+ background:
+ linear-gradient(
   135deg,
   rgba(195,43,105,.5),
   rgba(88,32,105,.65)
@@ -386,179 +689,352 @@ header p{
 .icon{
  width:46px;
  height:46px;
+
  flex:0 0 46px;
+
  display:flex;
+
  align-items:center;
  justify-content:center;
+
  border-radius:15px;
- background:rgba(255,255,255,.08);
+
+ background:
+ rgba(255,255,255,.08);
+
  font-size:23px;
 }
 
 .extraInfo{
  min-width:0;
+
  display:flex;
+
  flex-direction:column;
+
  gap:4px;
 }
 
 .title{
  font-size:13.5px;
+
  font-weight:bold;
 }
 
 .sub{
  color:#cdbbc5;
+
  font-size:10.5px;
+
  line-height:1.65;
 }
 
+/* =========================
+   FOOTER
+========================= */
+
 footer{
  margin-top:29px;
+
  text-align:center;
+
  color:#745b68;
+
  font-size:10px;
 }
 
+/* =========================
+   SUPPORT MODAL
+========================= */
+
 .modal{
  display:none;
+
  position:fixed;
+
  inset:0;
+
  z-index:9999;
+
  align-items:center;
  justify-content:center;
+
  padding:18px;
- background:rgba(0,0,0,.8);
+
+ background:
+ rgba(0,0,0,.8);
+
  backdrop-filter:blur(9px);
  -webkit-backdrop-filter:blur(9px);
 }
 
 .modal.open{
  display:flex;
+
  animation:fade .2s ease;
 }
 
 @keyframes fade{
- from{opacity:0}
- to{opacity:1}
+ from{
+  opacity:0;
+ }
+
+ to{
+  opacity:1;
+ }
 }
 
 .modalBox{
  width:100%;
+
  max-width:390px;
+
  padding:20px;
+
  border-radius:24px;
- background:linear-gradient(145deg,#29101f,#11070f);
- border:1px solid rgba(255,255,255,.12);
- box-shadow:0 30px 90px rgba(0,0,0,.7);
+
+ background:
+ linear-gradient(
+  145deg,
+  #29101f,
+  #11070f
+ );
+
+ border:
+ 1px solid rgba(255,255,255,.12);
+
+ box-shadow:
+ 0 30px 90px rgba(0,0,0,.7);
+
  animation:modalIn .3s ease;
 }
 
 @keyframes modalIn{
- from{opacity:0;transform:translateY(25px) scale(.94)}
- to{opacity:1;transform:none}
+ from{
+  opacity:0;
+
+  transform:
+   translateY(25px)
+   scale(.94);
+ }
+
+ to{
+  opacity:1;
+
+  transform:none;
+ }
 }
 
 .modalBox h3{
  margin:0 0 16px;
+
  color:#ffd3e2;
+
  font-size:16px;
 }
 
 .modalBox input,
 .modalBox textarea{
  width:100%;
+
  padding:13px;
+
  margin-bottom:10px;
+
  border-radius:13px;
- border:1px solid rgba(255,255,255,.1);
+
+ border:
+ 1px solid rgba(255,255,255,.1);
+
  outline:none;
- background:rgba(0,0,0,.3);
+
+ background:
+ rgba(0,0,0,.3);
+
  color:white;
+
  font-family:inherit;
+
  font-size:13px;
 }
 
 .modalBox input:focus,
 .modalBox textarea:focus{
- border-color:rgba(255,100,155,.7);
- box-shadow:0 0 0 3px rgba(255,70,130,.1);
+ border-color:
+ rgba(255,100,155,.7);
+
+ box-shadow:
+ 0 0 0 3px rgba(255,70,130,.1);
 }
 
 .modalBox textarea{
  min-height:105px;
+
  resize:vertical;
 }
 
 #supportMsg{
  min-height:20px;
+
  margin-bottom:8px;
+
  text-align:center;
+
  font-size:12px;
 }
 
 .send{
  width:100%;
+
  padding:13px;
+
  margin-bottom:8px;
+
  border:0;
+
  border-radius:13px;
- background:linear-gradient(135deg,#e83f78,#a92d5b);
+
+ background:
+ linear-gradient(
+  135deg,
+  #e83f78,
+  #a92d5b
+ );
+
  color:white;
+
  font-weight:bold;
+
  font-size:14px;
- box-shadow:0 8px 22px rgba(210,40,100,.25);
+
+ box-shadow:
+ 0 8px 22px rgba(210,40,100,.25);
 }
 
 .close{
  width:100%;
+
  padding:11px;
- border:1px solid rgba(255,255,255,.08);
+
+ border:
+ 1px solid rgba(255,255,255,.08);
+
  border-radius:13px;
- background:rgba(255,255,255,.06);
+
+ background:
+ rgba(255,255,255,.06);
+
  color:#ddd;
 }
 
+/* =========================
+   SMALL PHONES
+========================= */
+
 @media(max-width:380px){
+
  .wrap{
   padding-left:12px;
   padding-right:12px;
  }
- h1{font-size:27px}
+
+ h1{
+  font-size:27px;
+ }
+
  .logo{
   width:78px;
   height:78px;
  }
- .logo span{font-size:48px}
+
+ .logo span{
+  font-size:48px;
+ }
+
  .card{
   min-height:94px;
+
   padding:14px;
  }
+
  .rose{
   width:54px;
   height:54px;
+
   flex-basis:54px;
+
   font-size:32px;
  }
- .info h2{font-size:16px}
- .sub{font-size:10px}
+
+ .info h2{
+  font-size:16px;
+ }
+
+ .sub{
+  font-size:10px;
+ }
+
+ .topAccount{
+  width:42px;
+  height:42px;
+
+  right:11px;
+
+  font-size:19px;
+ }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     ACCOUNT BUTTON
+     ========================= -->
+
+<a
+ href="account.html"
+ class="topAccount"
+ aria-label="حساب کاربری"
+ title="حساب کاربری"
+>
+ 👤
+</a>
+
 <script>
-const petals=["🌸","🌹","🥀","🌺","💮"];
+const petals=[
+ "🌸",
+ "🌹",
+ "🥀",
+ "🌺",
+ "💮"
+];
 
 for(let i=0;i<12;i++){
+
  const p=document.createElement("div");
+
  p.className="petal";
- p.textContent=petals[Math.floor(Math.random()*petals.length)];
- p.style.left=Math.random()*100+"vw";
- p.style.fontSize=(10+Math.random()*13)+"px";
- p.style.animationDuration=(9+Math.random()*12)+"s";
- p.style.animationDelay=Math.random()*12+"s";
+
+ p.textContent=
+  petals[
+   Math.floor(
+    Math.random()*petals.length
+   )
+  ];
+
+ p.style.left=
+  Math.random()*100+"vw";
+
+ p.style.fontSize=
+  (10+Math.random()*13)+"px";
+
+ p.style.animationDuration=
+  (9+Math.random()*12)+"s";
+
+ p.style.animationDelay=
+  Math.random()*12+"s";
+
  document.body.appendChild(p);
 }
 </script>
@@ -566,13 +1042,17 @@ for(let i=0;i<12;i++){
 <div class="wrap">
 
 <header>
+
  <div class="logo">
   <span>🌹</span>
  </div>
 
  <h1>MANHWA ROSE</h1>
 
- <p>دنیای مانهوا از اینجا شروع میشه ✨</p>
+ <p>
+  دنیای مانهوا از اینجا شروع میشه ✨
+ </p>
+
 </header>
 
 <div class="label">
@@ -581,76 +1061,145 @@ for(let i=0;i<12;i++){
 
 <div class="categories">
 
-<a href="library.html?genre=اکشن" class="card action">
+<a
+ href="library.html?genre=اکشن"
+ class="card action"
+>
 
- <div class="rose blue">🌹</div>
-
- <div class="info">
-  <h2>رز آبی</h2>
-  <p>اکشن · مبارزه · قدرت</p>
+ <div class="rose blue">
+  🌹
  </div>
 
- <div class="arrow">◀</div>
+ <div class="info">
+
+  <h2>
+   رز آبی
+  </h2>
+
+  <p>
+   اکشن · مبارزه · قدرت
+  </p>
+
+ </div>
+
+ <div class="arrow">
+  ◀
+ </div>
 
 </a>
 
-<a href="library.html?genre=عاشقانه" class="card romance">
 
- <div class="rose yellow">🌹</div>
+<a
+ href="library.html?genre=عاشقانه"
+ class="card romance"
+>
 
- <div class="info">
-  <h2>رز زرد</h2>
-  <p>عاشقانه · احساسی · درام</p>
+ <div class="rose yellow">
+  🌹
  </div>
 
- <div class="arrow">◀</div>
+ <div class="info">
+
+  <h2>
+   رز زرد
+  </h2>
+
+  <p>
+   عاشقانه · احساسی · درام
+  </p>
+
+ </div>
+
+ <div class="arrow">
+  ◀
+ </div>
 
 </a>
 
-<a href="library.html" class="card all">
 
- <div class="rose">🌹</div>
+<a
+ href="library.html"
+ class="card all"
+>
 
- <div class="info">
-  <h2>همه مانهواها</h2>
-  <p>مشاهده کل کتابخانه</p>
+ <div class="rose">
+  🌹
  </div>
 
- <div class="arrow">◀</div>
+ <div class="info">
+
+  <h2>
+   همه مانهواها
+  </h2>
+
+  <p>
+   مشاهده کل کتابخانه
+  </p>
+
+ </div>
+
+ <div class="arrow">
+  ◀
+ </div>
 
 </a>
 
 </div>
 
+
 <div class="extra">
 
-<button class="extraBtn support" onclick="openSupport()">
+<button
+ class="extraBtn support"
+ onclick="openSupport()"
+>
 
- <div class="icon">🎧</div>
+ <div class="icon">
+  🎧
+ </div>
 
  <div class="extraInfo">
-  <div class="title">پشتیبانی</div>
-  <div class="sub">
-   مشکلی داری یا سؤالی برات پیش اومده؟ با ما در ارتباط باش.
+
+  <div class="title">
+   پشتیبانی
   </div>
+
+  <div class="sub">
+   مشکلی داری یا سؤالی برات پیش اومده؟
+   با ما در ارتباط باش.
+  </div>
+
  </div>
 
 </button>
 
-<a href="join.html" class="extraBtn join">
 
- <div class="icon">🌹</div>
+<a
+ href="join.html"
+ class="extraBtn join"
+>
+
+ <div class="icon">
+  🌹
+ </div>
 
  <div class="extraInfo">
-  <div class="title">عضویت در تیم رز</div>
-  <div class="sub">
-   ترجمه، تایپ، ادیت یا آپلود؛ به تیم Manhwa Rose ملحق شو.
+
+  <div class="title">
+   عضویت در تیم رز
   </div>
+
+  <div class="sub">
+   ترجمه، تایپ، ادیت یا آپلود؛
+   به تیم Manhwa Rose ملحق شو.
+  </div>
+
  </div>
 
 </a>
 
 </div>
+
 
 <footer>
  Manhwa Rose · ساخته‌شده با عشق 🌹
@@ -658,11 +1207,25 @@ for(let i=0;i<12;i++){
 
 </div>
 
-<div class="modal" id="supportOverlay" onclick="closeOutside(event)">
 
-<div class="modalBox" onclick="event.stopPropagation()">
+<!-- =========================
+     SUPPORT MODAL
+========================= -->
 
-<h3>🎧 ارسال پیام به پشتیبانی</h3>
+<div
+ class="modal"
+ id="supportOverlay"
+ onclick="closeOutside(event)"
+>
+
+<div
+ class="modalBox"
+ onclick="event.stopPropagation()"
+>
+
+<h3>
+ 🎧 ارسال پیام به پشتیبانی
+</h3>
 
 <input
  id="supportName"
@@ -683,136 +1246,236 @@ for(let i=0;i<12;i++){
  id="supportSend"
  onclick="sendSupport()"
 >
-ارسال پیام
+ ارسال پیام
 </button>
 
 <button
  class="close"
  onclick="closeSupport()"
 >
-بستن
+ بستن
 </button>
 
 </div>
+
 </div>
+
 
 <script>
 
 function openSupport(){
- const modal=document.getElementById("supportOverlay");
+
+ const modal=
+  document.getElementById(
+   "supportOverlay"
+  );
+
  modal.classList.add("open");
+
  document.body.style.overflow="hidden";
 
  setTimeout(()=>{
-  document.getElementById("supportName").focus();
+
+  document
+   .getElementById("supportName")
+   .focus();
+
  },200);
 }
 
+
 function closeSupport(){
- document.getElementById("supportOverlay").classList.remove("open");
+
+ document
+  .getElementById("supportOverlay")
+  .classList
+  .remove("open");
+
  document.body.style.overflow="";
 }
 
+
 function closeOutside(e){
- if(e.target.id==="supportOverlay"){
+
+ if(
+  e.target.id===
+  "supportOverlay"
+ ){
+
   closeSupport();
+
  }
 }
 
+
 async function sendSupport(){
 
- const nameInput=document.getElementById("supportName");
- const messageInput=document.getElementById("supportMessage");
- const msg=document.getElementById("supportMsg");
- const btn=document.getElementById("supportSend");
+ const nameInput=
+  document.getElementById(
+   "supportName"
+  );
 
- const name=nameInput.value.trim();
- const message=messageInput.value.trim();
+ const messageInput=
+  document.getElementById(
+   "supportMessage"
+  );
+
+ const msg=
+  document.getElementById(
+   "supportMsg"
+  );
+
+ const btn=
+  document.getElementById(
+   "supportSend"
+  );
+
+ const name=
+  nameInput.value.trim();
+
+ const message=
+  messageInput.value.trim();
+
 
  if(!name){
+
   msg.style.color="#ff8fae";
-  msg.textContent="لطفاً اسمت رو وارد کن 🌹";
+
+  msg.textContent=
+   "لطفاً اسمت رو وارد کن 🌹";
+
   nameInput.focus();
+
   return;
  }
+
 
  if(!message){
+
   msg.style.color="#ff8fae";
-  msg.textContent="لطفاً پیامت رو بنویس ✨";
+
+  msg.textContent=
+   "لطفاً پیامت رو بنویس ✨";
+
   messageInput.focus();
+
   return;
  }
 
+
  btn.disabled=true;
- btn.textContent="در حال ارسال...";
+
+ btn.textContent=
+  "در حال ارسال...";
+
  msg.textContent="";
+
 
  try{
 
-  const response=await fetch(
-   "https://manhwa-rose.wsalqlyzadh0.workers.dev/api/public/support",
-   {
-    method:"POST",
-    headers:{
-     "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-     name:name,
-     message:message
-    })
-   }
-  );
+  const response=
+   await fetch(
+    "https://manhwa-rose.wsalqlyzadh0.workers.dev/api/public/support",
+    {
+     method:"POST",
+
+     headers:{
+      "Content-Type":
+       "application/json"
+     },
+
+     body:JSON.stringify({
+      name:name,
+      message:message
+     })
+    }
+   );
+
 
   let data;
 
+
   try{
-   data=await response.json();
+
+   data=
+    await response.json();
+
   }catch(e){
+
    data={
     success:false,
     message:"پاسخ نامعتبر از سرور."
    };
+
   }
 
-  if(response.ok && data.success){
+
+  if(
+   response.ok &&
+   data.success
+  ){
 
    msg.style.color="#7dffb2";
-   msg.textContent="پیامت با موفقیت ارسال شد 🌹";
+
+   msg.textContent=
+    "پیامت با موفقیت ارسال شد 🌹";
 
    nameInput.value="";
+
    messageInput.value="";
 
+
    setTimeout(()=>{
+
     closeSupport();
+
    },1200);
+
 
   }else{
 
    msg.style.color="#ff8fae";
-   msg.textContent=data.message||"ارسال پیام ناموفق بود.";
+
+   msg.textContent=
+    data.message ||
+    "ارسال پیام ناموفق بود.";
 
   }
+
 
  }catch(error){
 
   console.error(error);
 
   msg.style.color="#ff8fae";
-  msg.textContent="ارتباط با سرور برقرار نشد.";
+
+  msg.textContent=
+   "ارتباط با سرور برقرار نشد.";
 
  }
+
 
  btn.disabled=false;
- btn.textContent="ارسال پیام";
+
+ btn.textContent=
+  "ارسال پیام";
 }
 
-document.addEventListener("keydown",e=>{
- if(e.key==="Escape"){
-  closeSupport();
+
+document.addEventListener(
+ "keydown",
+ e=>{
+
+  if(e.key==="Escape"){
+
+   closeSupport();
+
+  }
+
  }
-});
+);
 
 </script>
 
 </body>
-   </html>
+</html>
