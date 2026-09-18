@@ -38,10 +38,8 @@
   .header-card {
     display: flex;
     gap: 16px;
-
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
-
     border-radius: 20px;
     padding: 16px;
     margin-bottom: 20px;
@@ -51,19 +49,15 @@
     width: 110px;
     height: 150px;
     flex-shrink: 0;
-
     border-radius: 14px;
-
     background: linear-gradient(135deg, #4a2040, #2a1428);
-
     background-size: cover;
     background-position: center;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 34px;
+    overflow: hidden;
   }
 
   .head-info {
@@ -84,72 +78,46 @@
 
   .status-badge {
     display: inline-block;
-
     font-size: 11px;
-
     padding: 3px 10px;
-
     border-radius: 999px;
-
     background: rgba(226,73,122,0.25);
-
     border: 1px solid rgba(226,73,122,0.4);
   }
 
   .description {
     background: rgba(255,255,255,0.05);
-
     border: 1px solid rgba(255,255,255,0.1);
-
     border-radius: 16px;
-
     padding: 14px 16px;
-
     font-size: 13px;
-
     line-height: 1.9;
-
     color: #e8d4dc;
-
     margin-bottom: 22px;
   }
 
   h2 {
     font-size: 17px;
-
     margin: 0 0 12px;
-
     color: #ffd1de;
   }
 
   .chapter-item {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     padding: 14px 16px;
-
     border-radius: 14px;
-
     background: rgba(255,255,255,0.05);
-
     border: 1px solid rgba(255,255,255,0.08);
-
     margin-bottom: 10px;
-
     text-decoration: none;
-
     color: white;
-
-    transition:
-      transform .15s ease,
-      background .15s ease;
+    transition: transform .15s ease, background .15s ease;
   }
 
   .chapter-item:active {
     transform: scale(.98);
-
     background: rgba(255,255,255,0.09);
   }
 
@@ -170,86 +138,75 @@
 
   .quick-nav {
     display: flex;
-
     gap: 10px;
-
     margin-bottom: 16px;
   }
 
   .quick-btn {
     flex: 1;
-
     text-align: center;
-
     padding: 13px;
-
     border-radius: 14px;
-
     text-decoration: none;
-
     color: white;
-
     font-size: 13px;
-
     font-weight: bold;
   }
 
   .quick-btn.first {
-    background:
-      linear-gradient(
-        135deg,
-        #9d4a8f,
-        #6e2f6b
-      );
+    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
   }
 
   .quick-btn.last {
-    background:
-      linear-gradient(
-        135deg,
-        #e2497a,
-        #b13564
-      );
+    background: linear-gradient(135deg, #e2497a, #b13564);
   }
 
   #empty,
   #loading {
     text-align: center;
-
     color: #b98ba0;
-
     padding: 30px;
-
     font-size: 14px;
+  }
+
+  #loading {
+    animation: pulse 1.3s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% {
+      opacity: .45;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   #error {
     display: none;
-
     text-align: center;
-
     color: #ffb3c9;
-
     padding: 40px 20px;
-
     font-size: 14px;
+  }
+
+  #errorDetails {
+    margin-top: 10px;
+    color: #b98ba0;
+    font-size: 11px;
+    line-height: 1.8;
+    direction: ltr;
+    word-break: break-word;
   }
 
   .retry {
     margin-top: 14px;
-
     padding: 10px 18px;
-
     border: 0;
-
     border-radius: 12px;
-
     background: #d6336c;
-
     color: white;
-
     font-family: inherit;
-
     cursor: pointer;
   }
 </style>
@@ -273,6 +230,8 @@
       ارتباط با سرور برقرار نشد.
     </div>
 
+    <div id="errorDetails"></div>
+
     <button class="retry" onclick="load()">
       تلاش دوباره
     </button>
@@ -283,10 +242,7 @@
 
     <div class="header-card">
 
-      <div
-        class="cover"
-        id="cover"
-      >
+      <div class="cover" id="cover">
         📖
       </div>
 
@@ -294,31 +250,19 @@
 
         <h1 id="title"></h1>
 
-        <div
-          class="genre"
-          id="genre"
-        ></div>
+        <div class="genre" id="genre"></div>
 
-        <span
-          class="status-badge"
-          id="status"
-        ></span>
+        <span class="status-badge" id="status"></span>
 
       </div>
 
     </div>
 
-
-    <div
-      class="description"
-      id="description"
-    ></div>
-
+    <div class="description" id="description"></div>
 
     <h2>
       📖 قسمت‌ها
     </h2>
-
 
     <div
       class="quick-nav"
@@ -342,9 +286,7 @@
 
     </div>
 
-
     <div id="chapters"></div>
-
 
     <div
       id="empty"
@@ -357,33 +299,16 @@
 
 </div>
 
-
 <script>
-
-/* =========================
-   Worker API
-========================= */
 
 const API =
   "https://manhwa-rose.wsalqlyzadh0.workers.dev";
 
-
-/* =========================
-   Manga ID
-========================= */
-
 const params =
-  new URLSearchParams(
-    window.location.search
-  );
+  new URLSearchParams(window.location.search);
 
 const mangaId =
   params.get("id");
-
-
-/* =========================
-   Elements
-========================= */
 
 const loading =
   document.getElementById("loading");
@@ -397,61 +322,103 @@ const error =
 const errorText =
   document.getElementById("errorText");
 
+const errorDetails =
+  document.getElementById("errorDetails");
+
 const emptyEl =
   document.getElementById("empty");
 
 const chaptersEl =
   document.getElementById("chapters");
 
+const quickNav =
+  document.getElementById("quickNav");
 
-/* =========================
-   Load Manga
-========================= */
+
+function showError(message, details = "") {
+
+  loading.style.display = "none";
+  content.style.display = "none";
+
+  errorText.textContent = message;
+  errorDetails.textContent = details;
+
+  error.style.display = "block";
+}
+
+
+async function fetchWithTimeout(url, options = {}, timeout = 10000) {
+
+  const controller =
+    new AbortController();
+
+  const timer =
+    setTimeout(() => {
+      controller.abort();
+    }, timeout);
+
+  try {
+
+    const response =
+      await fetch(
+        url,
+        {
+          ...options,
+          signal: controller.signal,
+          credentials: "omit"
+        }
+      );
+
+    return response;
+
+  } finally {
+
+    clearTimeout(timer);
+
+  }
+}
+
 
 async function load() {
 
-  error.style.display =
-    "none";
+  error.style.display = "none";
+  errorDetails.textContent = "";
 
-  content.style.display =
-    "none";
+  content.style.display = "none";
 
-  loading.style.display =
-    "block";
+  loading.style.display = "block";
 
 
   if (!mangaId) {
 
-    loading.style.display =
-      "none";
-
-    errorText.textContent =
-      "مانهوا مشخص نشده.";
-
-    error.style.display =
-      "block";
+    showError(
+      "مانهوا مشخص نشده.",
+      "شناسه مانهوا در آدرس صفحه وجود ندارد."
+    );
 
     return;
   }
 
 
+  const url =
+    API +
+    "/api/public/manga/" +
+    encodeURIComponent(mangaId);
+
+
   try {
 
     const res =
-      await fetch(
-        API +
-        "/api/public/manga/" +
-        encodeURIComponent(mangaId),
+      await fetchWithTimeout(
+        url,
         {
           method: "GET",
-
           headers: {
-            "Accept":
-              "application/json"
+            "Accept": "application/json"
           },
-
           cache: "no-store"
-        }
+        },
+        10000
       );
 
 
@@ -460,6 +427,7 @@ async function load() {
       throw new Error(
         "HTTP " + res.status
       );
+
     }
 
 
@@ -467,90 +435,75 @@ async function load() {
       await res.json();
 
 
-    if (!data.success) {
+    if (!data || !data.success) {
 
-      loading.style.display =
-        "none";
-
-      errorText.textContent =
-        data.message ||
-        data.error ||
-        "مانهوا پیدا نشد.";
-
-      error.style.display =
-        "block";
+      showError(
+        data?.message ||
+        data?.error ||
+        "مانهوا پیدا نشد."
+      );
 
       return;
     }
 
 
-    /* =========================
-       Show content
-    ========================= */
-
-    loading.style.display =
-      "none";
-
-    content.style.display =
-      "block";
-
-
     const m =
-      data.manga;
+      data.manga || {};
 
 
-    document.getElementById(
-      "title"
-    ).textContent =
+    document.getElementById("title")
+      .textContent =
       m.title || "بدون عنوان";
 
 
-    document.getElementById(
-      "genre"
-    ).textContent =
+    document.getElementById("genre")
+      .textContent =
       m.genre || "";
 
 
-    document.getElementById(
-      "status"
-    ).textContent =
+    document.getElementById("status")
+      .textContent =
       m.status === "completed"
         ? "تمام‌شده"
         : "در حال انتشار";
 
 
-    document.getElementById(
-      "description"
-    ).textContent =
+    document.getElementById("description")
+      .textContent =
       m.description ||
       "توضیحاتی ثبت نشده.";
 
 
-    /* =========================
-       Cover
-    ========================= */
+    /*
+      Cover
+      اگر چند لینک با فاصله ذخیره شده باشد،
+      اولین لینک استفاده می‌شود.
+    */
 
     if (m.cover_url) {
 
       const coverEl =
-        document.getElementById(
-          "cover"
-        );
+        document.getElementById("cover");
 
-      coverEl.style.backgroundImage =
-        `url("${String(m.cover_url).replace(/"/g, '\\"')}")`;
+      const firstCover =
+        String(m.cover_url)
+          .trim()
+          .split(/\s+/)[0];
 
-      coverEl.textContent =
-        "";
+      if (firstCover) {
+
+        coverEl.style.backgroundImage =
+          `url("${firstCover.replace(/"/g, '\\"')}")`;
+
+        coverEl.textContent = "";
+
+      }
+
     }
 
 
-    /* =========================
-       Chapters
-    ========================= */
+    chaptersEl.innerHTML = "";
 
-    chaptersEl.innerHTML =
-      "";
 
     const chapters =
       Array.isArray(data.chapters)
@@ -560,123 +513,111 @@ async function load() {
 
     if (chapters.length === 0) {
 
-      emptyEl.style.display =
-        "block";
+      emptyEl.style.display = "block";
+      quickNav.style.display = "none";
 
-      document.getElementById(
-        "quickNav"
-      ).style.display =
-        "none";
+    } else {
 
-      return;
+      emptyEl.style.display = "none";
+      quickNav.style.display = "flex";
+
+
+      const firstCh =
+        chapters[0];
+
+      const lastCh =
+        chapters[chapters.length - 1];
+
+
+      document.getElementById("firstBtn")
+        .href =
+        "read.html?id=" +
+        encodeURIComponent(firstCh.id);
+
+
+      document.getElementById("lastBtn")
+        .href =
+        "read.html?id=" +
+        encodeURIComponent(lastCh.id);
+
+
+      chapters.forEach(ch => {
+
+        const a =
+          document.createElement("a");
+
+        a.className =
+          "chapter-item";
+
+
+        a.href =
+          "read.html?id=" +
+          encodeURIComponent(ch.id);
+
+
+        const number =
+          ch.chapter_number ?? "";
+
+
+        const title =
+          ch.title || "";
+
+
+        const left =
+          document.createElement("div");
+
+
+        const numberEl =
+          document.createElement("div");
+
+        numberEl.className =
+          "num";
+
+        numberEl.textContent =
+          "قسمت " + number;
+
+
+        left.appendChild(numberEl);
+
+
+        if (title) {
+
+          const titleEl =
+            document.createElement("div");
+
+          titleEl.className =
+            "title";
+
+          titleEl.textContent =
+            title;
+
+          left.appendChild(titleEl);
+
+        }
+
+
+        const arrow =
+          document.createElement("div");
+
+        arrow.className =
+          "arrow";
+
+        arrow.textContent =
+          "◀";
+
+
+        a.appendChild(left);
+        a.appendChild(arrow);
+
+        chaptersEl.appendChild(a);
+
+      });
+
     }
 
 
-    emptyEl.style.display =
-      "none";
-
-
-    const quickNav =
-      document.getElementById(
-        "quickNav"
-      );
-
-
-    const firstCh =
-      chapters[0];
-
-
-    const lastCh =
-      chapters[
-        chapters.length - 1
-      ];
-
-
-    document.getElementById(
-      "firstBtn"
-    ).href =
-      "read.html?id=" +
-      encodeURIComponent(
-        firstCh.id
-      );
-
-
-    document.getElementById(
-      "lastBtn"
-    ).href =
-      "read.html?id=" +
-      encodeURIComponent(
-        lastCh.id
-      );
-
-
-    quickNav.style.display =
-      "flex";
-
-
-    /* =========================
-       Chapter list
-    ========================= */
-
-    chapters.forEach(ch => {
-
-      const a =
-        document.createElement("a");
-
-      a.className =
-        "chapter-item";
-
-
-      a.href =
-        "read.html?id=" +
-        encodeURIComponent(
-          ch.id
-        );
-
-
-      const chapterNumber =
-        ch.chapter_number ??
-        "";
-
-
-      const chapterTitle =
-        String(ch.title || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-
-
-      a.innerHTML = `
-
-        <div>
-
-          <div class="num">
-            قسمت ${chapterNumber}
-          </div>
-
-          ${
-            chapterTitle
-              ? `
-                <div class="title">
-                  ${chapterTitle}
-                </div>
-              `
-              : ""
-          }
-
-        </div>
-
-        <div class="arrow">
-          ◀
-        </div>
-
-      `;
-
-
-      chaptersEl.appendChild(a);
-
-    });
+    loading.style.display = "none";
+    content.style.display = "block";
 
 
   } catch (err) {
@@ -687,33 +628,34 @@ async function load() {
     );
 
 
-    loading.style.display =
-      "none";
+    if (
+      err &&
+      err.name === "AbortError"
+    ) {
 
-    content.style.display =
-      "none";
+      showError(
+        "پاسخ سرور دیر دریافت شد.",
+        "درخواست بعد از ۱۰ ثانیه متوقف شد.\n" +
+        url
+      );
 
+    } else {
 
-    errorText.innerHTML =
-      `
-        ارتباط با سرور برقرار نشد.<br>
-        لطفاً دوباره تلاش کنید.
-      `;
+      showError(
+        "ارتباط با سرور برقرار نشد.",
+        err?.message || String(err)
+      );
 
+    }
 
-    error.style.display =
-      "block";
   }
+
 }
 
-
-/* =========================
-   Start
-========================= */
 
 load();
 
 </script>
 
 </body>
- </html>
+</html>
