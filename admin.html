@@ -2,54 +2,66 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manhwa Rose</title>
+  <title>Manhwa Rose — Admin</title>
 
   <style>
-
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(-3deg); }
-      50% { transform: translateY(-10px) rotate(3deg); }
+      0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(3deg);
+      }
     }
 
     @keyframes glow {
       0%, 100% {
         text-shadow:
-          0 0 20px rgba(233,90,140,0.6),
-          0 0 40px rgba(233,90,140,0.3);
+          0 0 20px rgba(233,90,140,.6),
+          0 0 40px rgba(233,90,140,.3);
       }
+
       50% {
         text-shadow:
-          0 0 30px rgba(233,90,140,0.9),
-          0 0 60px rgba(233,90,140,0.5);
+          0 0 30px rgba(233,90,140,.9),
+          0 0 60px rgba(233,90,140,.5);
       }
     }
 
     @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     @keyframes pop {
-      0% {
-        transform: scale(0.9);
+      from {
+        transform: scale(.9);
         opacity: 0;
       }
-      100% {
+
+      to {
         transform: scale(1);
         opacity: 1;
       }
     }
 
-    @keyframes petal-fall {
+    @keyframes petalFall {
       0% {
         transform: translateY(-10vh) rotate(0deg);
-        opacity: 0.9;
+        opacity: .9;
       }
+
       100% {
         transform: translateY(110vh) rotate(360deg);
         opacity: 0;
@@ -60,10 +72,13 @@
       margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
+
       display: flex;
       justify-content: center;
       align-items: center;
+
       font-family: Tahoma, Arial, sans-serif;
+
       background:
         radial-gradient(
           circle at top,
@@ -71,51 +86,61 @@
           #1a0a17 45%,
           #08050a
         );
+
       color: white;
-      position: relative;
     }
 
     .petal {
       position: fixed;
       top: -10vh;
-      font-size: 20px;
-      animation: petal-fall linear infinite;
+
       pointer-events: none;
-      opacity: 0.7;
       z-index: 0;
+
+      animation: petalFall linear infinite;
+      opacity: .7;
     }
 
     .box {
       width: 92%;
-      max-width: 400px;
+      max-width: 420px;
+
       padding: 40px 26px;
+
       border-radius: 26px;
+
       text-align: center;
 
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,.07);
+
+      border:
+        1px solid rgba(255,255,255,.15);
 
       box-shadow:
-        0 25px 70px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.08);
+        0 25px 70px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.08);
 
       backdrop-filter: blur(18px);
 
       position: relative;
       z-index: 1;
 
-      animation: pop 0.5s ease;
+      animation: pop .5s ease;
     }
 
     .rose {
       font-size: 60px;
       margin-bottom: 8px;
+
       display: inline-block;
-      animation: float 4s ease-in-out infinite;
+
+      animation:
+        float 4s ease-in-out infinite;
     }
 
     h1 {
       margin: 0 0 8px;
+
       font-size: 30px;
 
       background:
@@ -136,28 +161,30 @@
       animation:
         shimmer 4s linear infinite,
         glow 3s ease-in-out infinite;
-
-      letter-spacing: 1px;
     }
 
-    p.subtitle {
+    .subtitle {
       color: #d8c3cd;
       font-size: 14px;
       margin-bottom: 26px;
-      opacity: 0.9;
     }
 
     input {
       width: 100%;
+
       padding: 14px;
+
       margin-bottom: 12px;
 
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
+
+      border:
+        1px solid rgba(255,255,255,.15);
 
       outline: none;
 
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,.3);
+
       color: white;
 
       font-size: 15px;
@@ -169,9 +196,11 @@
 
     #loginButton {
       width: 100%;
+
       padding: 14px;
 
       border: none;
+
       border-radius: 12px;
 
       background:
@@ -207,8 +236,11 @@
 
     #message {
       min-height: 22px;
+
       margin-top: 15px;
+
       color: #ff8fae;
+
       font-size: 13px;
     }
 
@@ -218,10 +250,13 @@
 
     .panel-button {
       width: 100%;
+
       padding: 18px 20px;
+
       margin-top: 14px;
 
       border: none;
+
       border-radius: 16px;
 
       font-size: 16px;
@@ -232,58 +267,20 @@
       cursor: pointer;
 
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
       gap: 10px;
 
       position: relative;
+
       overflow: hidden;
 
       transition:
         transform .18s ease,
-        box-shadow .18s ease,
         filter .18s ease;
-    }
-
-    .panel-button .icon {
-      font-size: 22px;
-      transition: transform .3s ease;
-    }
-
-    .panel-button .arrow {
-      opacity: 0.6;
-      transition:
-        transform .25s ease,
-        opacity .25s ease;
-    }
-
-    .panel-button::before {
-      content: "";
-
-      position: absolute;
-
-      top: 0;
-      left: -100%;
-
-      width: 60%;
-      height: 100%;
-
-      background:
-        linear-gradient(
-          120deg,
-          transparent,
-          rgba(255,255,255,0.25),
-          transparent
-        );
-
-      transform: skewX(-20deg);
-
-      transition: left .5s ease;
-    }
-
-    .panel-button:hover::before {
-      left: 140%;
     }
 
     .panel-button:hover {
@@ -294,19 +291,16 @@
       filter: brightness(1.12);
     }
 
-    .panel-button:hover .icon {
-      transform:
-        rotate(-10deg)
-        scale(1.15);
-    }
-
-    .panel-button:hover .arrow {
-      transform: translateX(-6px);
-      opacity: 1;
-    }
-
     .panel-button:active {
       transform: scale(.97);
+    }
+
+    .icon {
+      font-size: 22px;
+    }
+
+    .arrow {
+      opacity: .6;
     }
 
     .btn-manga {
@@ -318,7 +312,7 @@
         );
 
       box-shadow:
-        0 10px 25px rgba(226,73,122,0.35);
+        0 10px 25px rgba(226,73,122,.35);
     }
 
     .btn-chapters {
@@ -330,7 +324,7 @@
         );
 
       box-shadow:
-        0 10px 25px rgba(157,74,143,0.35);
+        0 10px 25px rgba(157,74,143,.35);
     }
 
     .btn-support {
@@ -342,7 +336,7 @@
         );
 
       box-shadow:
-        0 10px 25px rgba(58,107,122,0.35);
+        0 10px 25px rgba(58,107,122,.35);
     }
 
     .btn-testfiles {
@@ -354,10 +348,12 @@
         );
 
       box-shadow:
-        0 10px 25px rgba(122,90,16,0.35);
+        0 10px 25px rgba(122,90,16,.35);
     }
 
     .btn-logout {
+      margin-top: 26px;
+
       background:
         linear-gradient(
           135deg,
@@ -365,18 +361,7 @@
           #241521
         );
 
-      box-shadow:
-        0 10px 20px rgba(0,0,0,0.35);
-
-      margin-top: 26px;
-
-      font-size: 14px;
-
-      opacity: 0.85;
-    }
-
-    .btn-logout:hover {
-      opacity: 1;
+      opacity: .85;
     }
 
     .badge {
@@ -388,21 +373,48 @@
 
       border-radius: 999px;
 
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,.08);
 
       border:
-        1px solid rgba(255,255,255,0.15);
+        1px solid rgba(255,255,255,.15);
 
       font-size: 12px;
 
       color: #f3c4d4;
     }
-
   </style>
-
 </head>
 
 <body>
+
+  <!-- گلبرگ‌ها -->
+  <script>
+    const petals = ["🌸", "🌹", "🥀", "💮"];
+
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement("div");
+
+      el.className = "petal";
+
+      el.textContent =
+        petals[Math.floor(Math.random() * petals.length)];
+
+      el.style.left =
+        Math.random() * 100 + "vw";
+
+      el.style.animationDuration =
+        (8 + Math.random() * 10) + "s";
+
+      el.style.animationDelay =
+        (Math.random() * 10) + "s";
+
+      el.style.fontSize =
+        (14 + Math.random() * 14) + "px";
+
+      document.body.appendChild(el);
+    }
+  </script>
+
 
   <!-- LOGIN -->
 
@@ -460,14 +472,18 @@
       وارد پنل مدیریت Manhwa Rose شدی 💫
     </p>
 
+
+    <!-- مدیریت مانهوا -->
+
     <button
       class="panel-button btn-manga"
-      onclick="window.location.href='manga.html'"
+      type="button"
+      onclick="goTo('manga.html')"
     >
 
       <span class="icon">📚</span>
 
-      <span style="flex:1; text-align:right;">
+      <span style="flex:1;text-align:right;">
         مدیریت مانهوا
       </span>
 
@@ -476,14 +492,17 @@
     </button>
 
 
+    <!-- مدیریت قسمت‌ها -->
+
     <button
       class="panel-button btn-chapters"
-      onclick="window.location.href='chapters.html'"
+      type="button"
+      onclick="goTo('chapters.html')"
     >
 
       <span class="icon">📖</span>
 
-      <span style="flex:1; text-align:right;">
+      <span style="flex:1;text-align:right;">
         مدیریت قسمت‌ها
       </span>
 
@@ -492,14 +511,17 @@
     </button>
 
 
+    <!-- پشتیبانی -->
+
     <button
       class="panel-button btn-support"
-      onclick="window.location.href='support.html'"
+      type="button"
+      onclick="goTo('support.html')"
     >
 
       <span class="icon">🎧</span>
 
-      <span style="flex:1; text-align:right;">
+      <span style="flex:1;text-align:right;">
         پیام‌های پشتیبانی
       </span>
 
@@ -508,14 +530,17 @@
     </button>
 
 
+    <!-- فایل‌های تست -->
+
     <button
       class="panel-button btn-testfiles"
-      onclick="window.location.href='test-files.html'"
+      type="button"
+      onclick="goTo('test-files.html')"
     >
 
       <span class="icon">📝</span>
 
-      <span style="flex:1; text-align:right;">
+      <span style="flex:1;text-align:right;">
         فایل‌های تست
       </span>
 
@@ -524,14 +549,17 @@
     </button>
 
 
+    <!-- خروج -->
+
     <button
       class="panel-button btn-logout"
+      type="button"
       id="logout"
     >
 
       <span class="icon">👋</span>
 
-      <span style="flex:1; text-align:right;">
+      <span style="flex:1;text-align:right;">
         خروج
       </span>
 
@@ -550,7 +578,7 @@
   <script>
 
     /*
-      آدرس اصلی Worker
+      آدرس Worker
     */
 
     const API =
@@ -558,48 +586,19 @@
 
 
     /*
-      گلبرگ‌های شناور
+      رفتن به صفحات داخل GitHub Pages
+
+      عمداً از / استفاده نشده،
+      چون سایت داخل /manhwa-rose/ قرار دارد.
     */
 
-    const petals = [
-      "🌸",
-      "🌹",
-      "🥀",
-      "💮"
-    ];
-
-    for (let i = 0; i < 14; i++) {
-
-      const el =
-        document.createElement("div");
-
-      el.className = "petal";
-
-      el.textContent =
-        petals[
-          Math.floor(
-            Math.random() * petals.length
-          )
-        ];
-
-      el.style.left =
-        Math.random() * 100 + "vw";
-
-      el.style.animationDuration =
-        (8 + Math.random() * 10) + "s";
-
-      el.style.animationDelay =
-        (Math.random() * 10) + "s";
-
-      el.style.fontSize =
-        (14 + Math.random() * 14) + "px";
-
-      document.body.appendChild(el);
+    function goTo(page) {
+      window.location.href = page;
     }
 
 
     /*
-      عناصر صفحه
+      عناصر
     */
 
     const login =
@@ -634,7 +633,7 @@
 
 
     /*
-      نمایش صفحه ورود
+      نمایش ورود
     */
 
     function showLogin() {
@@ -646,7 +645,7 @@
 
 
     /*
-      بررسی ورود ادمین
+      بررسی احراز هویت
     */
 
     async function checkAuth() {
@@ -662,29 +661,30 @@
             }
           );
 
+        if (!response.ok) {
+          return;
+        }
+
         const result =
           await response.json();
 
         if (result.authenticated) {
-
           showPanel();
-
         }
 
       } catch (error) {
 
         console.error(
-          "checkAuth error:",
+          "checkAuth:",
           error
         );
 
       }
-
     }
 
 
     /*
-      ورود
+      ورود ادمین
     */
 
     form.addEventListener(
@@ -703,6 +703,18 @@
 
         try {
 
+          const username =
+            document
+              .getElementById("username")
+              .value
+              .trim();
+
+          const password =
+            document
+              .getElementById("password")
+              .value;
+
+
           const response =
             await fetch(
               API + "/api/login",
@@ -718,20 +730,9 @@
 
                 body:
                   JSON.stringify({
-
-                    username:
-                      document
-                        .getElementById("username")
-                        .value
-                        .trim(),
-
-                    password:
-                      document
-                        .getElementById("password")
-                        .value
-
+                    username: username,
+                    password: password
                   })
-
               }
             );
 
@@ -755,17 +756,15 @@
 
           }
 
-
         } catch (error) {
 
           console.error(
-            "login error:",
+            "Login error:",
             error
           );
 
           message.textContent =
             "ارتباط با سرور برقرار نشد.";
-
         }
 
 
@@ -813,7 +812,7 @@
 
 
     /*
-      شروع
+      شروع بررسی ورود
     */
 
     checkAuth();
@@ -822,4 +821,4 @@
 
 </body>
 
-</html>
+  </html>
