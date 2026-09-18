@@ -1,623 +1,799 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>حساب کاربری | Manhwa Rose</title>
-
-<style>
-*{
- box-sizing:border-box;
- -webkit-tap-highlight-color:transparent;
-}
-
-body{
- margin:0;
- min-height:100vh;
- font-family:Tahoma,Arial,sans-serif;
- color:#fff;
-
- background:
- radial-gradient(circle at 10% 0%,rgba(255,70,140,.25),transparent 35%),
- radial-gradient(circle at 100% 20%,rgba(110,60,255,.18),transparent 35%),
- linear-gradient(145deg,#0b0409,#210b1b 45%,#080408);
-}
-
-.wrap{
- width:100%;
- max-width:520px;
- margin:auto;
- padding:25px 15px 50px;
-}
-
-.back{
- display:inline-flex;
- align-items:center;
- gap:8px;
-
- color:#d9b9c9;
- text-decoration:none;
-
- font-size:13px;
-
- margin-bottom:25px;
-}
-
-.profile{
- padding:25px 18px;
-
- border-radius:25px;
-
- text-align:center;
-
- background:rgba(255,255,255,.055);
-
- border:1px solid rgba(255,255,255,.1);
-
- box-shadow:
- 0 20px 50px rgba(0,0,0,.35);
-
- backdrop-filter:blur(14px);
- -webkit-backdrop-filter:blur(14px);
-}
-
-.avatar{
- width:82px;
- height:82px;
-
- margin:auto;
-
- display:flex;
- align-items:center;
- justify-content:center;
-
- border-radius:50%;
-
- font-size:40px;
-
- background:
- linear-gradient(
-  135deg,
-  #e83f78,
-  #6e35b8
- );
-
- box-shadow:
- 0 0 35px rgba(240,50,130,.3);
-
- overflow:hidden;
-}
-
-.avatar img{
- width:100%;
- height:100%;
- object-fit:cover;
-}
-
-h1{
- margin:15px 0 6px;
-
- font-size:22px;
-}
-
-.email{
- margin:0;
-
- color:#bfaeba;
-
- font-size:11px;
-
- direction:ltr;
-}
-
-.status{
- display:inline-block;
-
- margin-top:12px;
-
- padding:6px 12px;
-
- border-radius:20px;
-
- background:rgba(255,255,255,.07);
-
- color:#e8cbd9;
-
- font-size:10px;
-}
-
-.login{
- width:100%;
-
- margin-top:25px;
-
- padding:15px;
-
- border:0;
-
- border-radius:15px;
-
- background:
- linear-gradient(
-  135deg,
-  #e83f78,
-  #9e326c
- );
-
- color:white;
-
- font-family:inherit;
-
- font-size:14px;
-
- font-weight:bold;
-
- cursor:pointer;
-
- box-shadow:
- 0 10px 25px rgba(220,50,120,.25);
-}
-
-.logout{
- width:100%;
-
- margin-top:12px;
-
- padding:13px;
-
- border:1px solid rgba(255,255,255,.1);
-
- border-radius:15px;
-
- background:rgba(255,255,255,.05);
-
- color:#ddd;
-
- font-family:inherit;
-
- font-size:13px;
-
- cursor:pointer;
-
- display:none;
-}
-
-.stats{
- display:grid;
-
- grid-template-columns:
- repeat(3,1fr);
-
- gap:10px;
-
- margin-top:18px;
-}
-
-.stat{
- padding:15px 8px;
-
- border-radius:17px;
-
- background:rgba(255,255,255,.045);
-
- border:1px solid rgba(255,255,255,.08);
-
- text-align:center;
-}
-
-.statIcon{
- font-size:20px;
-}
-
-.statValue{
- margin-top:7px;
-
- font-size:14px;
-
- font-weight:bold;
-}
-
-.statName{
- margin-top:4px;
-
- color:#9f8995;
-
- font-size:9px;
-}
-
-.loading{
- margin-top:15px;
-
- color:#bda9b5;
-
- font-size:11px;
-}
-
-footer{
- margin-top:30px;
-
- text-align:center;
-
- color:#705967;
-
- font-size:10px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>حساب کاربری | Manhwa Rose</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      min-height: 100%;
+      background: #09050d;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 45, 130, .18), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(130, 45, 255, .16), transparent 35%),
+        linear-gradient(145deg, #09050d, #140817 50%, #09050d);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .background-glow {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .22;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow1 {
+      background: #ff1677;
+      top: -100px;
+      right: -100px;
+    }
+
+    .glow2 {
+      background: #8d35ff;
+      bottom: -120px;
+      left: -100px;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(92%, 520px);
+      margin: auto;
+      padding: 25px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .back {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      border-radius: 14px;
+      font-size: 21px;
+      backdrop-filter: blur(12px);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: .3px;
+    }
+
+    .profile-card {
+      position: relative;
+      overflow: hidden;
+      padding: 28px 20px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.065);
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.06);
+      backdrop-filter: blur(18px);
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: rgba(255, 32, 125, .12);
+      filter: blur(30px);
+      top: -90px;
+      left: -70px;
+    }
+
+    .profile {
+      position: relative;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 14px;
+      border: 3px solid rgba(255,255,255,.2);
+      box-shadow:
+        0 0 0 5px rgba(255, 32, 125, .08),
+        0 10px 35px rgba(0,0,0,.35);
+      background: #21101f;
+    }
+
+    .avatar-fallback {
+      display: none;
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: linear-gradient(135deg, #ff287f, #792cff);
+      border: 3px solid rgba(255,255,255,.2);
+    }
+
+    .name {
+      font-size: 23px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .email {
+      color: #bdb5c4;
+      font-size: 13px;
+      direction: ltr;
+      word-break: break-word;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 15px;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.09);
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #aaa;
+    }
+
+    .status.vip .status-dot {
+      background: #ffd34d;
+      box-shadow: 0 0 10px #ffd34d;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      padding: 16px 8px;
+      text-align: center;
+      border-radius: 17px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .stat-label {
+      margin-top: 6px;
+      color: #a9a1af;
+      font-size: 11px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: grid;
+      gap: 11px;
+    }
+
+    button,
+    .google-login {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 16px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    button:active,
+    .google-login:active {
+      transform: scale(.97);
+    }
+
+    .google-login {
+      background: linear-gradient(135deg, #fff, #e9e9e9);
+      color: #171717;
+      box-shadow: 0 8px 25px rgba(0,0,0,.25);
+    }
+
+    .google-icon {
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .logout {
+      background: rgba(255, 55, 105, .1);
+      border: 1px solid rgba(255, 55, 105, .25);
+      color: #ff739c;
+    }
+
+    .home-btn {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #ddd;
+    }
+
+    .guest {
+      text-align: center;
+    }
+
+    .guest-icon {
+      font-size: 58px;
+      margin-bottom: 12px;
+    }
+
+    .guest-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 9px;
+    }
+
+    .guest-text {
+      color: #aaa1b1;
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 22px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 45px 10px;
+      color: #bbb;
+    }
+
+    .spinner {
+      width: 35px;
+      height: 35px;
+      border: 3px solid rgba(255,255,255,.1);
+      border-top-color: #ff2d80;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 14px;
+      background: rgba(255, 50, 80, .1);
+      border: 1px solid rgba(255, 50, 80, .2);
+      color: #ff8ca7;
+      font-size: 12px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .footer {
+      text-align: center;
+      color: #625968;
+      font-size: 11px;
+      margin-top: 22px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="wrap">
+  <div class="background-glow glow1"></div>
+  <div class="background-glow glow2"></div>
 
-<a
- class="back"
- href="index.html"
->
-← بازگشت به صفحه اصلی
-</a>
+  <main class="container">
 
+    <div class="topbar">
+      <a class="back" href="index.html" aria-label="بازگشت">←</a>
+      <div class="title">حساب کاربری</div>
+      <div style="width:44px;"></div>
+    </div>
 
-<div class="profile">
+    <section class="profile-card">
 
-<div
- class="avatar"
- id="avatar"
->
-👤
-</div>
+      <!-- Loading -->
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        در حال بررسی حساب...
+      </div>
 
+      <!-- Guest -->
+      <div id="guest" class="guest hidden">
 
-<h1 id="username">
-در حال بررسی حساب...
-</h1>
+        <div class="guest-icon">👤</div>
 
+        <div class="guest-title">
+          حساب کاربری
+        </div>
 
-<p
- class="email"
- id="email"
->
-</p>
+        <div class="guest-text">
+          برای ذخیره اطلاعات حساب، پیگیری سطح کاربری
+          و استفاده از امکانات سایت وارد حساب خود شوید.
+        </div>
 
+        <div class="buttons">
 
-<div
- class="status"
- id="status"
->
-در حال بررسی...
-</div>
+          <a
+            class="google-login"
+            id="googleLogin"
+            href="https://manhwa-rose.wsalqlyzadh0.workers.dev/auth/google"
+          >
+            <span class="google-icon">G</span>
+            ورود با Google
+          </a>
 
+          <a class="home-btn" href="index.html">
+            بازگشت به خانه
+          </a>
 
-<button
- class="login"
- id="loginBtn"
- onclick="loginGoogle()"
- style="display:none"
->
-🔐 ورود با Google
-</button>
+        </div>
 
+      </div>
 
-<button
- class="logout"
- id="logoutBtn"
- onclick="logout()"
->
-🚪 خروج از حساب
-</button>
+      <!-- User -->
+      <div id="userPanel" class="hidden">
 
+        <div class="profile">
 
-<div
- class="loading"
- id="loading"
->
-لطفاً صبر کنید...
-</div>
+          <img
+            id="avatar"
+            class="avatar"
+            src=""
+            alt="تصویر پروفایل"
+          >
 
-</div>
+          <div id="avatarFallback" class="avatar-fallback">
+            👤
+          </div>
 
+          <div id="userName" class="name">
+            کاربر
+          </div>
 
-<div class="stats">
+          <div id="userEmail" class="email">
+            -
+          </div>
 
-<div class="stat">
+          <div id="status" class="status">
+            <span class="status-dot"></span>
+            <span id="statusText">Normal</span>
+          </div>
 
-<div class="statIcon">
-🌹
-</div>
+        </div>
 
-<div
- class="statValue"
- id="coins"
->
-0
-</div>
+        <div class="stats">
 
-<div class="statName">
-Rose Coins
-</div>
+          <div class="stat">
+            <div id="level" class="stat-value">1</div>
+            <div class="stat-label">سطح</div>
+          </div>
 
-</div>
+          <div class="stat">
+            <div id="xp" class="stat-value">0</div>
+            <div class="stat-label">XP</div>
+          </div>
 
+          <div class="stat">
+            <div id="coins" class="stat-value">0</div>
+            <div class="stat-label">Rose Coins</div>
+          </div>
 
-<div class="stat">
+        </div>
 
-<div class="statIcon">
-✨
-</div>
+        <div class="buttons">
 
-<div
- class="statValue"
- id="level"
->
-1
-</div>
+          <button
+            id="logoutBtn"
+            class="logout"
+            type="button"
+          >
+            خروج از حساب
+          </button>
 
-<div class="statName">
-سطح
-</div>
+          <a class="home-btn" href="index.html">
+            بازگشت به خانه
+          </a>
 
-</div>
+        </div>
 
+      </div>
 
-<div class="stat">
+      <div id="error" class="error"></div>
 
-<div class="statIcon">
-⭐
-</div>
+    </section>
 
-<div
- class="statValue"
- id="xp"
->
-0
-</div>
+    <div class="footer">
+      🌹 MANHWA ROSE
+    </div>
 
-<div class="statName">
-XP
-</div>
+  </main>
 
-</div>
+  <script>
 
-</div>
+    const API =
+      "https://manhwa-rose.wsalqlyzadh0.workers.dev";
 
+    const loading =
+      document.getElementById("loading");
 
-<footer>
-Manhwa Rose · 🌹
-</footer>
+    const guest =
+      document.getElementById("guest");
 
-</div>
+    const userPanel =
+      document.getElementById("userPanel");
 
+    const errorBox =
+      document.getElementById("error");
 
-<script>
+    const avatar =
+      document.getElementById("avatar");
 
-const API=
- "https://manhwa-rose.wsalqlyzadh0.workers.dev";
+    const avatarFallback =
+      document.getElementById("avatarFallback");
 
+    const userName =
+      document.getElementById("userName");
 
-function loginGoogle(){
+    const userEmail =
+      document.getElementById("userEmail");
 
- window.location.href=
- API+"/auth/google";
+    const status =
+      document.getElementById("status");
 
-}
+    const statusText =
+      document.getElementById("statusText");
 
+    const level =
+      document.getElementById("level");
 
-async function loadUser(){
+    const xp =
+      document.getElementById("xp");
 
- const username=
-  document.getElementById(
-   "username"
-  );
+    const coins =
+      document.getElementById("coins");
 
- const email=
-  document.getElementById(
-   "email"
-  );
-
- const status=
-  document.getElementById(
-   "status"
-  );
-
- const avatar=
-  document.getElementById(
-   "avatar"
-  );
-
- const loading=
-  document.getElementById(
-   "loading"
-  );
-
- const loginBtn=
-  document.getElementById(
-   "loginBtn"
-  );
-
- const logoutBtn=
-  document.getElementById(
-   "logoutBtn"
-  );
+    const logoutBtn =
+      document.getElementById("logoutBtn");
 
 
- try{
+    function showError(message) {
 
-  const response=
-   await fetch(
-    API+"/api/user/me",
-    {
-     credentials:"include"
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
+
     }
-   );
 
 
-  const data=
-   await response.json();
+    function hideError() {
 
+      errorBox.textContent = "";
+      errorBox.style.display = "none";
 
-  if(
-   response.ok &&
-   data.loggedIn &&
-   data.user
-  ){
+    }
 
-   const user=data.user;
 
+    function showGuest() {
 
-   username.textContent=
-    user.name ||
-    user.username ||
-    "کاربر Manhwa Rose";
+      loading.classList.add("hidden");
+      userPanel.classList.add("hidden");
+      guest.classList.remove("hidden");
 
+    }
 
-   email.textContent=
-    user.email ||
-    "";
 
+    function showUser(user) {
 
-   status.textContent=
-    user.plan==="vip"
-     ? "👑 VIP"
-     : "🌹 حساب عادی";
+      loading.classList.add("hidden");
+      guest.classList.add("hidden");
+      userPanel.classList.remove("hidden");
 
+      userName.textContent =
+        user.name ||
+        user.username ||
+        "کاربر";
 
-   if(user.avatar_url){
+      userEmail.textContent =
+        user.email || "-";
 
-    avatar.innerHTML=
-     '<img src="' +
-     escapeHtml(user.avatar_url) +
-     '" alt="Avatar">';
+      level.textContent =
+        Number(user.level ?? 1);
 
-   }else{
+      xp.textContent =
+        Number(user.xp ?? 0);
 
-    avatar.textContent="👤";
+      coins.textContent =
+        Number(user.rose_coins ?? 0);
 
-   }
 
+      const isVip =
+        user.plan &&
+        String(user.plan).toLowerCase() === "vip";
 
-   document.getElementById(
-    "coins"
-   ).textContent=
-    user.rose_coins ?? 0;
+      if (isVip) {
 
+        status.classList.add("vip");
+        statusText.textContent =
+          user.vip_expires_at
+            ? "VIP"
+            : "VIP";
 
-   document.getElementById(
-    "level"
-   ).textContent=
-    user.level ?? 1;
+      } else {
 
+        status.classList.remove("vip");
+        statusText.textContent =
+          "Normal";
 
-   document.getElementById(
-    "xp"
-   ).textContent=
-    user.xp ?? 0;
+      }
 
 
-   loginBtn.style.display="none";
+      if (user.avatar_url) {
 
-   logoutBtn.style.display="block";
+        avatar.src = user.avatar_url;
 
-   loading.style.display="none";
+        avatar.classList.remove("hidden");
+        avatarFallback.style.display = "none";
 
+        avatar.onerror = function() {
 
-  }else{
+          avatar.classList.add("hidden");
+          avatarFallback.style.display = "flex";
 
-   username.textContent=
-    "مهمان";
+        };
 
+      } else {
 
-   email.textContent=
-    "هنوز وارد حساب نشدی";
+        avatar.classList.add("hidden");
+        avatarFallback.style.display = "flex";
 
+      }
 
-   status.textContent=
-    "🔒 ورود لازم است";
+    }
 
 
-   loginBtn.style.display="block";
+    async function loadUser() {
 
-   logoutBtn.style.display="none";
+      hideError();
 
-   loading.style.display="none";
+      try {
 
-  }
+        const response =
+          await fetch(
+            API + "/api/user/me",
+            {
+              method: "GET",
 
+              credentials: "include",
 
- }catch(error){
+              headers: {
+                "Accept": "application/json"
+              },
 
-  console.error(error);
+              cache: "no-store"
+            }
+          );
 
-  username.textContent=
-   "خطا در اتصال";
 
+        if (!response.ok) {
 
-  email.textContent=
-   "لطفاً دوباره امتحان کن";
+          throw new Error(
+            "HTTP " + response.status
+          );
 
+        }
 
-  status.textContent=
-   "⚠️ خطای ارتباط";
 
+        const data =
+          await response.json();
 
-  loginBtn.style.display="block";
 
-  loading.style.display="none";
+        console.log(
+          "Manhwa Rose user:",
+          data
+        );
 
- }
 
-}
+        if (
+          data &&
+          data.success === true &&
+          data.user
+        ) {
 
+          showUser(data.user);
 
-async function logout(){
+        } else {
 
- const btn=
-  document.getElementById(
-   "logoutBtn"
-  );
+          showGuest();
 
- btn.disabled=true;
+        }
 
- btn.textContent=
-  "در حال خروج...";
+      } catch (error) {
 
+        console.error(
+          "Account error:",
+          error
+        );
 
- try{
+        showGuest();
 
-  await fetch(
-   API+"/api/user/logout",
-   {
-    method:"POST",
-    credentials:"include"
-   }
-  );
+        showError(
+          "ارتباط با حساب کاربری برقرار نشد. دوباره صفحه را باز کنید."
+        );
 
- }catch(error){
+      }
 
-  console.error(error);
+    }
 
- }
 
+    logoutBtn.addEventListener(
+      "click",
+      async function() {
 
- location.reload();
+        logoutBtn.disabled = true;
+        logoutBtn.textContent =
+          "در حال خروج...";
 
-}
+        try {
 
+          const response =
+            await fetch(
+              API + "/api/user/logout",
+              {
+                method: "POST",
 
-function escapeHtml(value){
+                credentials: "include",
 
- return String(value)
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+                headers: {
+                  "Accept": "application/json"
+                }
+              }
+            );
 
-}
 
+          const data =
+            await response.json();
 
-loadUser();
 
-</script>
+          if (!response.ok || !data.success) {
+
+            throw new Error(
+              data.error ||
+              "Logout failed"
+            );
+
+          }
+
+
+          // بعد از خروج، صفحه را دوباره بارگذاری می‌کنیم
+          // تا Cookie جدید Worker به طور کامل اعمال شود.
+          window.location.href =
+            "account.html";
+
+        } catch (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+          logoutBtn.disabled = false;
+          logoutBtn.textContent =
+            "خروج از حساب";
+
+          showError(
+            "خروج از حساب انجام نشد. دوباره امتحان کنید."
+          );
+
+        }
+
+      }
+    );
+
+
+    /*
+      اگر کاربر از Google برگردد،
+      Worker ممکن است login=success را به URL اضافه کند.
+      بعد از اینکه صفحه حساب اطلاعات را گرفت،
+      پارامتر را از URL حذف می‌کنیم.
+    */
+
+    (function cleanLoginParameter() {
+
+      try {
+
+        const url =
+          new URL(window.location.href);
+
+        if (
+          url.searchParams.has("login")
+        ) {
+
+          url.searchParams.delete("login");
+
+          window.history.replaceState(
+            {},
+            document.title,
+            url.pathname +
+            (
+              url.searchParams.toString()
+                ? "?" + url.searchParams.toString()
+                : ""
+            ) +
+            url.hash
+          );
+
+        }
+
+      } catch (e) {
+
+        console.log(
+          "URL cleanup skipped"
+        );
+
+      }
+
+    })();
+
+
+    // شروع بررسی حساب
+    loadUser();
+
+  </script>
 
 </body>
 </html>
