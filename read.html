@@ -6,715 +6,713 @@
 <title>خواندن قسمت - Manhwa Rose</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Tahoma, Arial, sans-serif;
-    background: #0a0509;
-    color: white;
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #0a0509;
+  color: white;
+}
 
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: rgba(10,5,9,0.92);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
 
-  .topbar a {
-    color: #ffb3c9;
-    text-decoration: none;
-    font-size: 13px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  .topbar .chapter-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffd1de;
-  }
+  padding: 12px 16px;
 
-  .settings-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  background: rgba(10,5,9,0.92);
+  backdrop-filter: blur(10px);
 
-  .settings-panel {
-    position: fixed;
-    top: 58px;
-    left: 12px;
-    z-index: 25;
-    width: 260px;
-    max-width: 80vw;
-    background: rgba(20,10,17,0.97);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    backdrop-filter: blur(14px);
-    display: none;
-  }
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
 
-  .settings-panel.open {
-    display: block;
-  }
+.topbar a {
+  color: #ffb3c9;
+  text-decoration: none;
+  font-size: 13px;
+}
 
-  .settings-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
+.topbar .chapter-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffd1de;
+}
 
-  .settings-row .label {
-    font-size: 12.5px;
-    color: #f0d0dc;
-  }
+.settings-btn {
+  background: rgba(255,255,255,0.08);
 
-  .switch {
-    position: relative;
-    width: 42px;
-    height: 24px;
-    flex-shrink: 0;
-  }
+  border: 1px solid rgba(255,255,255,0.15);
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+  color: white;
 
-  .switch .slider-toggle {
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.15);
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background .2s ease;
-  }
+  width: 34px;
+  height: 34px;
 
-  .switch .slider-toggle::before {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    left: 3px;
-    top: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: transform .2s ease;
-  }
+  border-radius: 10px;
 
-  .switch input:checked + .slider-toggle {
-    background: linear-gradient(135deg, #e2497a, #b13564);
-  }
+  font-size: 16px;
 
-  .switch input:checked + .slider-toggle::before {
-    transform: translateX(-18px);
-  }
+  cursor: pointer;
 
-  .slider-block {
-    margin-bottom: 14px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .slider-block:last-child {
-    margin-bottom: 0;
-  }
+.settings-panel {
+  position: fixed;
 
-  .slider-block .label {
-    font-size: 12.5px;
-    color: #f0d0dc;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-  }
+  top: 58px;
+  left: 12px;
 
-  .slider-block input[type="range"] {
-    width: 100%;
-    accent-color: #e2497a;
-  }
+  z-index: 25;
 
-  .sub-slider {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
+  width: 260px;
+  max-width: 80vw;
 
-  /* =========================
-     FULLSCREEN BUTTON
-  ========================= */
+  background: rgba(20,10,17,0.97);
 
-  .fullscreen-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px 12px;
-    margin-top: 12px;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 11px;
-    background: linear-gradient(
+  border: 1px solid rgba(255,255,255,0.15);
+
+  border-radius: 16px;
+
+  padding: 16px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+
+  backdrop-filter: blur(14px);
+
+  display: none;
+}
+
+.settings-panel.open {
+  display: block;
+}
+
+.settings-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.settings-row .label {
+  font-size: 12.5px;
+  color: #f0d0dc;
+}
+
+.switch {
+  position: relative;
+
+  width: 42px;
+  height: 24px;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+
+  width: 0;
+  height: 0;
+}
+
+.switch .slider-toggle {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(255,255,255,0.15);
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition: background .2s ease;
+}
+
+.switch .slider-toggle::before {
+  content: "";
+
+  position: absolute;
+
+  width: 18px;
+  height: 18px;
+
+  left: 3px;
+  top: 3px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  transition: transform .2s ease;
+}
+
+.switch input:checked + .slider-toggle {
+  background:
+    linear-gradient(
+      135deg,
+      #e2497a,
+      #b13564
+    );
+}
+
+.switch input:checked + .slider-toggle::before {
+  transform: translateX(-18px);
+}
+
+.slider-block {
+  margin-bottom: 14px;
+}
+
+.slider-block:last-child {
+  margin-bottom: 0;
+}
+
+.slider-block .label {
+  font-size: 12.5px;
+
+  color: #f0d0dc;
+
+  margin-bottom: 8px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider-block input[type="range"] {
+  width: 100%;
+  accent-color: #e2497a;
+}
+
+.sub-slider {
+  margin-top: 10px;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+}
+
+/* FULLSCREEN */
+
+.fullscreen-btn {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 11px 12px;
+
+  margin-top: 12px;
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
       135deg,
       rgba(226,73,122,.25),
       rgba(157,74,143,.25)
     );
-    color: white;
-    font-family: inherit;
-    font-size: 12.5px;
-    cursor: pointer;
-    transition:
-      transform .2s ease,
-      background .2s ease,
-      border-color .2s ease;
-  }
 
-  .fullscreen-btn:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255,255,255,.25);
-    background: linear-gradient(
+  color: white;
+
+  font-family: inherit;
+
+  font-size: 12.5px;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease;
+}
+
+.fullscreen-btn:active {
+  transform: scale(.97);
+}
+
+.pages {
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  padding-bottom: 40px;
+
+  transition:
+    max-width .2s ease;
+}
+
+.pages img {
+  width: 100%;
+
+  height: auto;
+
+  display: block;
+}
+
+#loading,
+#empty {
+  text-align: center;
+
+  padding: 60px 20px;
+
+  color: #b98ba0;
+}
+
+#error {
+  display: none;
+
+  text-align: center;
+
+  padding: 60px 20px;
+
+  color: #ffb3c9;
+
+  font-size: 14px;
+}
+
+.retry {
+  margin-top: 14px;
+
+  padding: 10px 18px;
+
+  border: 0;
+
+  border-radius: 12px;
+
+  background: #d6336c;
+
+  color: white;
+
+  font-family: inherit;
+}
+
+.nav-bottom {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 20px 16px 40px;
+
+  max-width: 700px;
+
+  margin: 0 auto;
+}
+
+.nav-bottom a,
+.nav-bottom span {
+  flex: 1;
+
+  text-align: center;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
       135deg,
-      rgba(226,73,122,.35),
-      rgba(157,74,143,.35)
+      #9d4a8f,
+      #6e2f6b
     );
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: bold;
+}
+
+.nav-bottom span {
+  background: rgba(255,255,255,0.05);
+  color: #777;
+}
+
+/* FULLSCREEN */
+
+body.fullscreen-mode .topbar {
+  display: none;
+}
+
+body.fullscreen-mode .pages {
+  max-width: 100% !important;
+}
+
+body.fullscreen-mode {
+  background: #000;
+}
+
+@media (max-width: 480px) {
+
+  .settings-panel {
+    width: 250px;
+
+    max-width:
+      calc(100vw - 24px);
   }
 
-  .fullscreen-btn:active {
-    transform: scale(.97);
-  }
-
-  .pages {
-    max-width: 700px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-    transition: max-width .2s ease;
-  }
-
-  .pages img {
-    width: 100%;
-    display: block;
-  }
-
-  #loading,
-  #empty {
-    text-align: center;
-    padding: 60px 20px;
-    color: #b98ba0;
-  }
-
-  .nav-bottom {
-    display: flex;
-    gap: 10px;
-    padding: 20px 16px 40px;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .nav-bottom a,
-  .nav-bottom span {
-    flex: 1;
-    text-align: center;
-    padding: 14px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #9d4a8f, #6e2f6b);
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
-  }
-
-  .nav-bottom span {
-    background: rgba(255,255,255,0.05);
-    color: #777;
-  }
-
-  /* =========================
-     FULLSCREEN MODE
-  ========================= */
-
-  body.fullscreen-mode .topbar {
-    display: none;
-  }
-
-  body.fullscreen-mode .pages {
-    max-width: 100% !important;
-  }
-
-  body.fullscreen-mode {
-    background: #000;
-  }
-
-  @media (max-width: 480px) {
-
-    .settings-panel {
-      width: 250px;
-      max-width: calc(100vw - 24px);
-    }
-
-  }
+}
 </style>
 </head>
 
 <body>
 
-  <div class="topbar">
+<div class="topbar">
 
-    <a href="/index.html">
-      ← کتابخانه
-    </a>
-
-    <div class="chapter-label" id="chapterLabel">
-      🌹
-    </div>
-
-    <button
-      class="settings-btn"
-      id="settingsBtn"
-      type="button"
-      aria-label="تنظیمات"
-    >
-      ⚙️
-    </button>
-
-  </div>
-
-
-  <!-- SETTINGS -->
+  <a href="library.html">
+    ← کتابخانه
+  </a>
 
   <div
-    class="settings-panel"
-    id="settingsPanel"
+    class="chapter-label"
+    id="chapterLabel"
   >
+    🌹
+  </div>
 
-    <div class="settings-row">
+  <button
+    class="settings-btn"
+    id="settingsBtn"
+    type="button"
+    aria-label="تنظیمات"
+  >
+    ⚙️
+  </button>
 
-      <span class="label">
-        رفتن خودکار به قسمت بعد
-      </span>
-
-      <label class="switch">
-
-        <input
-          type="checkbox"
-          id="autoNextToggle"
-        >
-
-        <span class="slider-toggle"></span>
-
-      </label>
-
-    </div>
+</div>
 
 
-    <div class="settings-row">
+<!-- SETTINGS -->
 
-      <span class="label">
-        اسکرول خودکار
-      </span>
+<div
+  class="settings-panel"
+  id="settingsPanel"
+>
 
-      <label class="switch">
+  <div class="settings-row">
 
-        <input
-          type="checkbox"
-          id="autoScrollToggle"
-        >
+    <span class="label">
+      رفتن خودکار به قسمت بعد
+    </span>
 
-        <span class="slider-toggle"></span>
-
-      </label>
-
-    </div>
-
-
-    <div
-      class="sub-slider"
-      id="speedBlock"
-      style="display:none;"
-    >
-
-      <div class="label">
-
-        <span>
-          سرعت اسکرول
-        </span>
-
-        <span id="speedVal">
-          50
-        </span>
-
-      </div>
+    <label class="switch">
 
       <input
-        type="range"
-        id="speedSlider"
-        min="1"
-        max="100"
-        value="50"
+        type="checkbox"
+        id="autoNextToggle"
       >
 
-    </div>
+      <span class="slider-toggle"></span>
+
+    </label>
+
+  </div>
 
 
-    <div class="slider-block sub-slider">
+  <div class="settings-row">
 
-      <div class="label">
+    <span class="label">
+      اسکرول خودکار
+    </span>
 
-        <span>
-          اندازه‌ی نمایش
-        </span>
-
-        <span id="zoomVal">
-          100
-        </span>
-
-      </div>
+    <label class="switch">
 
       <input
-        type="range"
-        id="zoomSlider"
-        min="20"
-        max="100"
-        value="100"
+        type="checkbox"
+        id="autoScrollToggle"
       >
+
+      <span class="slider-toggle"></span>
+
+    </label>
+
+  </div>
+
+
+  <div
+    class="sub-slider"
+    id="speedBlock"
+    style="display:none;"
+  >
+
+    <div class="label">
+
+      <span>
+        سرعت اسکرول
+      </span>
+
+      <span id="speedVal">
+        50
+      </span>
 
     </div>
 
-
-    <!-- FULLSCREEN -->
-
-    <button
-      class="fullscreen-btn"
-      id="fullscreenBtn"
-      type="button"
+    <input
+      type="range"
+      id="speedSlider"
+      min="1"
+      max="100"
+      value="50"
     >
-      🖥️ ورود به حالت تمام‌صفحه
-    </button>
 
   </div>
 
 
-  <div id="loading">
-    در حال بارگذاری...
+  <div class="slider-block sub-slider">
+
+    <div class="label">
+
+      <span>
+        اندازه‌ی نمایش
+      </span>
+
+      <span id="zoomVal">
+        100
+      </span>
+
+    </div>
+
+    <input
+      type="range"
+      id="zoomSlider"
+      min="20"
+      max="100"
+      value="100"
+    >
+
   </div>
 
 
-  <div
-    id="empty"
-    style="display:none;"
+  <button
+    class="fullscreen-btn"
+    id="fullscreenBtn"
+    type="button"
   >
-    این قسمت صفحه‌ای ندارد 🌸
+    🖥️ ورود به حالت تمام‌صفحه
+  </button>
+
+</div>
+
+
+<div id="loading">
+  در حال بارگذاری...
+</div>
+
+
+<div
+  id="error"
+>
+  <div id="errorText">
+    ارتباط با سرور برقرار نشد.
   </div>
 
+  <button
+    class="retry"
+    onclick="load()"
+  >
+    تلاش دوباره
+  </button>
+</div>
 
-  <div
-    class="pages"
-    id="pages"
-  ></div>
+
+<div
+  id="empty"
+  style="display:none;"
+>
+  این قسمت صفحه‌ای ندارد 🌸
+</div>
 
 
-  <div
-    class="nav-bottom"
-    id="navBottom"
-    style="display:none;"
-  ></div>
+<div
+  class="pages"
+  id="pages"
+></div>
+
+
+<div
+  class="nav-bottom"
+  id="navBottom"
+  style="display:none;"
+></div>
 
 
 <script>
 
-  /* =========================
-     URL PARAMS
-  ========================= */
+/* =========================
+   WORKER API
+========================= */
 
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const chapterId =
-    params.get("id");
+const API =
+  "https://manhwa-rose.wsalqlyzadh0.workers.dev";
 
 
-  /* =========================
-     ELEMENTS
-  ========================= */
+/* =========================
+   URL PARAMS
+========================= */
 
-  const loading =
-    document.getElementById("loading");
-
-  const emptyEl =
-    document.getElementById("empty");
-
-  const pagesEl =
-    document.getElementById("pages");
-
-  const navBottom =
-    document.getElementById("navBottom");
-
-  const chapterLabel =
-    document.getElementById("chapterLabel");
-
-
-  const settingsBtn =
-    document.getElementById("settingsBtn");
-
-  const settingsPanel =
-    document.getElementById("settingsPanel");
-
-
-  const autoNextToggle =
-    document.getElementById("autoNextToggle");
-
-  const autoScrollToggle =
-    document.getElementById("autoScrollToggle");
-
-
-  const speedBlock =
-    document.getElementById("speedBlock");
-
-  const speedSlider =
-    document.getElementById("speedSlider");
-
-  const speedVal =
-    document.getElementById("speedVal");
-
-
-  const zoomSlider =
-    document.getElementById("zoomSlider");
-
-  const zoomVal =
-    document.getElementById("zoomVal");
-
-
-  const fullscreenBtn =
-    document.getElementById("fullscreenBtn");
-
-
-  let nextChapterId = null;
-
-  let autoNextTriggered = false;
-
-
-  /* =========================
-     SAVED SETTINGS
-  ========================= */
-
-  autoNextToggle.checked =
-    localStorage.getItem("mr_auto_next") === "1";
-
-
-  autoScrollToggle.checked =
-    localStorage.getItem("mr_auto_scroll") === "1";
-
-
-  speedSlider.value =
-    localStorage.getItem("mr_scroll_speed") || "50";
-
-
-  zoomSlider.value =
-    localStorage.getItem("mr_zoom") || "100";
-
-
-  speedVal.textContent =
-    speedSlider.value;
-
-
-  zoomVal.textContent =
-    zoomSlider.value;
-
-
-  speedBlock.style.display =
-    autoScrollToggle.checked
-      ? "block"
-      : "none";
-
-
-  pagesEl.style.maxWidth =
-    zoomSlider.value + "%";
-
-
-  /* =========================
-     SETTINGS PANEL
-  ========================= */
-
-  settingsBtn.addEventListener(
-    "click",
-    (e) => {
-
-      e.stopPropagation();
-
-      settingsPanel.classList.toggle("open");
-
-    }
+const params =
+  new URLSearchParams(
+    window.location.search
   );
 
-
-  document.addEventListener(
-    "click",
-    (e) => {
-
-      if (
-        !settingsPanel.contains(e.target) &&
-        e.target !== settingsBtn
-      ) {
-
-        settingsPanel.classList.remove("open");
-
-      }
-
-    }
-  );
+const chapterId =
+  params.get("id");
 
 
-  settingsPanel.addEventListener(
-    "click",
-    (e) => {
+/* =========================
+   ELEMENTS
+========================= */
 
-      e.stopPropagation();
+const loading =
+  document.getElementById("loading");
 
-    }
-  );
+const emptyEl =
+  document.getElementById("empty");
 
+const errorEl =
+  document.getElementById("error");
 
-  /* =========================
-     AUTO NEXT
-  ========================= */
+const errorText =
+  document.getElementById("errorText");
 
-  autoNextToggle.addEventListener(
-    "change",
-    () => {
+const pagesEl =
+  document.getElementById("pages");
 
-      localStorage.setItem(
-        "mr_auto_next",
-        autoNextToggle.checked
-          ? "1"
-          : "0"
-      );
+const navBottom =
+  document.getElementById("navBottom");
 
-    }
-  );
+const chapterLabel =
+  document.getElementById("chapterLabel");
 
+const settingsBtn =
+  document.getElementById("settingsBtn");
 
-  /* =========================
-     AUTO SCROLL
-  ========================= */
+const settingsPanel =
+  document.getElementById("settingsPanel");
 
-  autoScrollToggle.addEventListener(
-    "change",
-    () => {
+const autoNextToggle =
+  document.getElementById("autoNextToggle");
 
-      localStorage.setItem(
-        "mr_auto_scroll",
-        autoScrollToggle.checked
-          ? "1"
-          : "0"
-      );
+const autoScrollToggle =
+  document.getElementById("autoScrollToggle");
 
-      speedBlock.style.display =
-        autoScrollToggle.checked
-          ? "block"
-          : "none";
+const speedBlock =
+  document.getElementById("speedBlock");
 
-    }
-  );
+const speedSlider =
+  document.getElementById("speedSlider");
 
+const speedVal =
+  document.getElementById("speedVal");
 
-  /* =========================
-     SPEED
-  ========================= */
+const zoomSlider =
+  document.getElementById("zoomSlider");
 
-  speedSlider.addEventListener(
-    "input",
-    () => {
+const zoomVal =
+  document.getElementById("zoomVal");
 
-      speedVal.textContent =
-        speedSlider.value;
-
-      localStorage.setItem(
-        "mr_scroll_speed",
-        speedSlider.value
-      );
-
-    }
-  );
+const fullscreenBtn =
+  document.getElementById("fullscreenBtn");
 
 
-  /* =========================
-     ZOOM
-  ========================= */
+let nextChapterId = null;
 
-  zoomSlider.addEventListener(
-    "input",
-    () => {
+let autoNextTriggered = false;
 
-      zoomVal.textContent =
-        zoomSlider.value;
+let scrollPaused = false;
 
-      localStorage.setItem(
-        "mr_zoom",
-        zoomSlider.value
-      );
-
-      pagesEl.style.maxWidth =
-        zoomSlider.value + "%";
-
-    }
-  );
+let pauseTimeout = null;
 
 
-  /* =========================
-     FULLSCREEN
-  ========================= */
+/* =========================
+   SAVED SETTINGS
+========================= */
 
-  async function enterFullscreen() {
+autoNextToggle.checked =
+  localStorage.getItem(
+    "mr_auto_next"
+  ) === "1";
 
-    try {
+autoScrollToggle.checked =
+  localStorage.getItem(
+    "mr_auto_scroll"
+  ) === "1";
 
-      if (document.documentElement.requestFullscreen) {
+speedSlider.value =
+  localStorage.getItem(
+    "mr_scroll_speed"
+  ) || "50";
 
-        await document.documentElement.requestFullscreen();
+zoomSlider.value =
+  localStorage.getItem(
+    "mr_zoom"
+  ) || "100";
 
-      } else if (document.documentElement.webkitRequestFullscreen) {
+speedVal.textContent =
+  speedSlider.value;
 
-        document.documentElement.webkitRequestFullscreen();
+zoomVal.textContent =
+  zoomSlider.value;
 
-      }
+speedBlock.style.display =
+  autoScrollToggle.checked
+    ? "block"
+    : "none";
 
-      document.body.classList.add(
-        "fullscreen-mode"
-      );
+pagesEl.style.maxWidth =
+  zoomSlider.value + "%";
 
-      fullscreenBtn.textContent =
-        "⛶ خروج از حالت تمام‌صفحه";
 
-      settingsPanel.classList.remove(
-        "open"
-      );
+/* =========================
+   SETTINGS PANEL
+========================= */
 
-    } catch (error) {
+settingsBtn.addEventListener(
+  "click",
+  (e) => {
 
-      document.body.classList.add(
-        "fullscreen-mode"
-      );
+    e.stopPropagation();
 
-      fullscreenBtn.textContent =
-        "⛶ خروج از حالت تمام‌صفحه";
+    settingsPanel.classList.toggle(
+      "open"
+    );
+
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  (e) => {
+
+    if (
+      !settingsPanel.contains(
+        e.target
+      ) &&
+      e.target !== settingsBtn
+    ) {
 
       settingsPanel.classList.remove(
         "open"
@@ -723,23 +721,218 @@
     }
 
   }
+);
 
 
-  async function exitFullscreen() {
+settingsPanel.addEventListener(
+  "click",
+  (e) => {
 
-    try {
+    e.stopPropagation();
 
-      if (document.exitFullscreen) {
+  }
+);
 
-        await document.exitFullscreen();
 
-      } else if (document.webkitExitFullscreen) {
+/* =========================
+   AUTO NEXT
+========================= */
 
-        document.webkitExitFullscreen();
+autoNextToggle.addEventListener(
+  "change",
+  () => {
 
-      }
+    localStorage.setItem(
+      "mr_auto_next",
 
-    } catch (error) {}
+      autoNextToggle.checked
+        ? "1"
+        : "0"
+    );
+
+  }
+);
+
+
+/* =========================
+   AUTO SCROLL
+========================= */
+
+autoScrollToggle.addEventListener(
+  "change",
+  () => {
+
+    localStorage.setItem(
+      "mr_auto_scroll",
+
+      autoScrollToggle.checked
+        ? "1"
+        : "0"
+    );
+
+    speedBlock.style.display =
+      autoScrollToggle.checked
+        ? "block"
+        : "none";
+
+  }
+);
+
+
+/* =========================
+   SPEED
+========================= */
+
+speedSlider.addEventListener(
+  "input",
+  () => {
+
+    speedVal.textContent =
+      speedSlider.value;
+
+    localStorage.setItem(
+      "mr_scroll_speed",
+      speedSlider.value
+    );
+
+  }
+);
+
+
+/* =========================
+   ZOOM
+========================= */
+
+zoomSlider.addEventListener(
+  "input",
+  () => {
+
+    zoomVal.textContent =
+      zoomSlider.value;
+
+    localStorage.setItem(
+      "mr_zoom",
+      zoomSlider.value
+    );
+
+    pagesEl.style.maxWidth =
+      zoomSlider.value + "%";
+
+  }
+);
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+async function enterFullscreen() {
+
+  try {
+
+    if (
+      document.documentElement
+        .requestFullscreen
+    ) {
+
+      await document.documentElement
+        .requestFullscreen();
+
+    } else if (
+      document.documentElement
+        .webkitRequestFullscreen
+    ) {
+
+      document.documentElement
+        .webkitRequestFullscreen();
+
+    }
+
+  } catch (e) {}
+
+  document.body.classList.add(
+    "fullscreen-mode"
+  );
+
+  fullscreenBtn.textContent =
+    "⛶ خروج از حالت تمام‌صفحه";
+
+  settingsPanel.classList.remove(
+    "open"
+  );
+}
+
+
+async function exitFullscreen() {
+
+  try {
+
+    if (
+      document.exitFullscreen
+    ) {
+
+      await document.exitFullscreen();
+
+    } else if (
+      document.webkitExitFullscreen
+    ) {
+
+      document.webkitExitFullscreen();
+
+    }
+
+  } catch (e) {}
+
+  document.body.classList.remove(
+    "fullscreen-mode"
+  );
+
+  fullscreenBtn.textContent =
+    "🖥️ ورود به حالت تمام‌صفحه";
+}
+
+
+fullscreenBtn.addEventListener(
+  "click",
+  async () => {
+
+    const isFullscreen =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.body.classList.contains(
+        "fullscreen-mode"
+      );
+
+    if (isFullscreen) {
+
+      await exitFullscreen();
+
+    } else {
+
+      await enterFullscreen();
+
+    }
+
+  }
+);
+
+
+function updateFullscreenButton() {
+
+  const isFullscreen =
+    document.fullscreenElement ||
+    document.webkitFullscreenElement;
+
+  if (isFullscreen) {
+
+    document.body.classList.add(
+      "fullscreen-mode"
+    );
+
+    fullscreenBtn.textContent =
+      "⛶ خروج از حالت تمام‌صفحه";
+
+  } else {
 
     document.body.classList.remove(
       "fullscreen-mode"
@@ -749,378 +942,420 @@
       "🖥️ ورود به حالت تمام‌صفحه";
 
   }
+}
 
 
-  fullscreenBtn.addEventListener(
-    "click",
-    async () => {
+document.addEventListener(
+  "fullscreenchange",
+  updateFullscreenButton
+);
 
-      const isFullscreen =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.body.classList.contains(
-          "fullscreen-mode"
-        );
-
-      if (isFullscreen) {
-
-        await exitFullscreen();
-
-      } else {
-
-        await enterFullscreen();
-
-      }
-
-    }
-  );
+document.addEventListener(
+  "webkitfullscreenchange",
+  updateFullscreenButton
+);
 
 
-  /* =========================
-     FULLSCREEN CHANGE
-  ========================= */
+/* =========================
+   AUTO SCROLL
+========================= */
 
-  function updateFullscreenButton() {
+function autoScrollTick() {
 
-    const isFullscreen =
-      document.fullscreenElement ||
-      document.webkitFullscreenElement;
+  if (
+    autoScrollToggle.checked &&
+    !scrollPaused
+  ) {
 
-    if (isFullscreen) {
-
-      document.body.classList.add(
-        "fullscreen-mode"
+    const speed =
+      Number(
+        speedSlider.value
       );
 
-      fullscreenBtn.textContent =
-        "⛶ خروج از حالت تمام‌صفحه";
+    const pxPerFrame =
+      0.15 +
+      (speed / 100) * 4.5;
 
-    } else {
-
-      document.body.classList.remove(
-        "fullscreen-mode"
-      );
-
-      fullscreenBtn.textContent =
-        "🖥️ ورود به حالت تمام‌صفحه";
-
-    }
-
-  }
-
-
-  document.addEventListener(
-    "fullscreenchange",
-    updateFullscreenButton
-  );
-
-
-  document.addEventListener(
-    "webkitfullscreenchange",
-    updateFullscreenButton
-  );
-
-
-  /* =========================
-     AUTO SCROLL
-  ========================= */
-
-  let scrollPaused = false;
-
-  let pauseTimeout = null;
-
-
-  function autoScrollTick() {
-
-    if (
-      autoScrollToggle.checked &&
-      !scrollPaused
-    ) {
-
-      const speed =
-        Number(speedSlider.value);
-
-      const pxPerFrame =
-        0.15 +
-        (speed / 100) * 4.5;
-
-
-      window.scrollBy(
-        0,
-        pxPerFrame
-      );
-
-
-      const nearBottom =
-        window.innerHeight +
-        window.scrollY >=
-        document.body.scrollHeight - 40;
-
-
-      if (
-        nearBottom &&
-        autoNextToggle.checked &&
-        nextChapterId &&
-        !autoNextTriggered
-      ) {
-
-        autoNextTriggered = true;
-
-        window.location.href =
-          `/read.html?id=${nextChapterId}`;
-
-      }
-
-    }
-
-    requestAnimationFrame(
-      autoScrollTick
+    window.scrollBy(
+      0,
+      pxPerFrame
     );
 
-  }
 
+    const nearBottom =
+      window.innerHeight +
+      window.scrollY >=
+      document.body.scrollHeight - 40;
+
+
+    if (
+      nearBottom &&
+      autoNextToggle.checked &&
+      nextChapterId &&
+      !autoNextTriggered
+    ) {
+
+      autoNextTriggered = true;
+
+      window.location.href =
+        "read.html?id=" +
+        encodeURIComponent(
+          nextChapterId
+        );
+
+    }
+
+  }
 
   requestAnimationFrame(
     autoScrollTick
   );
+}
 
 
-  /* =========================
-     TOUCH PAUSE
-  ========================= */
+requestAnimationFrame(
+  autoScrollTick
+);
 
-  document.addEventListener(
-    "touchstart",
-    () => {
 
-      scrollPaused = true;
+/* =========================
+   TOUCH PAUSE
+========================= */
 
-      clearTimeout(
-        pauseTimeout
+document.addEventListener(
+  "touchstart",
+  () => {
+
+    scrollPaused = true;
+
+    clearTimeout(
+      pauseTimeout
+    );
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+document.addEventListener(
+  "touchend",
+  () => {
+
+    clearTimeout(
+      pauseTimeout
+    );
+
+    pauseTimeout =
+      setTimeout(
+        () => {
+
+          scrollPaused = false;
+
+        },
+        900
       );
 
-    },
-    {
-      passive: true
+  },
+  {
+    passive: true
+  }
+);
+
+
+/* =========================
+   MANUAL SCROLL
+========================= */
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    const nearBottom =
+      window.innerHeight +
+      window.scrollY >=
+      document.body.scrollHeight - 40;
+
+
+    if (
+      nearBottom &&
+      autoNextToggle.checked &&
+      nextChapterId &&
+      !autoNextTriggered
+    ) {
+
+      autoNextTriggered = true;
+
+      window.location.href =
+        "read.html?id=" +
+        encodeURIComponent(
+          nextChapterId
+        );
+
     }
-  );
+
+  },
+  {
+    passive: true
+  }
+);
 
 
-  document.addEventListener(
-    "touchend",
-    () => {
+/* =========================
+   LOAD CHAPTER
+========================= */
 
-      clearTimeout(
-        pauseTimeout
-      );
+async function load() {
 
-      pauseTimeout =
-        setTimeout(
-          () => {
+  if (!chapterId) {
 
-            scrollPaused = false;
+    loading.style.display =
+      "none";
 
+    errorText.textContent =
+      "قسمت مشخص نشده.";
+
+    errorEl.style.display =
+      "block";
+
+    return;
+  }
+
+
+  loading.style.display =
+    "block";
+
+  errorEl.style.display =
+    "none";
+
+  emptyEl.style.display =
+    "none";
+
+  pagesEl.innerHTML =
+    "";
+
+  navBottom.style.display =
+    "none";
+
+
+  try {
+
+    const res =
+      await fetch(
+        API +
+        "/api/public/chapters/" +
+        encodeURIComponent(
+          chapterId
+        ),
+        {
+          method: "GET",
+
+          headers: {
+            "Accept":
+              "application/json"
           },
-          900
-        );
 
-    },
-    {
-      passive: true
-    }
-  );
+          cache: "no-store"
+        }
+      );
 
 
-  /* =========================
-     MANUAL SCROLL
-  ========================= */
+    if (!res.ok) {
 
-  window.addEventListener(
-    "scroll",
-    () => {
-
-      const nearBottom =
-        window.innerHeight +
-        window.scrollY >=
-        document.body.scrollHeight - 40;
-
-
-      if (
-        nearBottom &&
-        autoNextToggle.checked &&
-        nextChapterId &&
-        !autoNextTriggered
-      ) {
-
-        autoNextTriggered = true;
-
-        window.location.href =
-          `/read.html?id=${nextChapterId}`;
-
-      }
-
-    },
-    {
-      passive: true
-    }
-  );
-
-
-  /* =========================
-     LOAD CHAPTER
-  ========================= */
-
-  async function load() {
-
-    if (!chapterId) {
-
-      loading.textContent =
-        "قسمت مشخص نشده.";
-
-      return;
-
+      throw new Error(
+        "HTTP " + res.status
+      );
     }
 
 
-    try {
-
-      const res =
-        await fetch(
-          `/api/public/chapters/${chapterId}`
-        );
+    const data =
+      await res.json();
 
 
-      const data =
-        await res.json();
-
-
-      if (!data.success) {
-
-        loading.textContent =
-          data.message ||
-          "قسمت پیدا نشد.";
-
-        return;
-
-      }
-
+    if (!data.success) {
 
       loading.style.display =
         "none";
 
+      errorText.textContent =
+        data.message ||
+        data.error ||
+        "قسمت پیدا نشد.";
 
-      const ch =
-        data.chapter;
+      errorEl.style.display =
+        "block";
+
+      return;
+    }
 
 
-      chapterLabel.textContent =
-        `قسمت ${ch.chapter_number}`;
+    loading.style.display =
+      "none";
 
 
-      if (
-        ch.pages.length === 0
-      ) {
+    const ch =
+      data.chapter;
 
-        emptyEl.style.display =
-          "block";
 
-      } else {
+    chapterLabel.textContent =
+      `قسمت ${ch.chapter_number}`;
 
-        ch.pages.forEach(
-          src => {
 
-            const img =
-              document.createElement(
-                "img"
-              );
+    const pages =
+      Array.isArray(ch.pages)
+        ? ch.pages
+        : [];
 
-            img.src = src;
 
-            img.loading = "lazy";
+    if (pages.length === 0) {
 
-            pagesEl.appendChild(
-              img
+      emptyEl.style.display =
+        "block";
+
+    } else {
+
+      pages.forEach(
+        (src) => {
+
+          if (!src) return;
+
+          const img =
+            document.createElement(
+              "img"
             );
 
-          }
-        );
+          img.src =
+            src;
 
-      }
+          img.loading =
+            "lazy";
 
+          img.decoding =
+            "async";
 
-      /* =========================
-         CHAPTER NAVIGATION
-      ========================= */
+          img.alt =
+            `قسمت ${ch.chapter_number}`;
 
-      const siblings =
-        data.siblings;
+          pagesEl.appendChild(
+            img
+          );
 
-
-      const idx =
-        siblings.findIndex(
-          s => s.id === ch.id
-        );
-
-
-      const prev =
-        idx > 0
-          ? siblings[idx - 1]
-          : null;
-
-
-      const next =
-        idx < siblings.length - 1
-          ? siblings[idx + 1]
-          : null;
-
-
-      nextChapterId =
-        next
-          ? next.id
-          : null;
-
-
-      navBottom.style.display =
-        "flex";
-
-
-      navBottom.innerHTML = `
-
-        ${
-          next
-            ? `<a href="/read.html?id=${next.id}">
-                ▶ قسمت بعد
-              </a>`
-            : `<span>
-                آخرین قسمت
-              </span>`
         }
-
-        ${
-          prev
-            ? `<a href="/read.html?id=${prev.id}">
-                قسمت قبل ◀
-              </a>`
-            : `<span>
-                اولین قسمت
-              </span>`
-        }
-
-      `;
-
-    } catch {
-
-      loading.textContent =
-        "ارتباط با سرور برقرار نشد.";
+      );
 
     }
 
+
+    /* =========================
+       CHAPTER NAVIGATION
+    ========================= */
+
+    const siblings =
+      Array.isArray(
+        data.siblings
+      )
+        ? data.siblings
+        : [];
+
+
+    const idx =
+      siblings.findIndex(
+        s =>
+          String(s.id) ===
+          String(ch.id)
+      );
+
+
+    const prev =
+      idx > 0
+        ? siblings[idx - 1]
+        : null;
+
+
+    const next =
+      idx >= 0 &&
+      idx < siblings.length - 1
+        ? siblings[idx + 1]
+        : null;
+
+
+    nextChapterId =
+      next
+        ? next.id
+        : null;
+
+
+    navBottom.style.display =
+      "flex";
+
+
+    navBottom.innerHTML = `
+
+      ${
+        next
+          ? `
+            <a
+              href="read.html?id=${encodeURIComponent(next.id)}"
+            >
+              ▶ قسمت بعد
+            </a>
+          `
+          : `
+            <span>
+              آخرین قسمت
+            </span>
+          `
+      }
+
+      ${
+        prev
+          ? `
+            <a
+              href="read.html?id=${encodeURIComponent(prev.id)}"
+            >
+              قسمت قبل ◀
+            </a>
+          `
+          : `
+            <span>
+              اولین قسمت
+            </span>
+          `
+      }
+
+    `;
+
+
+  } catch (err) {
+
+    console.error(
+      "Chapter API error:",
+      err
+    );
+
+
+    loading.style.display =
+      "none";
+
+    errorText.textContent =
+      "ارتباط با سرور برقرار نشد.";
+
+    errorEl.style.display =
+      "block";
+
   }
 
+}
 
-  load();
+
+/* =========================
+   START
+========================= */
+
+load();
 
 </script>
 
 </body>
- </html>
+     </html>
