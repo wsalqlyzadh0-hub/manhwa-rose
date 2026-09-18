@@ -17,8 +17,16 @@
     }
 
     @keyframes glow {
-      0%, 100% { text-shadow: 0 0 20px rgba(233,90,140,0.6), 0 0 40px rgba(233,90,140,0.3); }
-      50% { text-shadow: 0 0 30px rgba(233,90,140,0.9), 0 0 60px rgba(233,90,140,0.5); }
+      0%, 100% {
+        text-shadow:
+          0 0 20px rgba(233,90,140,0.6),
+          0 0 40px rgba(233,90,140,0.3);
+      }
+      50% {
+        text-shadow:
+          0 0 30px rgba(233,90,140,0.9),
+          0 0 60px rgba(233,90,140,0.5);
+      }
     }
 
     @keyframes shimmer {
@@ -27,13 +35,25 @@
     }
 
     @keyframes pop {
-      0% { transform: scale(0.9); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     @keyframes petal-fall {
-      0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.9; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     body {
@@ -44,7 +64,13 @@
       justify-content: center;
       align-items: center;
       font-family: Tahoma, Arial, sans-serif;
-      background: radial-gradient(circle at top, #6b1f42, #1a0a17 45%, #08050a);
+      background:
+        radial-gradient(
+          circle at top,
+          #6b1f42,
+          #1a0a17 45%,
+          #08050a
+        );
       color: white;
       position: relative;
     }
@@ -65,12 +91,19 @@
       padding: 40px 26px;
       border-radius: 26px;
       text-align: center;
+
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+
+      box-shadow:
+        0 25px 70px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+
       backdrop-filter: blur(18px);
+
       position: relative;
       z-index: 1;
+
       animation: pop 0.5s ease;
     }
 
@@ -84,12 +117,26 @@
     h1 {
       margin: 0 0 8px;
       font-size: 30px;
-      background: linear-gradient(90deg, #ffd1de, #ff8fae, #ffd1de);
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffd1de,
+          #ff8fae,
+          #ffd1de
+        );
+
       background-size: 200% auto;
+
       -webkit-background-clip: text;
       background-clip: text;
+
       color: transparent;
-      animation: shimmer 4s linear infinite, glow 3s ease-in-out infinite;
+
+      animation:
+        shimmer 4s linear infinite,
+        glow 3s ease-in-out infinite;
+
       letter-spacing: 1px;
     }
 
@@ -104,98 +151,250 @@
       width: 100%;
       padding: 14px;
       margin-bottom: 12px;
+
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.15);
+
       outline: none;
+
       background: rgba(0,0,0,0.3);
       color: white;
+
       font-size: 15px;
     }
 
-    input:focus { border-color: #e65382; }
+    input:focus {
+      border-color: #e65382;
+    }
 
     #loginButton {
       width: 100%;
       padding: 14px;
+
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, #e2497a, #b13564);
+
+      background:
+        linear-gradient(
+          135deg,
+          #e2497a,
+          #b13564
+        );
+
       color: white;
+
       font-size: 16px;
       font-weight: bold;
+
       cursor: pointer;
+
       transition: .2s;
     }
 
-    #loginButton:hover { transform: translateY(-2px); filter: brightness(1.08); }
-    #loginButton:active { transform: scale(.98); }
-    #loginButton:disabled { opacity: .6; cursor: wait; }
+    #loginButton:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
 
-    #message { min-height: 22px; margin-top: 15px; color: #ff8fae; font-size: 13px; }
+    #loginButton:active {
+      transform: scale(.98);
+    }
 
-    #panel { display: none; }
+    #loginButton:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      min-height: 22px;
+      margin-top: 15px;
+      color: #ff8fae;
+      font-size: 13px;
+    }
+
+    #panel {
+      display: none;
+    }
 
     .panel-button {
       width: 100%;
       padding: 18px 20px;
       margin-top: 14px;
+
       border: none;
       border-radius: 16px;
+
       font-size: 16px;
       font-weight: bold;
+
       color: white;
+
       cursor: pointer;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 10px;
+
       position: relative;
       overflow: hidden;
-      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+
+      transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        filter .18s ease;
     }
 
-    .panel-button .icon { font-size: 22px; transition: transform .3s ease; }
-    .panel-button .arrow { opacity: 0.6; transition: transform .25s ease, opacity .25s ease; }
+    .panel-button .icon {
+      font-size: 22px;
+      transition: transform .3s ease;
+    }
+
+    .panel-button .arrow {
+      opacity: 0.6;
+      transition:
+        transform .25s ease,
+        opacity .25s ease;
+    }
 
     .panel-button::before {
       content: "";
+
       position: absolute;
-      top: 0; left: -100%;
+
+      top: 0;
+      left: -100%;
+
       width: 60%;
       height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+
+      background:
+        linear-gradient(
+          120deg,
+          transparent,
+          rgba(255,255,255,0.25),
+          transparent
+        );
+
       transform: skewX(-20deg);
+
       transition: left .5s ease;
     }
 
-    .panel-button:hover::before { left: 140%; }
-    .panel-button:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.12); }
-    .panel-button:hover .icon { transform: rotate(-10deg) scale(1.15); }
-    .panel-button:hover .arrow { transform: translateX(-6px); opacity: 1; }
-    .panel-button:active { transform: scale(.97); }
+    .panel-button:hover::before {
+      left: 140%;
+    }
 
-    .btn-manga { background: linear-gradient(135deg, #e2497a, #b13564); box-shadow: 0 10px 25px rgba(226,73,122,0.35); }
-    .btn-chapters { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); box-shadow: 0 10px 25px rgba(157,74,143,0.35); }
-    .btn-support { background: linear-gradient(135deg, #3a6b7a, #1f4550); box-shadow: 0 10px 25px rgba(58,107,122,0.35); }
-    .btn-testfiles { background: linear-gradient(135deg, #7a5a10, #4a3608); box-shadow: 0 10px 25px rgba(122,90,16,0.35); }
+    .panel-button:hover {
+      transform:
+        translateY(-3px)
+        scale(1.02);
+
+      filter: brightness(1.12);
+    }
+
+    .panel-button:hover .icon {
+      transform:
+        rotate(-10deg)
+        scale(1.15);
+    }
+
+    .panel-button:hover .arrow {
+      transform: translateX(-6px);
+      opacity: 1;
+    }
+
+    .panel-button:active {
+      transform: scale(.97);
+    }
+
+    .btn-manga {
+      background:
+        linear-gradient(
+          135deg,
+          #e2497a,
+          #b13564
+        );
+
+      box-shadow:
+        0 10px 25px rgba(226,73,122,0.35);
+    }
+
+    .btn-chapters {
+      background:
+        linear-gradient(
+          135deg,
+          #9d4a8f,
+          #6e2f6b
+        );
+
+      box-shadow:
+        0 10px 25px rgba(157,74,143,0.35);
+    }
+
+    .btn-support {
+      background:
+        linear-gradient(
+          135deg,
+          #3a6b7a,
+          #1f4550
+        );
+
+      box-shadow:
+        0 10px 25px rgba(58,107,122,0.35);
+    }
+
+    .btn-testfiles {
+      background:
+        linear-gradient(
+          135deg,
+          #7a5a10,
+          #4a3608
+        );
+
+      box-shadow:
+        0 10px 25px rgba(122,90,16,0.35);
+    }
 
     .btn-logout {
-      background: linear-gradient(135deg, #3a2030, #241521);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+      background:
+        linear-gradient(
+          135deg,
+          #3a2030,
+          #241521
+        );
+
+      box-shadow:
+        0 10px 20px rgba(0,0,0,0.35);
+
       margin-top: 26px;
+
       font-size: 14px;
+
       opacity: 0.85;
     }
-    .btn-logout:hover { opacity: 1; }
+
+    .btn-logout:hover {
+      opacity: 1;
+    }
 
     .badge {
       display: inline-block;
+
       margin-top: 22px;
+
       padding: 6px 16px;
+
       border-radius: 999px;
+
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
+
+      border:
+        1px solid rgba(255,255,255,0.15);
+
       font-size: 12px;
+
       color: #f3c4d4;
     }
 
@@ -206,16 +405,42 @@
 <body>
 
   <!-- LOGIN -->
+
   <div class="box" id="login">
 
     <div class="rose">🌹</div>
+
     <h1>Manhwa Rose</h1>
-    <p class="subtitle">ورود به پنل مدیریت</p>
+
+    <p class="subtitle">
+      ورود به پنل مدیریت
+    </p>
 
     <form id="loginForm">
-      <input id="username" type="text" placeholder="نام کاربری" autocomplete="username" required>
-      <input id="password" type="password" placeholder="رمز عبور" autocomplete="current-password" required>
-      <button id="loginButton" type="submit">ورود به پنل 🌹</button>
+
+      <input
+        id="username"
+        type="text"
+        placeholder="نام کاربری"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        id="password"
+        type="password"
+        placeholder="رمز عبور"
+        autocomplete="current-password"
+        required
+      >
+
+      <button
+        id="loginButton"
+        type="submit"
+      >
+        ورود به پنل 🌹
+      </button>
+
     </form>
 
     <div id="message"></div>
@@ -224,130 +449,372 @@
 
 
   <!-- PANEL -->
+
   <div class="box" id="panel">
 
     <div class="rose">🌹</div>
+
     <h1>خوش آمدی!</h1>
-    <p class="subtitle">وارد پنل مدیریت Manhwa Rose شدی 💫</p>
 
-    <button class="panel-button btn-manga" onclick="window.location.href='/manga.html'">
+    <p class="subtitle">
+      وارد پنل مدیریت Manhwa Rose شدی 💫
+    </p>
+
+    <button
+      class="panel-button btn-manga"
+      onclick="window.location.href='manga.html'"
+    >
+
       <span class="icon">📚</span>
-      <span style="flex:1; text-align:right;">مدیریت مانهوا</span>
+
+      <span style="flex:1; text-align:right;">
+        مدیریت مانهوا
+      </span>
+
       <span class="arrow">◀</span>
+
     </button>
 
-    <button class="panel-button btn-chapters" onclick="window.location.href='/chapters.html'">
+
+    <button
+      class="panel-button btn-chapters"
+      onclick="window.location.href='chapters.html'"
+    >
+
       <span class="icon">📖</span>
-      <span style="flex:1; text-align:right;">مدیریت قسمت‌ها</span>
+
+      <span style="flex:1; text-align:right;">
+        مدیریت قسمت‌ها
+      </span>
+
       <span class="arrow">◀</span>
+
     </button>
 
-    <button class="panel-button btn-support" onclick="window.location.href='/support.html'">
+
+    <button
+      class="panel-button btn-support"
+      onclick="window.location.href='support.html'"
+    >
+
       <span class="icon">🎧</span>
-      <span style="flex:1; text-align:right;">پیام‌های پشتیبانی</span>
+
+      <span style="flex:1; text-align:right;">
+        پیام‌های پشتیبانی
+      </span>
+
       <span class="arrow">◀</span>
+
     </button>
 
-    <button class="panel-button btn-testfiles" onclick="window.location.href='/test-files.html'">
+
+    <button
+      class="panel-button btn-testfiles"
+      onclick="window.location.href='test-files.html'"
+    >
+
       <span class="icon">📝</span>
-      <span style="flex:1; text-align:right;">فایل‌های تست</span>
+
+      <span style="flex:1; text-align:right;">
+        فایل‌های تست
+      </span>
+
       <span class="arrow">◀</span>
+
     </button>
 
-    <button class="panel-button btn-logout" id="logout">
+
+    <button
+      class="panel-button btn-logout"
+      id="logout"
+    >
+
       <span class="icon">👋</span>
-      <span style="flex:1; text-align:right;">خروج</span>
+
+      <span style="flex:1; text-align:right;">
+        خروج
+      </span>
+
       <span class="arrow">◀</span>
+
     </button>
 
-    <div class="badge">🌹 Manhwa Rose Admin</div>
+
+    <div class="badge">
+      🌹 Manhwa Rose Admin
+    </div>
 
   </div>
 
 
   <script>
 
-    // floating petals
-    const petals = ["🌸","🌹","🥀","💮"];
+    /*
+      آدرس اصلی Worker
+    */
+
+    const API =
+      "https://manhwa-rose.wsalqlyzadh0.workers.dev";
+
+
+    /*
+      گلبرگ‌های شناور
+    */
+
+    const petals = [
+      "🌸",
+      "🌹",
+      "🥀",
+      "💮"
+    ];
+
     for (let i = 0; i < 14; i++) {
-      const el = document.createElement("div");
+
+      const el =
+        document.createElement("div");
+
       el.className = "petal";
-      el.textContent = petals[Math.floor(Math.random() * petals.length)];
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.animationDuration = (8 + Math.random() * 10) + "s";
-      el.style.animationDelay = (Math.random() * 10) + "s";
-      el.style.fontSize = (14 + Math.random() * 14) + "px";
+
+      el.textContent =
+        petals[
+          Math.floor(
+            Math.random() * petals.length
+          )
+        ];
+
+      el.style.left =
+        Math.random() * 100 + "vw";
+
+      el.style.animationDuration =
+        (8 + Math.random() * 10) + "s";
+
+      el.style.animationDelay =
+        (Math.random() * 10) + "s";
+
+      el.style.fontSize =
+        (14 + Math.random() * 14) + "px";
+
       document.body.appendChild(el);
     }
 
-    const login = document.getElementById("login");
-    const panel = document.getElementById("panel");
-    const form = document.getElementById("loginForm");
-    const button = document.getElementById("loginButton");
-    const message = document.getElementById("message");
-    const logout = document.getElementById("logout");
+
+    /*
+      عناصر صفحه
+    */
+
+    const login =
+      document.getElementById("login");
+
+    const panel =
+      document.getElementById("panel");
+
+    const form =
+      document.getElementById("loginForm");
+
+    const button =
+      document.getElementById("loginButton");
+
+    const message =
+      document.getElementById("message");
+
+    const logout =
+      document.getElementById("logout");
+
+
+    /*
+      نمایش پنل
+    */
 
     function showPanel() {
+
       login.style.display = "none";
+
       panel.style.display = "block";
     }
 
+
+    /*
+      نمایش صفحه ورود
+    */
+
     function showLogin() {
+
       panel.style.display = "none";
+
       login.style.display = "block";
     }
 
+
+    /*
+      بررسی ورود ادمین
+    */
+
     async function checkAuth() {
-      try {
-        const response = await fetch("/api/check-auth", { method: "GET", credentials: "include" });
-        const result = await response.json();
-        if (result.authenticated) showPanel();
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
-      message.textContent = "";
-      button.disabled = true;
-      button.textContent = "در حال ورود...";
 
       try {
-        const response = await fetch("/api/login", {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: document.getElementById("username").value.trim(),
-            password: document.getElementById("password").value
-          })
-        });
 
-        const result = await response.json();
+        const response =
+          await fetch(
+            API + "/api/check-auth",
+            {
+              method: "GET",
+              credentials: "include"
+            }
+          );
 
-        if (response.ok && result.success) {
+        const result =
+          await response.json();
+
+        if (result.authenticated) {
+
           showPanel();
-        } else {
-          message.textContent = result.message || "ورود ناموفق بود.";
+
         }
 
       } catch (error) {
-        console.error(error);
-        message.textContent = "ارتباط با سرور برقرار نشد.";
+
+        console.error(
+          "checkAuth error:",
+          error
+        );
+
       }
 
-      button.disabled = false;
-      button.textContent = "ورود به پنل 🌹";
-    });
+    }
 
-    logout.addEventListener("click", async function() {
-      try {
-        await fetch("/api/logout", { method: "POST", credentials: "include" });
-      } catch (error) {}
-      showLogin();
-      document.getElementById("password").value = "";
-    });
+
+    /*
+      ورود
+    */
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        message.textContent = "";
+
+        button.disabled = true;
+
+        button.textContent =
+          "در حال ورود...";
+
+
+        try {
+
+          const response =
+            await fetch(
+              API + "/api/login",
+              {
+                method: "POST",
+
+                credentials: "include",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+
+                    username:
+                      document
+                        .getElementById("username")
+                        .value
+                        .trim(),
+
+                    password:
+                      document
+                        .getElementById("password")
+                        .value
+
+                  })
+
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (
+            response.ok &&
+            result.success
+          ) {
+
+            showPanel();
+
+          } else {
+
+            message.textContent =
+              result.message ||
+              "ورود ناموفق بود.";
+
+          }
+
+
+        } catch (error) {
+
+          console.error(
+            "login error:",
+            error
+          );
+
+          message.textContent =
+            "ارتباط با سرور برقرار نشد.";
+
+        }
+
+
+        button.disabled = false;
+
+        button.textContent =
+          "ورود به پنل 🌹";
+
+      }
+    );
+
+
+    /*
+      خروج
+    */
+
+    logout.addEventListener(
+      "click",
+      async function() {
+
+        try {
+
+          await fetch(
+            API + "/api/logout",
+            {
+              method: "POST",
+              credentials: "include"
+            }
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+        showLogin();
+
+        document
+          .getElementById("password")
+          .value = "";
+
+      }
+    );
+
+
+    /*
+      شروع
+    */
 
     checkAuth();
 
@@ -355,4 +822,4 @@
 
 </body>
 
-  </html>
+</html>
