@@ -17,10 +17,11 @@ body{
  min-height:100vh;
  font-family:Tahoma,Arial,sans-serif;
  color:#fff;
+
  background:
- radial-gradient(circle at 20% 0%,rgba(255,60,130,.25),transparent 35%),
- radial-gradient(circle at 100% 30%,rgba(100,50,220,.2),transparent 35%),
- linear-gradient(145deg,#090308,#210a1b,#080308);
+ radial-gradient(circle at 10% 0%,rgba(255,70,140,.25),transparent 35%),
+ radial-gradient(circle at 100% 20%,rgba(110,60,255,.18),transparent 35%),
+ linear-gradient(145deg,#0b0409,#210b1b 45%,#080408);
 }
 
 .wrap{
@@ -34,86 +35,212 @@ body{
  display:inline-flex;
  align-items:center;
  gap:8px;
+
  color:#d9b9c9;
  text-decoration:none;
+
  font-size:13px;
- margin-bottom:30px;
+
+ margin-bottom:25px;
 }
 
 .profile{
  padding:25px 18px;
+
  border-radius:25px;
+
  text-align:center;
+
  background:rgba(255,255,255,.055);
+
  border:1px solid rgba(255,255,255,.1);
- box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+ box-shadow:
+ 0 20px 50px rgba(0,0,0,.35);
+
  backdrop-filter:blur(14px);
+ -webkit-backdrop-filter:blur(14px);
 }
 
 .avatar{
  width:82px;
  height:82px;
+
  margin:auto;
+
  display:flex;
  align-items:center;
  justify-content:center;
+
  border-radius:50%;
+
  font-size:40px;
- background:linear-gradient(135deg,#e83f78,#6e35b8);
- box-shadow:0 0 35px rgba(240,50,130,.3);
+
+ background:
+ linear-gradient(
+  135deg,
+  #e83f78,
+  #6e35b8
+ );
+
+ box-shadow:
+ 0 0 35px rgba(240,50,130,.3);
+
+ overflow:hidden;
+}
+
+.avatar img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
 }
 
 h1{
  margin:15px 0 6px;
+
  font-size:22px;
 }
 
-.desc{
+.email{
  margin:0;
+
  color:#bfaeba;
+
  font-size:11px;
+
+ direction:ltr;
+}
+
+.status{
+ display:inline-block;
+
+ margin-top:12px;
+
+ padding:6px 12px;
+
+ border-radius:20px;
+
+ background:rgba(255,255,255,.07);
+
+ color:#e8cbd9;
+
+ font-size:10px;
 }
 
 .login{
  width:100%;
+
  margin-top:25px;
+
  padding:15px;
+
  border:0;
+
  border-radius:15px;
- background:linear-gradient(135deg,#e83f78,#9e326c);
+
+ background:
+ linear-gradient(
+  135deg,
+  #e83f78,
+  #9e326c
+ );
+
  color:white;
+
  font-family:inherit;
+
  font-size:14px;
+
  font-weight:bold;
+
  cursor:pointer;
- box-shadow:0 10px 25px rgba(220,50,120,.25);
+
+ box-shadow:
+ 0 10px 25px rgba(220,50,120,.25);
 }
 
-.cards{
- display:flex;
- flex-direction:column;
- gap:11px;
+.logout{
+ width:100%;
+
+ margin-top:12px;
+
+ padding:13px;
+
+ border:1px solid rgba(255,255,255,.1);
+
+ border-radius:15px;
+
+ background:rgba(255,255,255,.05);
+
+ color:#ddd;
+
+ font-family:inherit;
+
+ font-size:13px;
+
+ cursor:pointer;
+
+ display:none;
+}
+
+.stats{
+ display:grid;
+
+ grid-template-columns:
+ repeat(3,1fr);
+
+ gap:10px;
+
  margin-top:18px;
 }
 
-.item{
- padding:16px;
+.stat{
+ padding:15px 8px;
+
  border-radius:17px;
+
  background:rgba(255,255,255,.045);
+
  border:1px solid rgba(255,255,255,.08);
- color:#d9c9d2;
- font-size:12px;
+
+ text-align:center;
 }
 
-.item span{
- float:left;
- color:#777;
+.statIcon{
+ font-size:20px;
+}
+
+.statValue{
+ margin-top:7px;
+
+ font-size:14px;
+
+ font-weight:bold;
+}
+
+.statName{
+ margin-top:4px;
+
+ color:#9f8995;
+
+ font-size:9px;
+}
+
+.loading{
+ margin-top:15px;
+
+ color:#bda9b5;
+
+ font-size:11px;
 }
 
 footer{
  margin-top:30px;
+
  text-align:center;
+
  color:#705967;
+
  font-size:10px;
 }
 </style>
@@ -123,44 +250,136 @@ footer{
 
 <div class="wrap">
 
-<a class="back" href="index.html">
+<a
+ class="back"
+ href="index.html"
+>
 ← بازگشت به صفحه اصلی
 </a>
 
+
 <div class="profile">
 
-<div class="avatar">👤</div>
+<div
+ class="avatar"
+ id="avatar"
+>
+👤
+</div>
 
-<h1>حساب کاربری</h1>
 
-<p class="desc">
-برای استفاده از امکانات حساب کاربری وارد شوید
+<h1 id="username">
+در حال بررسی حساب...
+</h1>
+
+
+<p
+ class="email"
+ id="email"
+>
 </p>
 
-<button class="login" onclick="loginGoogle()">
+
+<div
+ class="status"
+ id="status"
+>
+در حال بررسی...
+</div>
+
+
+<button
+ class="login"
+ id="loginBtn"
+ onclick="loginGoogle()"
+ style="display:none"
+>
 🔐 ورود با Google
 </button>
 
+
+<button
+ class="logout"
+ id="logoutBtn"
+ onclick="logout()"
+>
+🚪 خروج از حساب
+</button>
+
+
+<div
+ class="loading"
+ id="loading"
+>
+لطفاً صبر کنید...
 </div>
 
-<div class="cards">
-
-<div class="item">
-⭐ وضعیت حساب
-<span>مهمان</span>
 </div>
 
-<div class="item">
-🌹 Rose Coins
-<span>0</span>
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="statIcon">
+🌹
 </div>
 
-<div class="item">
-✨ سطح کاربری
-<span>1</span>
+<div
+ class="statValue"
+ id="coins"
+>
+0
+</div>
+
+<div class="statName">
+Rose Coins
 </div>
 
 </div>
+
+
+<div class="stat">
+
+<div class="statIcon">
+✨
+</div>
+
+<div
+ class="statValue"
+ id="level"
+>
+1
+</div>
+
+<div class="statName">
+سطح
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statIcon">
+⭐
+</div>
+
+<div
+ class="statValue"
+ id="xp"
+>
+0
+</div>
+
+<div class="statName">
+XP
+</div>
+
+</div>
+
+</div>
+
 
 <footer>
 Manhwa Rose · 🌹
@@ -168,11 +387,236 @@ Manhwa Rose · 🌹
 
 </div>
 
+
 <script>
+
+const API=
+ "https://manhwa-rose.wsalqlyzadh0.workers.dev";
+
+
 function loginGoogle(){
- window.location.href =
- "https://manhwa-rose.wsalqlyzadh0.workers.dev/auth/google";
+
+ window.location.href=
+ API+"/auth/google";
+
 }
+
+
+async function loadUser(){
+
+ const username=
+  document.getElementById(
+   "username"
+  );
+
+ const email=
+  document.getElementById(
+   "email"
+  );
+
+ const status=
+  document.getElementById(
+   "status"
+  );
+
+ const avatar=
+  document.getElementById(
+   "avatar"
+  );
+
+ const loading=
+  document.getElementById(
+   "loading"
+  );
+
+ const loginBtn=
+  document.getElementById(
+   "loginBtn"
+  );
+
+ const logoutBtn=
+  document.getElementById(
+   "logoutBtn"
+  );
+
+
+ try{
+
+  const response=
+   await fetch(
+    API+"/api/user/me",
+    {
+     credentials:"include"
+    }
+   );
+
+
+  const data=
+   await response.json();
+
+
+  if(
+   response.ok &&
+   data.loggedIn &&
+   data.user
+  ){
+
+   const user=data.user;
+
+
+   username.textContent=
+    user.name ||
+    user.username ||
+    "کاربر Manhwa Rose";
+
+
+   email.textContent=
+    user.email ||
+    "";
+
+
+   status.textContent=
+    user.plan==="vip"
+     ? "👑 VIP"
+     : "🌹 حساب عادی";
+
+
+   if(user.avatar_url){
+
+    avatar.innerHTML=
+     '<img src="' +
+     escapeHtml(user.avatar_url) +
+     '" alt="Avatar">';
+
+   }else{
+
+    avatar.textContent="👤";
+
+   }
+
+
+   document.getElementById(
+    "coins"
+   ).textContent=
+    user.rose_coins ?? 0;
+
+
+   document.getElementById(
+    "level"
+   ).textContent=
+    user.level ?? 1;
+
+
+   document.getElementById(
+    "xp"
+   ).textContent=
+    user.xp ?? 0;
+
+
+   loginBtn.style.display="none";
+
+   logoutBtn.style.display="block";
+
+   loading.style.display="none";
+
+
+  }else{
+
+   username.textContent=
+    "مهمان";
+
+
+   email.textContent=
+    "هنوز وارد حساب نشدی";
+
+
+   status.textContent=
+    "🔒 ورود لازم است";
+
+
+   loginBtn.style.display="block";
+
+   logoutBtn.style.display="none";
+
+   loading.style.display="none";
+
+  }
+
+
+ }catch(error){
+
+  console.error(error);
+
+  username.textContent=
+   "خطا در اتصال";
+
+
+  email.textContent=
+   "لطفاً دوباره امتحان کن";
+
+
+  status.textContent=
+   "⚠️ خطای ارتباط";
+
+
+  loginBtn.style.display="block";
+
+  loading.style.display="none";
+
+ }
+
+}
+
+
+async function logout(){
+
+ const btn=
+  document.getElementById(
+   "logoutBtn"
+  );
+
+ btn.disabled=true;
+
+ btn.textContent=
+  "در حال خروج...";
+
+
+ try{
+
+  await fetch(
+   API+"/api/user/logout",
+   {
+    method:"POST",
+    credentials:"include"
+   }
+  );
+
+ }catch(error){
+
+  console.error(error);
+
+ }
+
+
+ location.reload();
+
+}
+
+
+function escapeHtml(value){
+
+ return String(value)
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+
+loadUser();
+
 </script>
 
 </body>
