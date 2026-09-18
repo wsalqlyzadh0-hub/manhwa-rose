@@ -229,7 +229,7 @@ function adminCookie(token) {
     "Path=/",
     "HttpOnly",
     "Secure",
-    "SameSite=Lax",
+    "SameSite=None",
     `Max-Age=${ADMIN_SESSION_TIME}`,
   ].join("; ");
 }
@@ -240,7 +240,7 @@ function clearAdminCookie() {
     "Path=/",
     "HttpOnly",
     "Secure",
-    "SameSite=Lax",
+    "SameSite=None",
     "Max-Age=0",
   ].join("; ");
 }
@@ -329,7 +329,7 @@ function userCookie(sessionId) {
     "Path=/",
     "HttpOnly",
     "Secure",
-    "SameSite=None",
+    "SameSite=Lax",
     `Max-Age=${USER_SESSION_TIME}`,
   ].join("; ");
 }
@@ -340,7 +340,7 @@ function clearUserCookie() {
     "Path=/",
     "HttpOnly",
     "Secure",
-    "SameSite=None",
+    "SameSite=Lax",
     "Max-Age=0",
   ].join("; ");
 }
