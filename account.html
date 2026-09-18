@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>حساب کاربری | Manhwa Rose</title>
+
+<style>
+*{
+ box-sizing:border-box;
+ -webkit-tap-highlight-color:transparent;
+}
+
+body{
+ margin:0;
+ min-height:100vh;
+ font-family:Tahoma,Arial,sans-serif;
+ color:#fff;
+ background:
+ radial-gradient(circle at 20% 0%,rgba(255,60,130,.25),transparent 35%),
+ radial-gradient(circle at 100% 30%,rgba(100,50,220,.2),transparent 35%),
+ linear-gradient(145deg,#090308,#210a1b,#080308);
+}
+
+.wrap{
+ width:100%;
+ max-width:520px;
+ margin:auto;
+ padding:25px 15px 50px;
+}
+
+.back{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ color:#d9b9c9;
+ text-decoration:none;
+ font-size:13px;
+ margin-bottom:30px;
+}
+
+.profile{
+ padding:25px 18px;
+ border-radius:25px;
+ text-align:center;
+ background:rgba(255,255,255,.055);
+ border:1px solid rgba(255,255,255,.1);
+ box-shadow:0 20px 50px rgba(0,0,0,.35);
+ backdrop-filter:blur(14px);
+}
+
+.avatar{
+ width:82px;
+ height:82px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:50%;
+ font-size:40px;
+ background:linear-gradient(135deg,#e83f78,#6e35b8);
+ box-shadow:0 0 35px rgba(240,50,130,.3);
+}
+
+h1{
+ margin:15px 0 6px;
+ font-size:22px;
+}
+
+.desc{
+ margin:0;
+ color:#bfaeba;
+ font-size:11px;
+}
+
+.login{
+ width:100%;
+ margin-top:25px;
+ padding:15px;
+ border:0;
+ border-radius:15px;
+ background:linear-gradient(135deg,#e83f78,#9e326c);
+ color:white;
+ font-family:inherit;
+ font-size:14px;
+ font-weight:bold;
+ cursor:pointer;
+ box-shadow:0 10px 25px rgba(220,50,120,.25);
+}
+
+.cards{
+ display:flex;
+ flex-direction:column;
+ gap:11px;
+ margin-top:18px;
+}
+
+.item{
+ padding:16px;
+ border-radius:17px;
+ background:rgba(255,255,255,.045);
+ border:1px solid rgba(255,255,255,.08);
+ color:#d9c9d2;
+ font-size:12px;
+}
+
+.item span{
+ float:left;
+ color:#777;
+}
+
+footer{
+ margin-top:30px;
+ text-align:center;
+ color:#705967;
+ font-size:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<a class="back" href="index.html">
+← بازگشت به صفحه اصلی
+</a>
+
+<div class="profile">
+
+<div class="avatar">👤</div>
+
+<h1>حساب کاربری</h1>
+
+<p class="desc">
+برای استفاده از امکانات حساب کاربری وارد شوید
+</p>
+
+<button class="login" onclick="loginGoogle()">
+🔐 ورود با Google
+</button>
+
+</div>
+
+<div class="cards">
+
+<div class="item">
+⭐ وضعیت حساب
+<span>مهمان</span>
+</div>
+
+<div class="item">
+🌹 Rose Coins
+<span>0</span>
+</div>
+
+<div class="item">
+✨ سطح کاربری
+<span>1</span>
+</div>
+
+</div>
+
+<footer>
+Manhwa Rose · 🌹
+</footer>
+
+</div>
+
+<script>
+function loginGoogle(){
+ window.location.href =
+ "https://manhwa-rose.wsalqlyzadh0.workers.dev/auth/google";
+}
+</script>
+
+</body>
+</html>
