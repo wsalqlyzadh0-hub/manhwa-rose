@@ -1,978 +1,526 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>کتابخانه - Manhwa Rose</title>
-
-<style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-@keyframes petal-fall {
-  0% {
-    transform: translateY(-10vh) translateX(0) rotate(0deg);
-    opacity: 0.9;
-  }
-  50% {
-    transform: translateY(50vh) translateX(20px) rotate(180deg);
-  }
-  100% {
-    transform: translateY(110vh) translateX(-10px) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(-4deg) scale(1);
-  }
-  50% {
-    transform: translateY(-12px) rotate(4deg) scale(1.05);
-  }
-}
-
-@keyframes pop-in {
-  0% {
-    transform: translateY(16px) scale(0.94);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes spin-rose {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-family: Tahoma, Arial, sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 20% 0%,
-      rgba(233,90,140,0.25),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 100% 30%,
-      rgba(157,74,143,0.25),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at top,
-      #6b1f42,
-      #1a0a17 45%,
-      #08050a
-    );
-
-  color: white;
-  position: relative;
-}
-
-.petal {
-  position: fixed;
-  top: -10vh;
-  font-size: 18px;
-  animation: petal-fall linear infinite;
-  pointer-events: none;
-  opacity: 0.6;
-  z-index: 0;
-}
-
-.wrap {
-  max-width: 540px;
-  margin: 0 auto;
-  padding: 20px 16px 70px;
-  position: relative;
-  z-index: 1;
-}
-
-.topbar {
-  margin-bottom: 16px;
-}
-
-.topbar a {
-  color: #ffb3c9;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-h1 {
-  font-size: 22px;
-  text-align: center;
-  margin: 6px 0 18px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffd1de,
-      #ff8fae,
-      #ffd1de
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.search-box {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 14px 42px 14px 16px;
-
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.15);
-
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(10px);
-
-  color: white;
-  font-size: 14px;
-  outline: none;
-}
-
-.search-box input::placeholder {
-  color: #cda9b8;
-}
-
-.search-box input:focus {
-  border-color: #e65382;
-}
-
-.search-box .icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.6;
-}
-
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.filters select {
-  flex: 1;
-
-  padding: 11px 10px;
-
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.15);
-
-  background: rgba(255,255,255,0.06);
-
-  color: white;
-  font-size: 12.5px;
-  outline: none;
-}
-
-.filters select option {
-  background: #24121f;
-  color: white;
-}
-
-.filters select:focus {
-  border-color: #e65382;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-
-  font-size: 14px;
-  color: #ffd1de;
-
-  margin: 4px 0 14px;
-}
-
-.badge-count {
-  margin-right: auto;
-
-  font-size: 11px;
-
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-
-  padding: 3px 10px;
-  border-radius: 999px;
-
-  color: #e8b8c8;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.card {
-  background:
-    linear-gradient(
-      160deg,
-      rgba(255,255,255,0.09),
-      rgba(255,255,255,0.03)
-    );
-
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 20px;
-
-  overflow: hidden;
-
-  text-decoration: none;
-  color: white;
-
-  display: block;
-  position: relative;
-
-  animation: pop-in 0.4s ease backwards;
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease;
-}
-
-.card:active {
-  transform: scale(.96);
-}
-
-.card:hover {
-  border-color: rgba(255,143,174,0.45);
-}
-
-.card .cover-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/4;
-  overflow: hidden;
-}
-
-.card .cover {
-  width: 100%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #4a2040,
-      #2a1428
-    );
-
-  background-size: cover;
-  background-position: center;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 32px;
-}
-
-.card .cover-fade {
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(10,5,9,0.85) 0%,
-      transparent 55%
-    );
-}
-
-.ribbon {
-  position: absolute;
-
-  top: 10px;
-  right: -6px;
-
-  font-size: 10px;
-  font-weight: bold;
-
-  padding: 4px 12px 4px 10px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff5f8f,
-      #d6336c
-    );
-
-  color: white;
-
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.35);
-
-  border-radius: 6px 0 0 6px;
-}
-
-.ribbon.completed {
-  background:
-    linear-gradient(
-      135deg,
-      #9d4a8f,
-      #6e2f6b
-    );
-}
-
-.card .info {
-  padding: 12px 12px 14px;
-}
-
-.card .title {
-  font-weight: bold;
-  font-size: 14px;
-
-  margin-bottom: 6px;
-  line-height: 1.35;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
-  overflow: hidden;
-}
-
-.card .genre-tag {
-  font-size: 10.5px;
-
-  color: #f3c4d4;
-
-  background: rgba(233,90,140,0.15);
-
-  border: 1px solid rgba(233,90,140,0.3);
-
-  padding: 3px 9px;
-
-  border-radius: 999px;
-
-  display: inline-block;
-}
-
-#empty {
-  text-align: center;
-  color: #d3a9ba;
-
-  padding: 70px 20px;
-
-  font-size: 14px;
-}
-
-#empty .big-emoji {
-  font-size: 50px;
-
-  display: block;
-
-  margin-bottom: 14px;
-
-  animation:
-    float 3s ease-in-out infinite;
-}
-
-#loading {
-  text-align: center;
-
-  padding: 60px 20px;
-
-  color: #e8b8c8;
-}
-
-.spinner {
-  width: 44px;
-  height: 44px;
-
-  margin: 0 auto 14px;
-
-  font-size: 34px;
-
-  animation:
-    spin-rose 1.4s linear infinite;
-}
-
-#errorBox {
-  display: none;
-
-  margin-top: 20px;
-
-  padding: 18px;
-
-  border-radius: 16px;
-
-  background: rgba(255,70,100,0.08);
-
-  border: 1px solid rgba(255,100,130,0.2);
-
-  color: #ffc1d0;
-
-  text-align: center;
-
-  font-size: 13px;
-
-  line-height: 1.8;
-}
-
-.retry {
-  margin-top: 12px;
-
-  border: 0;
-
-  border-radius: 12px;
-
-  padding: 10px 18px;
-
-  background: #d6336c;
-
-  color: white;
-
-  font-family: inherit;
-
-  cursor: pointer;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>کتابخانه | Manhwa Rose</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 20% 10%,rgba(255,50,130,.15),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(130,50,255,.12),transparent 30%),
+        #09070d;
+      color:#fff;
+      font-family:Tahoma,Arial,sans-serif;
+      min-height:100vh;
+    }
+
+    .container{
+      width:100%;
+      max-width:520px;
+      margin:auto;
+      padding:18px 14px 40px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+
+    .back{
+      color:#fff;
+      text-decoration:none;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+      padding:10px 14px;
+      border-radius:14px;
+    }
+
+    .title{
+      text-align:center;
+      flex:1;
+      margin:0 10px;
+    }
+
+    .title h1{
+      margin:0;
+      font-size:23px;
+      color:#ff5c9d;
+    }
+
+    .title p{
+      margin:4px 0 0;
+      color:#aaa;
+      font-size:11px;
+    }
+
+    .search{
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);
+      color:white;
+      outline:none;
+      font-size:14px;
+      margin-bottom:12px;
+    }
+
+    .search::placeholder{
+      color:#888;
+    }
+
+    .filters{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding-bottom:5px;
+      margin-bottom:18px;
+    }
+
+    .filter{
+      flex:none;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);
+      color:#ddd;
+      padding:9px 14px;
+      border-radius:13px;
+      cursor:pointer;
+    }
+
+    .filter.active{
+      background:linear-gradient(135deg,#ff347e,#a52cff);
+      color:#fff;
+      border-color:transparent;
+    }
+
+    #status{
+      text-align:center;
+      color:#aaa;
+      padding:30px 10px;
+      font-size:14px;
+    }
+
+    .error{
+      background:rgba(255,50,90,.08);
+      border:1px solid rgba(255,70,100,.25);
+      border-radius:18px;
+      padding:20px;
+      text-align:center;
+      color:#ff9ab8;
+      line-height:1.9;
+    }
+
+    .retry{
+      margin-top:14px;
+      border:0;
+      background:linear-gradient(135deg,#ff347e,#a52cff);
+      color:white;
+      padding:11px 20px;
+      border-radius:13px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:18px;
+      overflow:hidden;
+      text-decoration:none;
+      color:white;
+      transition:.2s;
+      display:block;
+    }
+
+    .card:active{
+      transform:scale(.97);
+    }
+
+    .cover{
+      width:100%;
+      aspect-ratio:3/4;
+      background:#15121b;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .no-cover{
+      color:#777;
+      font-size:13px;
+    }
+
+    .info{
+      padding:11px;
+    }
+
+    .name{
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:8px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      gap:5px;
+      font-size:10px;
+      color:#aaa;
+    }
+
+    .genre{
+      color:#ff72aa;
+    }
+
+    .empty{
+      text-align:center;
+      color:#888;
+      padding:40px 10px;
+    }
+
+    @media(max-width:360px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div class="container">
 
-  <div class="topbar">
-    <a href="index.html">← بازگشت</a>
-  </div>
+  <div class="top">
+    <a class="back" href="index.html">← بازگشت</a>
 
-  <h1>📚 کتابخانه</h1>
-
-  <div class="search-box">
-    <span class="icon">🔍</span>
-
-    <input
-      id="search"
-      type="text"
-      placeholder="جستجوی مانهوا..."
-      autocomplete="off"
-    >
-  </div>
-
-  <div class="filters">
-
-    <select id="genreFilter">
-      <option value="">همه‌ی ژانرها</option>
-    </select>
-
-    <select id="statusFilter">
-      <option value="">همه‌ی وضعیت‌ها</option>
-      <option value="ongoing">در حال انتشار</option>
-      <option value="completed">تمام‌شده</option>
-    </select>
-
-  </div>
-
-  <div class="section-title">
-    <span class="badge-count" id="count">...</span>
-  </div>
-
-  <div id="loading">
-    <div class="spinner">🌹</div>
-    در حال بارگذاری...
-  </div>
-
-  <div class="grid" id="grid"></div>
-
-  <div id="empty" style="display:none;">
-    <span class="big-emoji">🌸</span>
-    چیزی پیدا نشد
-  </div>
-
-  <div id="errorBox">
-    <div id="errorText">
-      ارتباط با سرور برقرار نشد.
+    <div class="title">
+      <h1>🌹 کتابخانه</h1>
+      <p>MANHWA ROSE</p>
     </div>
 
-    <button class="retry" onclick="load()">
-      تلاش دوباره
-    </button>
+    <div style="width:70px"></div>
   </div>
+
+  <input
+    id="search"
+    class="search"
+    type="text"
+    placeholder="🔎 جستجوی مانهوا..."
+    autocomplete="off"
+  >
+
+  <div class="filters">
+    <button class="filter active" data-genre="">همه</button>
+    <button class="filter" data-genre="اکشن">رز آبی</button>
+    <button class="filter" data-genre="عاشقانه">رز زرد</button>
+    <button class="filter" data-genre="فانتزی">فانتزی</button>
+    <button class="filter" data-genre="درام">درام</button>
+    <button class="filter" data-genre="کمدی">کمدی</button>
+  </div>
+
+  <div id="status">در حال دریافت مانهواها...</div>
+
+  <div id="grid" class="grid"></div>
 
 </div>
 
 <script>
+  const API = "https://manhwa-rose.wsalqlyzadh0.workers.dev";
 
-/* =========================
-   API
-========================= */
+  const grid = document.getElementById("grid");
+  const statusBox = document.getElementById("status");
+  const searchInput = document.getElementById("search");
+  const filters = document.querySelectorAll(".filter");
 
-const API =
-  "https://manhwa-rose.wsalqlyzadh0.workers.dev";
+  let mangas = [];
+  let selectedGenre = "";
 
+  async function loadManga(){
 
-/* =========================
-   Petals
-========================= */
+    statusBox.style.display = "block";
+    statusBox.innerHTML = "در حال دریافت مانهواها...";
+    grid.innerHTML = "";
 
-const petals = [
-  "🌸",
-  "🌹",
-  "🥀",
-  "💮",
-  "🌺"
-];
+    try{
 
-for (let i = 0; i < 8; i++) {
-
-  const el = document.createElement("div");
-
-  el.className = "petal";
-
-  el.textContent =
-    petals[
-      Math.floor(
-        Math.random() * petals.length
-      )
-    ];
-
-  el.style.left =
-    Math.random() * 100 + "vw";
-
-  el.style.animationDuration =
-    (9 + Math.random() * 12) + "s";
-
-  el.style.animationDelay =
-    (Math.random() * 10) + "s";
-
-  el.style.fontSize =
-    (12 + Math.random() * 14) + "px";
-
-  document.body.appendChild(el);
-}
-
-
-/* =========================
-   URL
-========================= */
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const initialGenre =
-  params.get("genre") || "";
-
-
-/* =========================
-   Elements
-========================= */
-
-const grid =
-  document.getElementById("grid");
-
-const empty =
-  document.getElementById("empty");
-
-const loading =
-  document.getElementById("loading");
-
-const searchInput =
-  document.getElementById("search");
-
-const genreFilter =
-  document.getElementById("genreFilter");
-
-const statusFilter =
-  document.getElementById("statusFilter");
-
-const countEl =
-  document.getElementById("count");
-
-const errorBox =
-  document.getElementById("errorBox");
-
-const errorText =
-  document.getElementById("errorText");
-
-
-/* =========================
-   Data
-========================= */
-
-let allManga = [];
-
-
-/* =========================
-   Status
-========================= */
-
-function statusLabel(status) {
-
-  return status === "completed"
-    ? "تمام‌شده"
-    : "در حال انتشار";
-}
-
-
-/* =========================
-   Genres
-========================= */
-
-function populateGenres() {
-
-  genreFilter.innerHTML = `
-    <option value="">
-      همه‌ی ژانرها
-    </option>
-  `;
-
-  const genres = [
-    ...new Set(
-      allManga
-        .map(m => m.genre)
-        .filter(Boolean)
-    )
-  ];
-
-  genres.forEach(g => {
-
-    const opt =
-      document.createElement("option");
-
-    opt.value = g;
-    opt.textContent = g;
-
-    genreFilter.appendChild(opt);
-  });
-
-  if (initialGenre) {
-
-    if (!genres.includes(initialGenre)) {
-
-      const opt =
-        document.createElement("option");
-
-      opt.value = initialGenre;
-      opt.textContent = initialGenre;
-
-      genreFilter.appendChild(opt);
-    }
-
-    genreFilter.value =
-      initialGenre;
-  }
-}
-
-
-/* =========================
-   Filters
-========================= */
-
-function applyFilters() {
-
-  const q =
-    searchInput.value
-      .trim()
-      .toLowerCase();
-
-  const g =
-    genreFilter.value;
-
-  const s =
-    statusFilter.value;
-
-  const filtered =
-    allManga.filter(m => {
-
-      const title =
-        String(m.title || "")
-          .toLowerCase();
-
-      const matchQ =
-        title.includes(q);
-
-      const matchG =
-        !g || m.genre === g;
-
-      const matchS =
-        !s || m.status === s;
-
-      return (
-        matchQ &&
-        matchG &&
-        matchS
-      );
-    });
-
-  render(filtered);
-}
-
-
-/* =========================
-   Render
-========================= */
-
-function render(list) {
-
-  grid.innerHTML = "";
-
-  if (!list.length) {
-
-    empty.style.display = "block";
-
-    countEl.textContent =
-      "۰ عنوان";
-
-    return;
-  }
-
-  empty.style.display = "none";
-
-  countEl.textContent =
-    `${list.length} عنوان`;
-
-  list.forEach((m, i) => {
-
-    const a =
-      document.createElement("a");
-
-    a.className = "card";
-
-    a.style.animationDelay =
-      (i * 0.04) + "s";
-
-
-    /* مهم:
-       لینک نسبی برای GitHub Pages
-    */
-
-    a.href =
-      `view.html?id=${encodeURIComponent(m.id)}`;
-
-
-    const coverStyle =
-      m.cover_url
-        ? `
-          background-image:
-          url("${String(m.cover_url).replace(/"/g, '&quot;')}");
-        `
-        : "";
-
-
-    const ribbonClass =
-      m.status === "completed"
-        ? "ribbon completed"
-        : "ribbon";
-
-
-    const safeTitle =
-      String(m.title || "بدون عنوان")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-
-
-    const safeGenre =
-      String(m.genre || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-
-
-    a.innerHTML = `
-
-      <div class="cover-wrap">
-
-        <div
-          class="cover"
-          style="${coverStyle}"
-        >
-          ${m.cover_url ? "" : "📖"}
-        </div>
-
-        <div class="cover-fade"></div>
-
-        <div class="${ribbonClass}">
-          ${statusLabel(m.status)}
-        </div>
-
-      </div>
-
-      <div class="info">
-
-        <div class="title">
-          ${safeTitle}
-        </div>
-
-        ${
-          m.genre
-            ? `
-              <span class="genre-tag">
-                ${safeGenre}
-              </span>
-            `
-            : ""
-        }
-
-      </div>
-    `;
-
-
-    grid.appendChild(a);
-  });
-}
-
-
-/* =========================
-   Load Manga
-========================= */
-
-async function load() {
-
-  loading.style.display =
-    "block";
-
-  grid.innerHTML = "";
-
-  empty.style.display =
-    "none";
-
-  errorBox.style.display =
-    "none";
-
-  countEl.textContent =
-    "...";
-
-
-  try {
-
-    const res =
-      await fetch(
+      const response = await fetch(
         API + "/api/public/manga",
         {
-          method: "GET",
-
-          headers: {
-            "Accept":
-              "application/json"
+          method:"GET",
+          headers:{
+            "Accept":"application/json"
           },
-
-          cache: "no-store"
+          cache:"no-store"
         }
       );
 
+      if(!response.ok){
+        throw new Error("HTTP " + response.status);
+      }
 
-    if (!res.ok) {
+      const data = await response.json();
 
-      throw new Error(
-        "HTTP " + res.status
-      );
-    }
+      console.log("MANHWA API:", data);
 
+      if(!data || data.success !== true){
+        throw new Error(
+          data && data.error
+            ? data.error
+            : "پاسخ نامعتبر از سرور"
+        );
+      }
 
-    const data =
-      await res.json();
-
-
-    loading.style.display =
-      "none";
-
-
-    if (
-      data &&
-      data.success
-    ) {
-
-      allManga =
-        Array.isArray(data.manga)
-          ? data.manga
+      mangas = Array.isArray(data.manga)
+        ? data.manga
+        : Array.isArray(data.results)
+          ? data.results
           : [];
 
-      populateGenres();
+      statusBox.style.display = "none";
 
-      applyFilters();
+      render();
+
+    }catch(error){
+
+      console.error("MANHWA ERROR:",error);
+
+      statusBox.innerHTML = `
+        <div class="error">
+          <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+          ارتباط با سرور برقرار نشد.
+          <br>
+          <small>${escapeHtml(error.message || "Unknown error")}</small>
+          <br>
+          <button class="retry" onclick="loadManga()">
+            تلاش دوباره
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  function render(){
+
+    const search =
+      searchInput.value
+        .trim()
+        .toLowerCase();
+
+    const filtered = mangas.filter(manga => {
+
+      const title =
+        String(manga.title || "").toLowerCase();
+
+      const genre =
+        String(manga.genre || "");
+
+      const matchesSearch =
+        !search ||
+        title.includes(search);
+
+      const matchesGenre =
+        !selectedGenre ||
+        genre === selectedGenre;
+
+      return matchesSearch && matchesGenre;
+    });
+
+    grid.innerHTML = "";
+
+    if(filtered.length === 0){
+
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1">
+          🌹 مانهوا‌ای پیدا نشد
+        </div>
+      `;
 
       return;
     }
 
+    filtered.forEach(manga => {
 
-    throw new Error(
-      data?.error ||
-      "API error"
-    );
+      const card = document.createElement("a");
 
+      card.className = "card";
 
-  } catch (err) {
+      card.href =
+        "view.html?id=" +
+        encodeURIComponent(manga.id);
 
-    console.error(
-      "Manga API error:",
-      err
-    );
+      const coverUrl =
+        getFirstImage(manga.cover_url);
 
-    loading.style.display =
-      "none";
+      const status =
+        manga.status === "completed"
+          ? "کامل"
+          : "در حال انتشار";
 
-    grid.innerHTML = "";
+      card.innerHTML = `
 
-    empty.style.display =
-      "none";
+        <div class="cover">
 
-    countEl.textContent =
-      "خطا";
+          ${
+            coverUrl
+              ? `
+                <img
+                  src="${escapeAttribute(coverUrl)}"
+                  alt="${escapeAttribute(manga.title || "")}"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;no-cover&quot;>بدون تصویر</span>'"
+                >
+              `
+              : `
+                <span class="no-cover">
+                  بدون تصویر
+                </span>
+              `
+          }
 
-    errorText.innerHTML =
-      `
-        ارتباط با سرور برقرار نشد.<br>
-        لطفاً دوباره تلاش کنید.
+        </div>
+
+        <div class="info">
+
+          <div class="name">
+            ${escapeHtml(manga.title || "بدون عنوان")}
+          </div>
+
+          <div class="meta">
+
+            <span class="genre">
+              ${escapeHtml(manga.genre || "نامشخص")}
+            </span>
+
+            <span>
+              ${status}
+            </span>
+
+          </div>
+
+        </div>
       `;
 
-    errorBox.style.display =
-      "block";
+      grid.appendChild(card);
+    });
   }
-}
 
+  function getFirstImage(value){
 
-/* =========================
-   Events
-========================= */
+    if(!value){
+      return "";
+    }
 
-searchInput.addEventListener(
-  "input",
-  applyFilters
-);
+    /*
+      اگر چند لینک داخل cover_url ذخیره شده باشد،
+      فقط اولین لینک به عنوان کاور استفاده می‌شود.
+    */
 
-genreFilter.addEventListener(
-  "change",
-  applyFilters
-);
+    const text = String(value).trim();
 
-statusFilter.addEventListener(
-  "change",
-  applyFilters
-);
+    const match = text.match(
+      /https?:\/\/[^\s]+/i
+    );
 
+    return match ? match[0] : "";
+  }
 
-/* =========================
-   Start
-========================= */
+  function escapeHtml(value){
 
-load();
+    return String(value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
 
+  function escapeAttribute(value){
+
+    return escapeHtml(value);
+  }
+
+  searchInput.addEventListener(
+    "input",
+    render
+  );
+
+  filters.forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        filters.forEach(
+          b => b.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        selectedGenre =
+          button.dataset.genre || "";
+
+        render();
+      }
+    );
+
+  });
+
+  /*
+    اگر لینک به شکل:
+    library.html?genre=عاشقانه
+    باز شده باشد، فیلتر مربوطه فعال می‌شود.
+  */
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const urlGenre =
+    params.get("genre");
+
+  if(urlGenre){
+
+    selectedGenre = urlGenre;
+
+    filters.forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.genre === urlGenre
+      );
+
+    });
+  }
+
+  loadManga();
 </script>
 
 </body>
