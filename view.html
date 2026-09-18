@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مانهوا - Manhwa Rose</title>
+
 <style>
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
 
   body {
     margin: 0;
@@ -16,19 +20,28 @@
     padding: 20px 16px 60px;
   }
 
-  .wrap { max-width: 520px; margin: 0 auto; }
+  .wrap {
+    max-width: 520px;
+    margin: 0 auto;
+  }
 
   .topbar {
     margin-bottom: 18px;
   }
 
-  .topbar a { color: #ffb3c9; text-decoration: none; font-size: 14px; }
+  .topbar a {
+    color: #ffb3c9;
+    text-decoration: none;
+    font-size: 14px;
+  }
 
   .header-card {
     display: flex;
     gap: 16px;
+
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
+
     border-radius: 20px;
     padding: 16px;
     margin-bottom: 20px;
@@ -38,197 +51,669 @@
     width: 110px;
     height: 150px;
     flex-shrink: 0;
+
     border-radius: 14px;
+
     background: linear-gradient(135deg, #4a2040, #2a1428);
+
     background-size: cover;
     background-position: center;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 34px;
   }
 
-  .head-info { flex: 1; min-width: 0; }
-  .head-info h1 { font-size: 19px; margin: 0 0 6px; }
-  .head-info .genre { font-size: 12px; color: #e8b8c8; margin-bottom: 6px; }
+  .head-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .head-info h1 {
+    font-size: 19px;
+    margin: 0 0 6px;
+  }
+
+  .head-info .genre {
+    font-size: 12px;
+    color: #e8b8c8;
+    margin-bottom: 6px;
+  }
+
   .status-badge {
     display: inline-block;
+
     font-size: 11px;
+
     padding: 3px 10px;
+
     border-radius: 999px;
+
     background: rgba(226,73,122,0.25);
+
     border: 1px solid rgba(226,73,122,0.4);
   }
 
   .description {
     background: rgba(255,255,255,0.05);
+
     border: 1px solid rgba(255,255,255,0.1);
+
     border-radius: 16px;
+
     padding: 14px 16px;
+
     font-size: 13px;
+
     line-height: 1.9;
+
     color: #e8d4dc;
+
     margin-bottom: 22px;
   }
 
   h2 {
     font-size: 17px;
+
     margin: 0 0 12px;
+
     color: #ffd1de;
   }
 
   .chapter-item {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     padding: 14px 16px;
+
     border-radius: 14px;
+
     background: rgba(255,255,255,0.05);
+
     border: 1px solid rgba(255,255,255,0.08);
+
     margin-bottom: 10px;
+
     text-decoration: none;
+
     color: white;
-    transition: transform .15s ease, background .15s ease;
+
+    transition:
+      transform .15s ease,
+      background .15s ease;
   }
 
-  .chapter-item:active { transform: scale(.98); background: rgba(255,255,255,0.09); }
+  .chapter-item:active {
+    transform: scale(.98);
 
-  .chapter-item .num { font-weight: bold; font-size: 14px; }
-  .chapter-item .title { font-size: 12px; color: #c9a5b6; margin-top: 2px; }
-  .chapter-item .arrow { opacity: 0.6; }
+    background: rgba(255,255,255,0.09);
+  }
+
+  .chapter-item .num {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .chapter-item .title {
+    font-size: 12px;
+    color: #c9a5b6;
+    margin-top: 2px;
+  }
+
+  .chapter-item .arrow {
+    opacity: 0.6;
+  }
 
   .quick-nav {
     display: flex;
+
     gap: 10px;
+
     margin-bottom: 16px;
   }
 
   .quick-btn {
     flex: 1;
+
     text-align: center;
+
     padding: 13px;
+
     border-radius: 14px;
+
     text-decoration: none;
+
     color: white;
+
     font-size: 13px;
+
     font-weight: bold;
   }
 
-  .quick-btn.first { background: linear-gradient(135deg, #9d4a8f, #6e2f6b); }
-  .quick-btn.last { background: linear-gradient(135deg, #e2497a, #b13564); }
+  .quick-btn.first {
+    background:
+      linear-gradient(
+        135deg,
+        #9d4a8f,
+        #6e2f6b
+      );
+  }
 
-  #empty, #loading { text-align: center; color: #b98ba0; padding: 30px; font-size: 14px; }
+  .quick-btn.last {
+    background:
+      linear-gradient(
+        135deg,
+        #e2497a,
+        #b13564
+      );
+  }
+
+  #empty,
+  #loading {
+    text-align: center;
+
+    color: #b98ba0;
+
+    padding: 30px;
+
+    font-size: 14px;
+  }
+
+  #error {
+    display: none;
+
+    text-align: center;
+
+    color: #ffb3c9;
+
+    padding: 40px 20px;
+
+    font-size: 14px;
+  }
+
+  .retry {
+    margin-top: 14px;
+
+    padding: 10px 18px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    background: #d6336c;
+
+    color: white;
+
+    font-family: inherit;
+
+    cursor: pointer;
+  }
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
 
   <div class="topbar">
-    <a href="/index.html">← بازگشت به کتابخانه</a>
+    <a href="library.html">← بازگشت به کتابخانه</a>
   </div>
 
-  <div id="loading">در حال بارگذاری...</div>
+  <div id="loading">
+    در حال بارگذاری...
+  </div>
+
+  <div id="error">
+
+    <div id="errorText">
+      ارتباط با سرور برقرار نشد.
+    </div>
+
+    <button class="retry" onclick="load()">
+      تلاش دوباره
+    </button>
+
+  </div>
 
   <div id="content" style="display:none;">
 
     <div class="header-card">
-      <div class="cover" id="cover">📖</div>
-      <div class="head-info">
-        <h1 id="title"></h1>
-        <div class="genre" id="genre"></div>
-        <span class="status-badge" id="status"></span>
+
+      <div
+        class="cover"
+        id="cover"
+      >
+        📖
       </div>
+
+      <div class="head-info">
+
+        <h1 id="title"></h1>
+
+        <div
+          class="genre"
+          id="genre"
+        ></div>
+
+        <span
+          class="status-badge"
+          id="status"
+        ></span>
+
+      </div>
+
     </div>
 
-    <div class="description" id="description"></div>
 
-    <h2>📖 قسمت‌ها</h2>
-    <div class="quick-nav" id="quickNav" style="display:none;">
-      <a class="quick-btn first" id="firstBtn">⏮ اولین قسمت</a>
-      <a class="quick-btn last" id="lastBtn">آخرین قسمت ⏭</a>
+    <div
+      class="description"
+      id="description"
+    ></div>
+
+
+    <h2>
+      📖 قسمت‌ها
+    </h2>
+
+
+    <div
+      class="quick-nav"
+      id="quickNav"
+      style="display:none;"
+    >
+
+      <a
+        class="quick-btn first"
+        id="firstBtn"
+      >
+        ⏮ اولین قسمت
+      </a>
+
+      <a
+        class="quick-btn last"
+        id="lastBtn"
+      >
+        آخرین قسمت ⏭
+      </a>
+
     </div>
+
+
     <div id="chapters"></div>
-    <div id="empty" style="display:none;">هنوز قسمتی برای این مانهوا اضافه نشده 🌸</div>
+
+
+    <div
+      id="empty"
+      style="display:none;"
+    >
+      هنوز قسمتی برای این مانهوا اضافه نشده 🌸
+    </div>
 
   </div>
 
 </div>
 
+
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const mangaId = params.get("id");
 
-  const loading = document.getElementById("loading");
-  const content = document.getElementById("content");
-  const emptyEl = document.getElementById("empty");
-  const chaptersEl = document.getElementById("chapters");
+/* =========================
+   Worker API
+========================= */
 
-  async function load() {
-    if (!mangaId) {
-      loading.textContent = "مانهوا مشخص نشده.";
+const API =
+  "https://manhwa-rose.wsalqlyzadh0.workers.dev";
+
+
+/* =========================
+   Manga ID
+========================= */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const mangaId =
+  params.get("id");
+
+
+/* =========================
+   Elements
+========================= */
+
+const loading =
+  document.getElementById("loading");
+
+const content =
+  document.getElementById("content");
+
+const error =
+  document.getElementById("error");
+
+const errorText =
+  document.getElementById("errorText");
+
+const emptyEl =
+  document.getElementById("empty");
+
+const chaptersEl =
+  document.getElementById("chapters");
+
+
+/* =========================
+   Load Manga
+========================= */
+
+async function load() {
+
+  error.style.display =
+    "none";
+
+  content.style.display =
+    "none";
+
+  loading.style.display =
+    "block";
+
+
+  if (!mangaId) {
+
+    loading.style.display =
+      "none";
+
+    errorText.textContent =
+      "مانهوا مشخص نشده.";
+
+    error.style.display =
+      "block";
+
+    return;
+  }
+
+
+  try {
+
+    const res =
+      await fetch(
+        API +
+        "/api/public/manga/" +
+        encodeURIComponent(mangaId),
+        {
+          method: "GET",
+
+          headers: {
+            "Accept":
+              "application/json"
+          },
+
+          cache: "no-store"
+        }
+      );
+
+
+    if (!res.ok) {
+
+      throw new Error(
+        "HTTP " + res.status
+      );
+    }
+
+
+    const data =
+      await res.json();
+
+
+    if (!data.success) {
+
+      loading.style.display =
+        "none";
+
+      errorText.textContent =
+        data.message ||
+        data.error ||
+        "مانهوا پیدا نشد.";
+
+      error.style.display =
+        "block";
+
       return;
     }
 
-    try {
-      const res = await fetch(`/api/public/manga/${mangaId}`);
-      const data = await res.json();
 
-      if (!data.success) {
-        loading.textContent = data.message || "مانهوا پیدا نشد.";
-        return;
-      }
+    /* =========================
+       Show content
+    ========================= */
 
-      loading.style.display = "none";
-      content.style.display = "block";
+    loading.style.display =
+      "none";
 
-      const m = data.manga;
+    content.style.display =
+      "block";
 
-      document.getElementById("title").textContent = m.title;
-      document.getElementById("genre").textContent = m.genre || "";
-      document.getElementById("status").textContent =
-        m.status === "completed" ? "تمام‌شده" : "در حال انتشار";
-      document.getElementById("description").textContent =
-        m.description || "توضیحاتی ثبت نشده.";
 
-      if (m.cover_url) {
-        const coverEl = document.getElementById("cover");
-        coverEl.style.backgroundImage = `url('${m.cover_url}')`;
-        coverEl.textContent = "";
-      }
+    const m =
+      data.manga;
 
-      if (data.chapters.length === 0) {
-        emptyEl.style.display = "block";
-      } else {
-        const quickNav = document.getElementById("quickNav");
-        const firstCh = data.chapters[0];
-        const lastCh = data.chapters[data.chapters.length - 1];
-        document.getElementById("firstBtn").href = `/read.html?id=${firstCh.id}`;
-        document.getElementById("lastBtn").href = `/read.html?id=${lastCh.id}`;
-        quickNav.style.display = "flex";
 
-        data.chapters.forEach(ch => {
-          const a = document.createElement("a");
-          a.className = "chapter-item";
-          a.href = `/read.html?id=${ch.id}`;
-          a.innerHTML = `
-            <div>
-              <div class="num">قسمت ${ch.chapter_number}</div>
-              ${ch.title ? `<div class="title">${ch.title}</div>` : ""}
-            </div>
-            <div class="arrow">◀</div>
-          `;
-          chaptersEl.appendChild(a);
-        });
-      }
+    document.getElementById(
+      "title"
+    ).textContent =
+      m.title || "بدون عنوان";
 
-    } catch {
-      loading.textContent = "ارتباط با سرور برقرار نشد.";
+
+    document.getElementById(
+      "genre"
+    ).textContent =
+      m.genre || "";
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      m.status === "completed"
+        ? "تمام‌شده"
+        : "در حال انتشار";
+
+
+    document.getElementById(
+      "description"
+    ).textContent =
+      m.description ||
+      "توضیحاتی ثبت نشده.";
+
+
+    /* =========================
+       Cover
+    ========================= */
+
+    if (m.cover_url) {
+
+      const coverEl =
+        document.getElementById(
+          "cover"
+        );
+
+      coverEl.style.backgroundImage =
+        `url("${String(m.cover_url).replace(/"/g, '\\"')}")`;
+
+      coverEl.textContent =
+        "";
     }
-  }
 
-  load();
+
+    /* =========================
+       Chapters
+    ========================= */
+
+    chaptersEl.innerHTML =
+      "";
+
+    const chapters =
+      Array.isArray(data.chapters)
+        ? data.chapters
+        : [];
+
+
+    if (chapters.length === 0) {
+
+      emptyEl.style.display =
+        "block";
+
+      document.getElementById(
+        "quickNav"
+      ).style.display =
+        "none";
+
+      return;
+    }
+
+
+    emptyEl.style.display =
+      "none";
+
+
+    const quickNav =
+      document.getElementById(
+        "quickNav"
+      );
+
+
+    const firstCh =
+      chapters[0];
+
+
+    const lastCh =
+      chapters[
+        chapters.length - 1
+      ];
+
+
+    document.getElementById(
+      "firstBtn"
+    ).href =
+      "read.html?id=" +
+      encodeURIComponent(
+        firstCh.id
+      );
+
+
+    document.getElementById(
+      "lastBtn"
+    ).href =
+      "read.html?id=" +
+      encodeURIComponent(
+        lastCh.id
+      );
+
+
+    quickNav.style.display =
+      "flex";
+
+
+    /* =========================
+       Chapter list
+    ========================= */
+
+    chapters.forEach(ch => {
+
+      const a =
+        document.createElement("a");
+
+      a.className =
+        "chapter-item";
+
+
+      a.href =
+        "read.html?id=" +
+        encodeURIComponent(
+          ch.id
+        );
+
+
+      const chapterNumber =
+        ch.chapter_number ??
+        "";
+
+
+      const chapterTitle =
+        String(ch.title || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+
+
+      a.innerHTML = `
+
+        <div>
+
+          <div class="num">
+            قسمت ${chapterNumber}
+          </div>
+
+          ${
+            chapterTitle
+              ? `
+                <div class="title">
+                  ${chapterTitle}
+                </div>
+              `
+              : ""
+          }
+
+        </div>
+
+        <div class="arrow">
+          ◀
+        </div>
+
+      `;
+
+
+      chaptersEl.appendChild(a);
+
+    });
+
+
+  } catch (err) {
+
+    console.error(
+      "Manga details error:",
+      err
+    );
+
+
+    loading.style.display =
+      "none";
+
+    content.style.display =
+      "none";
+
+
+    errorText.innerHTML =
+      `
+        ارتباط با سرور برقرار نشد.<br>
+        لطفاً دوباره تلاش کنید.
+      `;
+
+
+    error.style.display =
+      "block";
+  }
+}
+
+
+/* =========================
+   Start
+========================= */
+
+load();
+
 </script>
 
 </body>
-</html>
+ </html>
