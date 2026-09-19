@@ -307,6 +307,63 @@ body {
   font-family: inherit;
 }
 
+.locked-box {
+  display: none;
+
+  text-align: center;
+
+  padding: 60px 20px;
+}
+
+.locked-box .icon {
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.locked-box .title {
+  font-size: 16px;
+
+  font-weight: bold;
+
+  color: #ffd1de;
+
+  margin-bottom: 8px;
+}
+
+.locked-box .desc {
+  font-size: 13px;
+
+  color: #c48ea1;
+
+  line-height: 1.9;
+
+  margin-bottom: 16px;
+}
+
+.locked-box .subscribe-btn {
+  display: inline-block;
+
+  padding: 12px 22px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff347e,
+      #a52cff
+    );
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: bold;
+}
+
 .nav-bottom {
   display: flex;
 
@@ -546,6 +603,31 @@ body.fullscreen-mode {
 
 
 <div
+  class="locked-box"
+  id="lockedBox"
+>
+  <div class="icon">🔒</div>
+
+  <div class="title">
+    این قسمت قفل است
+  </div>
+
+  <div class="desc">
+    برای خواندن این قسمت به اشتراک ویژهٔ Manhwa Rose نیاز داری.
+    <br>
+    قسمت اول هر مانهوا رایگانه.
+  </div>
+
+  <a
+    class="subscribe-btn"
+    href="library.html"
+  >
+    🌹 تهیهٔ اشتراک (به‌زودی)
+  </a>
+</div>
+
+
+<div
   class="pages"
   id="pages"
 ></div>
@@ -596,6 +678,9 @@ const errorEl =
 
 const errorText =
   document.getElementById("errorText");
+
+const lockedBox =
+  document.getElementById("lockedBox");
 
 const pagesEl =
   document.getElementById("pages");
@@ -1132,6 +1217,9 @@ async function load() {
   emptyEl.style.display =
     "none";
 
+  lockedBox.style.display =
+    "none";
+
   pagesEl.innerHTML =
     "";
 
@@ -1155,6 +1243,9 @@ async function load() {
             "Accept":
               "application/json"
           },
+
+          credentials:
+            "include",
 
           cache: "no-store"
         }
@@ -1200,51 +1291,6 @@ async function load() {
 
     chapterLabel.textContent =
       `قسمت ${ch.chapter_number}`;
-
-
-    const pages =
-      Array.isArray(ch.pages)
-        ? ch.pages
-        : [];
-
-
-    if (pages.length === 0) {
-
-      emptyEl.style.display =
-        "block";
-
-    } else {
-
-      pages.forEach(
-        (src) => {
-
-          if (!src) return;
-
-          const img =
-            document.createElement(
-              "img"
-            );
-
-          img.src =
-            src;
-
-          img.loading =
-            "lazy";
-
-          img.decoding =
-            "async";
-
-          img.alt =
-            `قسمت ${ch.chapter_number}`;
-
-          pagesEl.appendChild(
-            img
-          );
-
-        }
-      );
-
-    }
 
 
     /* =========================
@@ -1325,6 +1371,64 @@ async function load() {
       }
 
     `;
+
+
+    /* =========================
+       LOCKED CHAPTER
+    ========================= */
+
+    if (data.locked) {
+
+      lockedBox.style.display =
+        "block";
+
+      return;
+    }
+
+
+    const pages =
+      Array.isArray(ch.pages)
+        ? ch.pages
+        : [];
+
+
+    if (pages.length === 0) {
+
+      emptyEl.style.display =
+        "block";
+
+    } else {
+
+      pages.forEach(
+        (src) => {
+
+          if (!src) return;
+
+          const img =
+            document.createElement(
+              "img"
+            );
+
+          img.src =
+            src;
+
+          img.loading =
+            "lazy";
+
+          img.decoding =
+            "async";
+
+          img.alt =
+            `قسمت ${ch.chapter_number}`;
+
+          pagesEl.appendChild(
+            img
+          );
+
+        }
+      );
+
+    }
 
 
   } catch (err) {
