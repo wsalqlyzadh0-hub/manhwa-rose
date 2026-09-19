@@ -1665,27 +1665,69 @@ async function publicMangaById(
 
 async function publicChapters(
   env,
-  mangaId
+  chapterId
 ) {
   try {
-    const { results } =
+    const chapter =
       await env.DB.prepare(
         `
           SELECT *
+          FROM chapters
+          WHERE id = ?
+          LIMIT 1
+        `
+      )
+        .bind(chapterId)
+        .first();
+
+    if (!chapter) {
+      return notFound(
+        "Chapter not found."
+      );
+    }
+
+    let pages = [];
+
+    try {
+      pages =
+        typeof chapter.pages ===
+        "string"
+          ? JSON.parse(
+              chapter.pages
+            )
+          : chapter.pages;
+    } catch {
+      pages = [];
+    }
+
+    if (
+      !Array.isArray(pages)
+    ) {
+      pages = [];
+    }
+
+    const { results: siblings } =
+      await env.DB.prepare(
+        `
+          SELECT
+            id,
+            chapter_number
           FROM chapters
           WHERE manga_id = ?
           ORDER BY chapter_number ASC
         `
       )
-        .bind(mangaId)
+        .bind(chapter.manga_id)
         .all();
 
     return json({
       success: true,
-      chapters:
-        results || [],
-      results:
-        results || [],
+      chapter: {
+        ...chapter,
+        pages,
+      },
+      siblings:
+        siblings || [],
     });
   } catch (error) {
     return serverError(
