@@ -2484,8 +2484,7 @@ export default {
       // ------------------------------------------------------
 
       if (
-        path === "/" ||
-        path === ""
+        path === "/api/status"
       ) {
         response =
           await workerStatus();
