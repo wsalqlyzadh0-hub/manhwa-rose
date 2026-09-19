@@ -2,1480 +2,910 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Manhwa Rose</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#09090d">
+<meta name="description" content="MANHWA ROSE - دنیای مانهوا">
+
+<title>MANHWA ROSE</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#08090d;
+    --surface:#101116;
+    --surface2:#15161d;
+    --border:rgba(255,255,255,.07);
+    --rose:#e83f72;
+    --rose2:#ff6b91;
+    --text:#f7f7f8;
+    --muted:#9496a2;
+    --green:#45d483;
+}
+
 *{
- box-sizing:border-box;
- -webkit-tap-highlight-color:transparent;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
- scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
- margin:0;
- min-height:100vh;
- overflow-x:hidden;
- font-family:Tahoma,Arial,sans-serif;
- color:#fff;
-
- background:
- radial-gradient(circle at 10% 0%,rgba(255,70,140,.25),transparent 35%),
- radial-gradient(circle at 100% 20%,rgba(110,60,255,.18),transparent 35%),
- radial-gradient(circle at 50% 100%,rgba(255,40,120,.15),transparent 40%),
- linear-gradient(145deg,#0b0409,#210b1b 45%,#080408);
-
- background-attachment:fixed;
+    background:
+        radial-gradient(circle at 80% -10%, rgba(232,63,114,.12), transparent 32%),
+        radial-gradient(circle at 10% 35%, rgba(232,63,114,.05), transparent 25%),
+        var(--bg);
+    color:var(--text);
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    min-height:100vh;
+    padding-bottom:85px;
 }
 
-body:before,
-body:after{
- content:"";
- position:fixed;
- width:220px;
- height:220px;
- border-radius:50%;
- filter:blur(75px);
- opacity:.35;
- pointer-events:none;
- z-index:0;
+button,
+input{
+    font:inherit;
 }
 
-body:before{
- right:-80px;
- top:-80px;
- background:#ef397e;
- animation:orb1 8s ease-in-out infinite;
+button{
+    border:0;
+    cursor:pointer;
 }
 
-body:after{
- left:-90px;
- bottom:-90px;
- background:#7135d9;
- animation:orb2 10s ease-in-out infinite;
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:68px;
+    background:rgba(8,9,13,.82);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
 }
 
-@keyframes orb1{
- 0%,100%{
-  transform:translate(0,0) scale(1);
- }
- 50%{
-  transform:translate(-25px,35px) scale(1.15);
- }
-}
-
-@keyframes orb2{
- 0%,100%{
-  transform:translate(0,0) scale(1);
- }
- 50%{
-  transform:translate(35px,-25px) scale(1.15);
- }
-}
-
-/* =========================
-   ACCOUNT BUTTON
-========================= */
-
-.topAccount{
- position:fixed;
-
- top:calc(14px + env(safe-area-inset-top));
- right:14px;
-
- width:46px;
- height:46px;
-
- display:flex;
- align-items:center;
- justify-content:center;
-
- z-index:9998;
-
- border-radius:50%;
-
- text-decoration:none;
-
- font-size:21px;
-
- background:rgba(255,255,255,.08);
-
- border:1px solid rgba(255,255,255,.15);
-
- box-shadow:
- 0 8px 25px rgba(0,0,0,.35),
- inset 0 1px 0 rgba(255,255,255,.12);
-
- backdrop-filter:blur(14px);
- -webkit-backdrop-filter:blur(14px);
-
- transition:
- transform .2s ease,
- background .2s ease,
- box-shadow .2s ease;
-}
-
-.topAccount:active{
- transform:scale(.9);
-
- background:rgba(255,70,140,.22);
-
- box-shadow:
- 0 5px 18px rgba(255,50,130,.25);
-}
-
-.topAccount:hover{
- background:rgba(255,255,255,.13);
-}
-
-/* =========================
-   PETALS
-========================= */
-
-.petal{
- position:fixed;
- top:-50px;
-
- z-index:1;
-
- pointer-events:none;
-
- animation:fall linear infinite;
-
- opacity:0;
-}
-
-@keyframes fall{
- 0%{
-  transform:
-   translateY(-10vh)
-   translateX(0)
-   rotate(0);
-
-  opacity:0;
- }
-
- 10%{
-  opacity:.65;
- }
-
- 50%{
-  transform:
-   translateY(55vh)
-   translateX(30px)
-   rotate(180deg);
- }
-
- 100%{
-  transform:
-   translateY(115vh)
-   translateX(-25px)
-   rotate(360deg);
-
-  opacity:0;
- }
-}
-
-/* =========================
-   MAIN
-========================= */
-
-.wrap{
- width:100%;
- max-width:520px;
-
- margin:auto;
-
- padding:
- calc(30px + env(safe-area-inset-top))
- 15px
- calc(50px + env(safe-area-inset-bottom));
-
- position:relative;
-
- z-index:2;
-}
-
-header{
- text-align:center;
-
- margin-bottom:28px;
-
- animation:headerIn .7s ease both;
-}
-
-@keyframes headerIn{
- from{
-  opacity:0;
-  transform:translateY(25px) scale(.95);
- }
-
- to{
-  opacity:1;
-  transform:none;
- }
+.header-inner{
+    max-width:1180px;
+    height:100%;
+    margin:auto;
+    padding:0 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
 .logo{
- width:88px;
- height:88px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:white;
+    font-weight:800;
+    letter-spacing:.5px;
+}
 
- margin:0 auto 12px;
-
- display:flex;
- align-items:center;
- justify-content:center;
-
- border-radius:50%;
-
- background:
- radial-gradient(
-  circle,
-  rgba(255,100,160,.25),
-  transparent 70%
- );
-
- box-shadow:
- 0 0 35px rgba(255,60,130,.22);
-
- animation:logoFloat 4s ease-in-out infinite;
+.logo-rose{
+    width:37px;
+    height:37px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(145deg,#ff668e,#a91f4c);
+    box-shadow:0 8px 25px rgba(232,63,114,.25);
+    font-size:20px;
 }
 
 .logo span{
- font-size:55px;
-
- filter:
- drop-shadow(
- 0 7px 15px rgba(255,30,110,.5)
- );
+    font-size:17px;
 }
 
-@keyframes logoFloat{
- 0%,100%{
-  transform:
-   translateY(0)
-   rotate(-3deg);
- }
-
- 50%{
-  transform:
-   translateY(-7px)
-   rotate(3deg);
- }
+.header-actions{
+    display:flex;
+    gap:8px;
 }
 
-h1{
- margin:0;
-
- font-size:30px;
-
- letter-spacing:1px;
-
- font-weight:900;
-
- background:
- linear-gradient(
-  90deg,
-  #ffd4e3,
-  #ff6f9f,
-  #fff,
-  #ff83ad,
-  #ffd4e3
- );
-
- background-size:300%;
-
- -webkit-background-clip:text;
- background-clip:text;
-
- color:transparent;
-
- animation:shine 5s linear infinite;
+.icon-btn{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    background:var(--surface2);
+    color:#fff;
+    border:1px solid var(--border);
+    display:grid;
+    place-items:center;
+    font-size:18px;
+    transition:.2s;
 }
 
-@keyframes shine{
- from{
-  background-position:0;
- }
-
- to{
-  background-position:300%;
- }
+.icon-btn:active{
+    transform:scale(.94);
 }
 
-header p{
- margin:8px 0 0;
+/* ================= MAIN ================= */
 
- color:#cbb4c4;
-
- font-size:12px;
+.container{
+    width:min(1180px,100%);
+    margin:auto;
+    padding:22px 16px;
 }
 
-/* =========================
-   LABEL
-========================= */
+/* ================= HERO ================= */
 
-.label{
- display:flex;
- align-items:center;
-
- gap:9px;
-
- margin-bottom:13px;
-
- color:#d8bdca;
-
- font-size:11px;
-
- font-weight:bold;
+.hero{
+    position:relative;
+    overflow:hidden;
+    min-height:285px;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.08);
+    background:
+        linear-gradient(110deg,
+            rgba(232,63,114,.20),
+            rgba(16,17,22,.96) 55%),
+        var(--surface);
+    padding:30px 24px;
+    display:flex;
+    align-items:center;
 }
 
-.label:before,
-.label:after{
- content:"";
-
- height:1px;
-
- flex:1;
-
- background:
- linear-gradient(
-  to right,
-  transparent,
-  rgba(255,100,160,.45)
- );
+.hero::before{
+    content:"";
+    position:absolute;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    left:-90px;
+    top:-80px;
+    background:rgba(232,63,114,.10);
+    filter:blur(10px);
 }
 
-.label:before{
- background:
- linear-gradient(
-  to left,
-  transparent,
-  rgba(255,100,160,.45)
- );
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:650px;
 }
 
-/* =========================
-   CATEGORY CARDS
-========================= */
+.hero-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:100px;
+    padding:7px 12px;
+    color:#ff9ab3;
+    font-size:12px;
+    margin-bottom:16px;
+}
+
+.hero h1{
+    font-size:clamp(29px,7vw,48px);
+    line-height:1.25;
+    margin-bottom:10px;
+    letter-spacing:-1px;
+}
+
+.hero h1 span{
+    color:var(--rose2);
+}
+
+.hero p{
+    color:#b5b6c0;
+    font-size:14px;
+    line-height:2;
+    max-width:520px;
+    margin-bottom:20px;
+}
+
+.hero-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 17px;
+    border-radius:14px;
+    color:white;
+    background:linear-gradient(135deg,var(--rose2),var(--rose));
+    box-shadow:0 10px 30px rgba(232,63,114,.22);
+    font-weight:700;
+    transition:.2s;
+}
+
+.hero-btn:active{
+    transform:scale(.96);
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    margin:20px 0;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    height:55px;
+    background:var(--surface);
+    color:white;
+    border:1px solid var(--border);
+    outline:none;
+    border-radius:17px;
+    padding:0 48px 0 18px;
+    transition:.2s;
+}
+
+.search-box input:focus{
+    border-color:rgba(232,63,114,.55);
+    box-shadow:0 0 0 4px rgba(232,63,114,.07);
+}
+
+.search-icon{
+    position:absolute;
+    right:17px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#888b96;
+    font-size:18px;
+}
+
+/* ================= SECTION ================= */
+
+.section{
+    margin-top:28px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.section-title::before{
+    content:"";
+    width:4px;
+    height:21px;
+    border-radius:5px;
+    background:var(--rose);
+}
+
+.more{
+    color:#a7a8b1;
+    font-size:12px;
+    text-decoration:none;
+}
+
+/* ================= CATEGORIES ================= */
 
 .categories{
- display:flex;
-
- flex-direction:column;
-
- gap:13px;
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
 }
 
-.card{
- min-height:102px;
-
- display:flex;
-
- align-items:center;
-
- gap:14px;
-
- padding:16px;
-
- position:relative;
-
- overflow:hidden;
-
- border-radius:23px;
-
- color:white;
-
- text-decoration:none;
-
- border:1px solid rgba(255,255,255,.11);
-
- box-shadow:
- 0 14px 35px rgba(0,0,0,.28),
-  inset 0 1px 0 rgba(255,255,255,.08);
-
- backdrop-filter:blur(12px);
- -webkit-backdrop-filter:blur(12px);
-
- opacity:0;
-
- animation:
-  cardIn .6s ease forwards;
-
- transition:
-  transform .22s ease,
-  filter .22s ease;
+.categories::-webkit-scrollbar{
+    display:none;
 }
 
-.card:nth-child(1){
- animation-delay:.1s;
+.category{
+    white-space:nowrap;
+    padding:9px 15px;
+    border-radius:100px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    color:#a9abb5;
+    font-size:12px;
+    transition:.2s;
 }
 
-.card:nth-child(2){
- animation-delay:.2s;
+.category.active,
+.category:hover{
+    background:rgba(232,63,114,.13);
+    border-color:rgba(232,63,114,.3);
+    color:#ff7698;
 }
 
-.card:nth-child(3){
- animation-delay:.3s;
+/* ================= MANGA GRID ================= */
+
+.manga-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
 }
 
-@keyframes cardIn{
- from{
-  opacity:0;
-
-  transform:
-   translateY(20px)
-   scale(.96);
- }
-
- to{
-  opacity:1;
-
-  transform:none;
- }
+.manga-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    transition:.22s;
 }
 
-.card:before{
- content:"";
-
- position:absolute;
-
- width:180%;
- height:100%;
-
- top:0;
-
- right:-190%;
-
- background:
- linear-gradient(
-  110deg,
-  transparent 40%,
-  rgba(255,255,255,.1),
-  transparent 60%
- );
-
- transition:right .7s ease;
+.manga-card:active{
+    transform:scale(.98);
 }
 
-.card:active:before,
-.card:hover:before{
- right:100%;
+.cover{
+    position:relative;
+    aspect-ratio:3/4;
+    overflow:hidden;
+    background:#191a21;
 }
 
-.card:active{
- transform:scale(.975);
-
- filter:brightness(1.1);
+.cover img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    transition:.35s;
 }
 
-.action{
- background:
- linear-gradient(
-  135deg,
-  rgba(38,86,160,.82),
-  rgba(8,25,55,.94)
- );
-
- border-color:
- rgba(100,170,255,.22);
+.manga-card:hover .cover img{
+    transform:scale(1.04);
 }
 
-.romance{
- background:
- linear-gradient(
-  135deg,
-  rgba(140,96,20,.84),
-  rgba(58,37,5,.94)
- );
-
- border-color:
- rgba(255,215,90,.2);
+.badge{
+    position:absolute;
+    top:9px;
+    right:9px;
+    padding:5px 8px;
+    border-radius:8px;
+    background:rgba(8,9,13,.82);
+    backdrop-filter:blur(8px);
+    font-size:10px;
+    color:#fff;
 }
 
-.all{
- background:
- linear-gradient(
-  135deg,
-  rgba(150,38,90,.84),
-  rgba(60,10,40,.94)
- );
-
- border-color:
- rgba(255,105,170,.22);
+.badge.free{
+    color:#72e7a4;
 }
 
-.rose{
- width:60px;
- height:60px;
-
- flex:0 0 60px;
-
- display:flex;
-
- align-items:center;
- justify-content:center;
-
- border-radius:18px;
-
- background:
- rgba(255,255,255,.08);
-
- border:
- 1px solid rgba(255,255,255,.1);
-
- box-shadow:
- inset 0 0 18px rgba(255,255,255,.04);
-
- font-size:36px;
-
- transition:.25s;
+.card-info{
+    padding:12px;
 }
 
-.card:active .rose{
- transform:
-  scale(1.1)
-  rotate(-7deg);
+.card-title{
+    font-size:14px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-bottom:6px;
 }
 
-.blue{
- filter:
- hue-rotate(150deg)
- saturate(2.2)
- drop-shadow(
-  0 0 9px rgba(70,150,255,.35)
- );
+.card-meta{
+    color:var(--muted);
+    font-size:10px;
+    display:flex;
+    justify-content:space-between;
+    gap:5px;
 }
 
-.yellow{
- filter:
- hue-rotate(-65deg)
- saturate(2)
- drop-shadow(
-  0 0 9px rgba(255,210,60,.3)
- );
+.price{
+    color:#ff7899;
+    font-weight:700;
 }
 
-.info{
- min-width:0;
+/* ================= EMPTY STATE ================= */
 
- flex:1;
+.empty{
+    display:none;
+    padding:35px 15px;
+    text-align:center;
+    color:#777985;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
 }
 
-.info h2{
- margin:0 0 5px;
-
- font-size:17px;
-
- font-weight:800;
+.empty-icon{
+    font-size:30px;
+    margin-bottom:10px;
 }
 
-.info p{
- margin:0;
+/* ================= BOTTOM NAV ================= */
 
- color:#d9c9d2;
-
- font-size:10.5px;
+.bottom-nav{
+    position:fixed;
+    z-index:200;
+    bottom:0;
+    right:0;
+    left:0;
+    height:72px;
+    background:rgba(10,10,14,.92);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-top:1px solid var(--border);
 }
 
-.arrow{
- width:34px;
- height:34px;
-
- flex:0 0 34px;
-
- display:flex;
-
- align-items:center;
- justify-content:center;
-
- border-radius:50%;
-
- background:
- rgba(255,255,255,.07);
-
- color:#eadde4;
-
- font-size:14px;
-
- transition:.25s;
+.bottom-inner{
+    height:100%;
+    max-width:520px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
 }
 
-.card:active .arrow{
- transform:translateX(-4px);
-
- background:
- rgba(255,255,255,.14);
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    color:#777985;
+    font-size:10px;
+    text-decoration:none;
+    transition:.2s;
 }
 
-/* =========================
-   EXTRA BUTTONS
-========================= */
-
-.extra{
- display:flex;
-
- flex-direction:column;
-
- gap:12px;
-
- margin-top:21px;
+.nav-item span:first-child{
+    font-size:19px;
 }
 
-.extraBtn{
- min-height:76px;
-
- width:100%;
-
- display:flex;
-
- align-items:center;
-
- gap:13px;
-
- padding:14px;
-
- border-radius:19px;
-
- border:
- 1px solid rgba(255,255,255,.1);
-
- color:#fff;
-
- text-decoration:none;
-
- background:
- rgba(255,255,255,.045);
-
- box-shadow:
- 0 10px 25px rgba(0,0,0,.2),
-  inset 0 1px 0 rgba(255,255,255,.05);
-
- backdrop-filter:blur(10px);
- -webkit-backdrop-filter:blur(10px);
-
- transition:.22s;
-
- cursor:pointer;
+.nav-item.active{
+    color:#ff6f95;
 }
 
-.extraBtn:active{
- transform:scale(.975);
+/* ================= RESPONSIVE ================= */
 
- filter:brightness(1.1);
+@media(min-width:700px){
+
+    body{
+        padding-bottom:25px;
+    }
+
+    .container{
+        padding:30px 24px;
+    }
+
+    .hero{
+        min-height:330px;
+        padding:45px;
+    }
+
+    .manga-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:17px;
+    }
+
+    .bottom-nav{
+        display:none;
+    }
+
+    .header{
+        height:74px;
+    }
 }
 
-.support{
- background:
- linear-gradient(
-  135deg,
-  rgba(40,105,120,.5),
-  rgba(18,52,63,.65)
- );
-}
-
-.join{
- background:
- linear-gradient(
-  135deg,
-  rgba(195,43,105,.5),
-  rgba(88,32,105,.65)
- );
-}
-
-.icon{
- width:46px;
- height:46px;
-
- flex:0 0 46px;
-
- display:flex;
-
- align-items:center;
- justify-content:center;
-
- border-radius:15px;
-
- background:
- rgba(255,255,255,.08);
-
- font-size:23px;
-}
-
-.extraInfo{
- min-width:0;
-
- display:flex;
-
- flex-direction:column;
-
- gap:4px;
-}
-
-.title{
- font-size:13.5px;
-
- font-weight:bold;
-}
-
-.sub{
- color:#cdbbc5;
-
- font-size:10.5px;
-
- line-height:1.65;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
- margin-top:29px;
-
- text-align:center;
-
- color:#745b68;
-
- font-size:10px;
-}
-
-/* =========================
-   SUPPORT MODAL
-========================= */
-
-.modal{
- display:none;
-
- position:fixed;
-
- inset:0;
-
- z-index:9999;
-
- align-items:center;
- justify-content:center;
-
- padding:18px;
-
- background:
- rgba(0,0,0,.8);
-
- backdrop-filter:blur(9px);
- -webkit-backdrop-filter:blur(9px);
-}
-
-.modal.open{
- display:flex;
-
- animation:fade .2s ease;
-}
-
-@keyframes fade{
- from{
-  opacity:0;
- }
-
- to{
-  opacity:1;
- }
-}
-
-.modalBox{
- width:100%;
-
- max-width:390px;
-
- padding:20px;
-
- border-radius:24px;
-
- background:
- linear-gradient(
-  145deg,
-  #29101f,
-  #11070f
- );
-
- border:
- 1px solid rgba(255,255,255,.12);
-
- box-shadow:
- 0 30px 90px rgba(0,0,0,.7);
-
- animation:modalIn .3s ease;
-}
-
-@keyframes modalIn{
- from{
-  opacity:0;
-
-  transform:
-   translateY(25px)
-   scale(.94);
- }
-
- to{
-  opacity:1;
-
-  transform:none;
- }
-}
-
-.modalBox h3{
- margin:0 0 16px;
-
- color:#ffd3e2;
-
- font-size:16px;
-}
-
-.modalBox input,
-.modalBox textarea{
- width:100%;
-
- padding:13px;
-
- margin-bottom:10px;
-
- border-radius:13px;
-
- border:
- 1px solid rgba(255,255,255,.1);
-
- outline:none;
-
- background:
- rgba(0,0,0,.3);
-
- color:white;
-
- font-family:inherit;
-
- font-size:13px;
-}
-
-.modalBox input:focus,
-.modalBox textarea:focus{
- border-color:
- rgba(255,100,155,.7);
-
- box-shadow:
- 0 0 0 3px rgba(255,70,130,.1);
-}
-
-.modalBox textarea{
- min-height:105px;
-
- resize:vertical;
-}
-
-#supportMsg{
- min-height:20px;
-
- margin-bottom:8px;
-
- text-align:center;
-
- font-size:12px;
-}
-
-.send{
- width:100%;
-
- padding:13px;
-
- margin-bottom:8px;
-
- border:0;
-
- border-radius:13px;
-
- background:
- linear-gradient(
-  135deg,
-  #e83f78,
-  #a92d5b
- );
-
- color:white;
-
- font-weight:bold;
-
- font-size:14px;
-
- box-shadow:
- 0 8px 22px rgba(210,40,100,.25);
-}
-
-.close{
- width:100%;
-
- padding:11px;
-
- border:
- 1px solid rgba(255,255,255,.08);
-
- border-radius:13px;
-
- background:
- rgba(255,255,255,.06);
-
- color:#ddd;
-}
-
-/* =========================
-   SMALL PHONES
-========================= */
-
-@media(max-width:380px){
-
- .wrap{
-  padding-left:12px;
-  padding-right:12px;
- }
-
- h1{
-  font-size:27px;
- }
-
- .logo{
-  width:78px;
-  height:78px;
- }
-
- .logo span{
-  font-size:48px;
- }
-
- .card{
-  min-height:94px;
-
-  padding:14px;
- }
-
- .rose{
-  width:54px;
-  height:54px;
-
-  flex-basis:54px;
-
-  font-size:32px;
- }
-
- .info h2{
-  font-size:16px;
- }
-
- .sub{
-  font-size:10px;
- }
-
- .topAccount{
-  width:42px;
-  height:42px;
-
-  right:11px;
-
-  font-size:19px;
- }
+@media(min-width:1000px){
+
+    .manga-grid{
+        grid-template-columns:repeat(5,minmax(0,1fr));
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     ACCOUNT BUTTON
-     ========================= -->
+<header class="header">
+    <div class="header-inner">
 
-<a
- href="account.html"
- class="topAccount"
- aria-label="حساب کاربری"
- title="حساب کاربری"
->
- 👤
-</a>
+        <a href="#" class="logo">
+            <div class="logo-rose">🌹</div>
+            <span>MANHWA ROSE</span>
+        </a>
 
-<script>
-const petals=[
- "🌸",
- "🌹",
- "🥀",
- "🌺",
- "💮"
-];
+        <div class="header-actions">
+            <button class="icon-btn" aria-label="اعلان‌ها">🔔</button>
+            <button class="icon-btn" aria-label="حساب کاربری">👤</button>
+        </div>
 
-for(let i=0;i<12;i++){
-
- const p=document.createElement("div");
-
- p.className="petal";
-
- p.textContent=
-  petals[
-   Math.floor(
-    Math.random()*petals.length
-   )
-  ];
-
- p.style.left=
-  Math.random()*100+"vw";
-
- p.style.fontSize=
-  (10+Math.random()*13)+"px";
-
- p.style.animationDuration=
-  (9+Math.random()*12)+"s";
-
- p.style.animationDelay=
-  Math.random()*12+"s";
-
- document.body.appendChild(p);
-}
-</script>
-
-<div class="wrap">
-
-<header>
-
- <div class="logo">
-  <span>🌹</span>
- </div>
-
- <h1>MANHWA ROSE</h1>
-
- <p>
-  دنیای مانهوا از اینجا شروع میشه ✨
- </p>
-
+    </div>
 </header>
 
-<div class="label">
- دسته‌بندی مانهوا
-</div>
 
-<div class="categories">
+<main class="container">
 
-<a
- href="library.html?genre=اکشن"
- class="card action"
->
+    <!-- HERO -->
+    <section class="hero">
 
- <div class="rose blue">
-  🌹
- </div>
+        <div class="hero-content">
 
- <div class="info">
+            <div class="hero-tag">
+                🌹 دنیای مانهوا
+            </div>
 
-  <h2>
-   رز آبی
-  </h2>
+            <h1>
+                داستانت را<br>
+                از <span>اینجا</span> شروع کن
+            </h1>
 
-  <p>
-   اکشن · مبارزه · قدرت
-  </p>
+            <p>
+                مجموعه‌ای از مانهواهای محبوب و جدید،
+                با تجربه‌ای سریع، ساده و لذت‌بخش برای مطالعه.
+            </p>
 
- </div>
+            <button class="hero-btn" onclick="scrollToManga()">
+                مشاهده مانهواها
+                <span>←</span>
+            </button>
 
- <div class="arrow">
-  ◀
- </div>
+        </div>
 
-</a>
+    </section>
 
 
-<a
- href="library.html?genre=عاشقانه"
- class="card romance"
->
+    <!-- SEARCH -->
+    <div class="search-box">
 
- <div class="rose yellow">
-  🌹
- </div>
+        <span class="search-icon">⌕</span>
 
- <div class="info">
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="جستجوی نام مانهوا..."
+            autocomplete="off"
+        >
 
-  <h2>
-   رز زرد
-  </h2>
-
-  <p>
-   عاشقانه · احساسی · درام
-  </p>
-
- </div>
-
- <div class="arrow">
-  ◀
- </div>
-
-</a>
+    </div>
 
 
-<a
- href="library.html"
- class="card all"
->
+    <!-- CATEGORIES -->
+    <section class="section">
 
- <div class="rose">
-  🌹
- </div>
+        <div class="section-head">
+            <h2 class="section-title">دسته‌بندی</h2>
+        </div>
 
- <div class="info">
+        <div class="categories">
 
-  <h2>
-   همه مانهواها
-  </h2>
+            <button class="category active" data-filter="all">
+                همه
+            </button>
 
-  <p>
-   مشاهده کل کتابخانه
-  </p>
+            <button class="category" data-filter="action">
+                اکشن
+            </button>
 
- </div>
+            <button class="category" data-filter="romance">
+                عاشقانه
+            </button>
 
- <div class="arrow">
-  ◀
- </div>
+            <button class="category" data-filter="fantasy">
+                فانتزی
+            </button>
 
-</a>
+            <button class="category" data-filter="drama">
+                درام
+            </button>
 
-</div>
+            <button class="category" data-filter="comedy">
+                کمدی
+            </button>
 
+        </div>
 
-<div class="extra">
-
-<button
- class="extraBtn support"
- onclick="openSupport()"
->
-
- <div class="icon">
-  🎧
- </div>
-
- <div class="extraInfo">
-
-  <div class="title">
-   پشتیبانی
-  </div>
-
-  <div class="sub">
-   مشکلی داری یا سؤالی برات پیش اومده؟
-   با ما در ارتباط باش.
-  </div>
-
- </div>
-
-</button>
+    </section>
 
 
-<a
- href="join.html"
- class="extraBtn join"
->
+    <!-- MANGA -->
+    <section class="section" id="mangaSection">
 
- <div class="icon">
-  🌹
- </div>
+        <div class="section-head">
+            <h2 class="section-title">مانهواهای جدید</h2>
 
- <div class="extraInfo">
-
-  <div class="title">
-   عضویت در تیم رز
-  </div>
-
-  <div class="sub">
-   ترجمه، تایپ، ادیت یا آپلود؛
-   به تیم Manhwa Rose ملحق شو.
-  </div>
-
- </div>
-
-</a>
-
-</div>
+            <a href="#" class="more">
+                مشاهده همه
+            </a>
+        </div>
 
 
-<footer>
- Manhwa Rose · ساخته‌شده با عشق 🌹
-</footer>
+        <div class="manga-grid" id="mangaGrid">
 
-</div>
+            <!-- نمونه ۱ -->
+            <article
+                class="manga-card"
+                data-title="رز سرخ"
+                data-category="action"
+            >
+
+                <div class="cover">
+
+                    <img
+                        src="https://placehold.co/600x800/171820/ffffff?text=MANHWA"
+                        alt="رز سرخ"
+                    >
+
+                    <span class="badge free">
+                        رایگان
+                    </span>
+
+                </div>
+
+                <div class="card-info">
+
+                    <h3 class="card-title">
+                        رز سرخ
+                    </h3>
+
+                    <div class="card-meta">
+                        <span>چپتر ۱۲</span>
+                        <span class="price">رایگان</span>
+                    </div>
+
+                </div>
+
+            </article>
 
 
-<!-- =========================
-     SUPPORT MODAL
-========================= -->
+            <!-- نمونه ۲ -->
+            <article
+                class="manga-card"
+                data-title="آخرین گل"
+                data-category="romance"
+            >
 
-<div
- class="modal"
- id="supportOverlay"
- onclick="closeOutside(event)"
->
+                <div class="cover">
 
-<div
- class="modalBox"
- onclick="event.stopPropagation()"
->
+                    <img
+                        src="https://placehold.co/600x800/171820/ffffff?text=ROSE"
+                        alt="آخرین گل"
+                    >
 
-<h3>
- 🎧 ارسال پیام به پشتیبانی
-</h3>
+                    <span class="badge">
+                        عاشقانه
+                    </span>
 
-<input
- id="supportName"
- type="text"
- placeholder="اسمت رو بنویس"
- autocomplete="name"
->
+                </div>
 
-<textarea
- id="supportMessage"
- placeholder="پیامت رو بنویس..."
-></textarea>
+                <div class="card-info">
 
-<div id="supportMsg"></div>
+                    <h3 class="card-title">
+                        آخرین گل
+                    </h3>
 
-<button
- class="send"
- id="supportSend"
- onclick="sendSupport()"
->
- ارسال پیام
-</button>
+                    <div class="card-meta">
+                        <span>چپتر ۸</span>
+                        <span class="price">۴۰۰ تومان</span>
+                    </div>
 
-<button
- class="close"
- onclick="closeSupport()"
->
- بستن
-</button>
+                </div>
 
-</div>
+            </article>
 
-</div>
+
+            <!-- نمونه ۳ -->
+            <article
+                class="manga-card"
+                data-title="پادشاه سایه"
+                data-category="fantasy"
+            >
+
+                <div class="cover">
+
+                    <img
+                        src="https://placehold.co/600x800/171820/ffffff?text=SHADOW"
+                        alt="پادشاه سایه"
+                    >
+
+                    <span class="badge">
+                        فانتزی
+                    </span>
+
+                </div>
+
+                <div class="card-info">
+
+                    <h3 class="card-title">
+                        پادشاه سایه
+                    </h3>
+
+                    <div class="card-meta">
+                        <span>چپتر ۲۴</span>
+                        <span class="price">۴۰۰ تومان</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- نمونه ۴ -->
+            <article
+                class="manga-card"
+                data-title="آخرین قهرمان"
+                data-category="action"
+            >
+
+                <div class="cover">
+
+                    <img
+                        src="https://placehold.co/600x800/171820/ffffff?text=HERO"
+                        alt="آخرین قهرمان"
+                    >
+
+                    <span class="badge">
+                        اکشن
+                    </span>
+
+                </div>
+
+                <div class="card-info">
+
+                    <h3 class="card-title">
+                        آخرین قهرمان
+                    </h3>
+
+                    <div class="card-meta">
+                        <span>چپتر ۳۱</span>
+                        <span class="price">۴۰۰ تومان</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <div class="empty" id="emptyState">
+
+            <div class="empty-icon">🔎</div>
+
+            مانهوا موردنظر پیدا نشد.
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+    <div class="bottom-inner">
+
+        <a href="#" class="nav-item active">
+            <span>⌂</span>
+            <span>خانه</span>
+        </a>
+
+        <a href="#mangaSection" class="nav-item">
+            <span>▦</span>
+            <span>مانهوا</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span>♡</span>
+            <span>کتابخانه</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span>♙</span>
+            <span>حساب</span>
+        </a>
+
+    </div>
+
+</nav>
 
 
 <script>
 
-function openSupport(){
+/* ================= SEARCH ================= */
 
- const modal=
-  document.getElementById(
-   "supportOverlay"
-  );
+const searchInput =
+    document.getElementById("searchInput");
 
- modal.classList.add("open");
+const cards =
+    document.querySelectorAll(".manga-card");
 
- document.body.style.overflow="hidden";
+const emptyState =
+    document.getElementById("emptyState");
 
- setTimeout(()=>{
 
-  document
-   .getElementById("supportName")
-   .focus();
+searchInput.addEventListener("input", function(){
 
- },200);
+    const value =
+        this.value.trim().toLowerCase();
+
+    let visible = 0;
+
+    cards.forEach(card => {
+
+        const title =
+            card.dataset.title.toLowerCase();
+
+        const match =
+            title.includes(value);
+
+        card.style.display =
+            match ? "" : "none";
+
+        if(match){
+            visible++;
+        }
+
+    });
+
+    emptyState.style.display =
+        visible === 0 ? "block" : "none";
+
+});
+
+
+/* ================= FILTER ================= */
+
+const categoryButtons =
+    document.querySelectorAll(".category");
+
+categoryButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        categoryButtons.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        const filter =
+            button.dataset.filter;
+
+        let visible = 0;
+
+        cards.forEach(card => {
+
+            const match =
+                filter === "all" ||
+                card.dataset.category === filter;
+
+            card.style.display =
+                match ? "" : "none";
+
+            if(match){
+                visible++;
+            }
+
+        });
+
+        emptyState.style.display =
+            visible === 0 ? "block" : "none";
+
+    });
+
+});
+
+
+/* ================= HERO BUTTON ================= */
+
+function scrollToManga(){
+
+    document
+        .getElementById("mangaSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
 }
-
-
-function closeSupport(){
-
- document
-  .getElementById("supportOverlay")
-  .classList
-  .remove("open");
-
- document.body.style.overflow="";
-}
-
-
-function closeOutside(e){
-
- if(
-  e.target.id===
-  "supportOverlay"
- ){
-
-  closeSupport();
-
- }
-}
-
-
-async function sendSupport(){
-
- const nameInput=
-  document.getElementById(
-   "supportName"
-  );
-
- const messageInput=
-  document.getElementById(
-   "supportMessage"
-  );
-
- const msg=
-  document.getElementById(
-   "supportMsg"
-  );
-
- const btn=
-  document.getElementById(
-   "supportSend"
-  );
-
- const name=
-  nameInput.value.trim();
-
- const message=
-  messageInput.value.trim();
-
-
- if(!name){
-
-  msg.style.color="#ff8fae";
-
-  msg.textContent=
-   "لطفاً اسمت رو وارد کن 🌹";
-
-  nameInput.focus();
-
-  return;
- }
-
-
- if(!message){
-
-  msg.style.color="#ff8fae";
-
-  msg.textContent=
-   "لطفاً پیامت رو بنویس ✨";
-
-  messageInput.focus();
-
-  return;
- }
-
-
- btn.disabled=true;
-
- btn.textContent=
-  "در حال ارسال...";
-
- msg.textContent="";
-
-
- try{
-
-  const response=
-   await fetch(
-    "https://manhwa-rose.wsalqlyzadh0.workers.dev/api/public/support",
-    {
-     method:"POST",
-
-     headers:{
-      "Content-Type":
-       "application/json"
-     },
-
-     body:JSON.stringify({
-      name:name,
-      message:message
-     })
-    }
-   );
-
-
-  let data;
-
-
-  try{
-
-   data=
-    await response.json();
-
-  }catch(e){
-
-   data={
-    success:false,
-    message:"پاسخ نامعتبر از سرور."
-   };
-
-  }
-
-
-  if(
-   response.ok &&
-   data.success
-  ){
-
-   msg.style.color="#7dffb2";
-
-   msg.textContent=
-    "پیامت با موفقیت ارسال شد 🌹";
-
-   nameInput.value="";
-
-   messageInput.value="";
-
-
-   setTimeout(()=>{
-
-    closeSupport();
-
-   },1200);
-
-
-  }else{
-
-   msg.style.color="#ff8fae";
-
-   msg.textContent=
-    data.message ||
-    "ارسال پیام ناموفق بود.";
-
-  }
-
-
- }catch(error){
-
-  console.error(error);
-
-  msg.style.color="#ff8fae";
-
-  msg.textContent=
-   "ارتباط با سرور برقرار نشد.";
-
- }
-
-
- btn.disabled=false;
-
- btn.textContent=
-  "ارسال پیام";
-}
-
-
-document.addEventListener(
- "keydown",
- e=>{
-
-  if(e.key==="Escape"){
-
-   closeSupport();
-
-  }
-
- }
-);
 
 </script>
 
 </body>
-</html>
+             </html>
