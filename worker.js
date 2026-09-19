@@ -272,6 +272,29 @@ async function createUserSession(env, userId) {
   };
 }
 
+function hasActiveSubscription(user) {
+  if (!user) {
+    return false;
+  }
+
+  if (
+    !user.plan ||
+    user.plan === "normal"
+  ) {
+    return false;
+  }
+
+  if (!user.vip_expires_at) {
+    return true;
+  }
+
+  return (
+    new Date(
+      user.vip_expires_at
+    ).getTime() > Date.now()
+  );
+}
+
 async function getCurrentUser(request, env) {
   const sessionId = getCookie(request, USER_COOKIE);
 
@@ -729,7 +752,7 @@ async function handleGoogleCallback(
 
     const frontend =
       env.FRONTEND_URL ||
-      "https://wsalqlyzadh0-hub.github.io/manhwa-rose/";
+      "https://manhwa-rose.wsalqlyzadh0.workers.dev/";
 
     const redirectUrl =
       new URL(frontend);
@@ -1664,6 +1687,7 @@ async function publicMangaById(
 }
 
 async function publicChapters(
+  request,
   env,
   chapterId
 ) {
@@ -1686,6 +1710,61 @@ async function publicChapters(
       );
     }
 
+    const { results: siblings } =
+      await env.DB.prepare(
+        `
+          SELECT
+            id,
+            chapter_number
+          FROM chapters
+          WHERE manga_id = ?
+          ORDER BY chapter_number ASC
+        `
+      )
+        .bind(chapter.manga_id)
+        .all();
+
+    const isFirstChapter =
+      Array.isArray(siblings) &&
+      siblings.length > 0 &&
+      Number(
+        siblings[0].id
+      ) === Number(chapter.id);
+
+    let unlocked =
+      isFirstChapter;
+
+    if (!unlocked) {
+      const user =
+        await getCurrentUser(
+          request,
+          env
+        );
+
+      unlocked =
+        hasActiveSubscription(
+          user
+        );
+    }
+
+    if (!unlocked) {
+      return json({
+        success: true,
+        locked: true,
+        chapter: {
+          id: chapter.id,
+          manga_id:
+            chapter.manga_id,
+          chapter_number:
+            chapter.chapter_number,
+          title: chapter.title,
+          pages: [],
+        },
+        siblings:
+          siblings || [],
+      });
+    }
+
     let pages = [];
 
     try {
@@ -1706,22 +1785,9 @@ async function publicChapters(
       pages = [];
     }
 
-    const { results: siblings } =
-      await env.DB.prepare(
-        `
-          SELECT
-            id,
-            chapter_number
-          FROM chapters
-          WHERE manga_id = ?
-          ORDER BY chapter_number ASC
-        `
-      )
-        .bind(chapter.manga_id)
-        .all();
-
     return json({
       success: true,
+      locked: false,
       chapter: {
         ...chapter,
         pages,
@@ -2358,6 +2424,7 @@ export default {
       ) {
         response =
           await publicChapters(
+            request,
             env,
             publicChapterMatch[1]
           );
