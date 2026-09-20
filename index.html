@@ -2,1076 +2,1020 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#09090d">
-<meta name="description" content="MANHWA ROSE — دنیای مانهوا و داستان‌های مورد علاقه‌ات">
-
-<title>MANHWA ROSE</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rose OCR | استخراج متن مانهوا</title>
 
 <style>
 :root{
-    --bg:#08080c;
-    --bg2:#0d0d13;
-    --card:#12121a;
-    --card2:#171720;
-    --rose:#e43b72;
-    --rose2:#ff6b98;
-    --rose3:#9f204d;
-    --text:#f8f8fb;
-    --muted:#9696a5;
-    --line:rgba(255,255,255,.07);
-    --success:#55d68b;
-    --gold:#ffc857;
-    --radius:20px;
-    --shadow:0 20px 60px rgba(0,0,0,.45);
+  --bg:#080a11;
+  --card:#111522;
+  --card2:#171b2b;
+  --line:#292f43;
+  --text:#f5f7ff;
+  --muted:#929bb2;
+  --purple:#8b5cf6;
+  --pink:#ec4899;
+  --green:#22c55e;
+  --red:#ef4444;
 }
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html{
-    scroll-behavior:smooth;
+  box-sizing:border-box;
 }
 
 body{
-    font-family:"Vazirmatn",Tahoma,sans-serif;
-    background:
-        radial-gradient(circle at 85% 5%,rgba(228,59,114,.12),transparent 28%),
-        radial-gradient(circle at 10% 45%,rgba(130,30,80,.08),transparent 25%),
-        var(--bg);
-    color:var(--text);
-    min-height:100vh;
-    overflow-x:hidden;
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 20% 0%,#291545 0,transparent 35%),
+    radial-gradient(circle at 100% 30%,#35132e 0,transparent 30%),
+    var(--bg);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Tahoma,
+    sans-serif;
 }
 
-button,
-input{
-    font-family:inherit;
+.container{
+  width:min(1100px,94%);
+  margin:auto;
+  padding:25px 0 60px;
 }
 
-button{
-    border:0;
-    cursor:pointer;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg-orb{
-    position:fixed;
-    width:280px;
-    height:280px;
-    border-radius:50%;
-    filter:blur(100px);
-    opacity:.12;
-    pointer-events:none;
-    z-index:-1;
-}
-
-.orb1{
-    background:#e43b72;
-    top:80px;
-    right:-150px;
-}
-
-.orb2{
-    background:#7622a8;
-    bottom:120px;
-    left:-160px;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px;
-    background:rgba(8,8,12,.78);
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-    border-bottom:1px solid var(--line);
+header{
+  text-align:center;
+  padding:20px 10px 30px;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:800;
-    letter-spacing:.5px;
+  width:78px;
+  height:78px;
+  margin:auto;
+  border-radius:25px;
+  display:grid;
+  place-items:center;
+  font-size:38px;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  box-shadow:0 15px 45px #8b5cf655;
 }
 
-.logo-mark{
-    width:39px;
-    height:39px;
-    border-radius:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-        linear-gradient(145deg,#ff719b,#a9164d);
-    box-shadow:
-        0 0 25px rgba(228,59,114,.35),
-        inset 0 1px rgba(255,255,255,.25);
-    font-size:20px;
+h1{
+  margin:16px 0 5px;
+  font-size:clamp(28px,7vw,44px);
 }
 
-.logo-text{
-    font-size:15px;
+.subtitle{
+  margin:0;
+  color:var(--muted);
 }
 
-.logo-text span{
-    display:block;
-    color:var(--rose2);
-    font-size:9px;
-    font-weight:500;
-    letter-spacing:2px;
-    margin-top:-2px;
+.card{
+  background:linear-gradient(145deg,#131827f2,#0e121df2);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 20px 60px #0007;
 }
 
-.header-actions{
-    display:flex;
-    gap:8px;
+.drop-zone{
+  border:2px dashed #3b435d;
+  border-radius:20px;
+  padding:40px 15px;
+  text-align:center;
+  transition:.2s;
+  cursor:pointer;
 }
 
-.icon-btn{
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    background:rgba(255,255,255,.045);
-    color:#fff;
-    border:1px solid var(--line);
-    font-size:18px;
-    transition:.25s ease;
+.drop-zone.drag{
+  border-color:var(--purple);
+  background:#8b5cf614;
+  transform:scale(1.01);
 }
 
-.icon-btn:active{
-    transform:scale(.92);
+.drop-icon{
+  font-size:45px;
+  margin-bottom:8px;
 }
 
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    position:relative;
-    min-height:430px;
-    margin:14px 14px 0;
-    border-radius:28px;
-    overflow:hidden;
-    isolation:isolate;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(8,8,12,.98) 5%,
-            rgba(8,8,12,.76) 42%,
-            rgba(8,8,12,.25) 100%
-        ),
-        url("https://images.unsplash.com/photo-1513001900722-370f803f498d?auto=format&fit=crop&w=1200&q=85")
-        center/cover;
-    box-shadow:var(--shadow);
-    border:1px solid rgba(255,255,255,.08);
+.drop-title{
+  font-size:20px;
+  font-weight:800;
 }
 
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        linear-gradient(0deg,#08080c 0%,transparent 50%),
-        radial-gradient(circle at 75% 30%,rgba(255,68,130,.24),transparent 35%);
-    z-index:-1;
+.drop-description{
+  color:var(--muted);
+  margin:8px 0 20px;
+  line-height:1.8;
 }
 
-.hero-content{
-    min-height:430px;
-    padding:50px 25px 35px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    max-width:550px;
+input[type=file]{
+  display:none;
 }
 
-.hero-tag{
-    width:max-content;
-    padding:6px 12px;
-    border-radius:999px;
-    background:rgba(228,59,114,.12);
-    border:1px solid rgba(228,59,114,.25);
-    color:#ff8bad;
-    font-size:11px;
-    margin-bottom:15px;
+.button{
+  border:0;
+  border-radius:14px;
+  padding:12px 17px;
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+  transition:.16s;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  box-shadow:0 8px 25px #8b5cf633;
 }
 
-.hero h1{
-    font-size:clamp(29px,8vw,48px);
-    line-height:1.25;
-    font-weight:800;
-    margin-bottom:12px;
+.button:hover{
+  transform:translateY(-2px);
 }
 
-.hero h1 span{
-    color:var(--rose2);
-    text-shadow:0 0 25px rgba(255,72,132,.3);
+.button:active{
+  transform:scale(.96);
 }
 
-.hero p{
-    color:#bdbdc8;
-    line-height:2;
-    font-size:13px;
-    max-width:390px;
-    margin-bottom:24px;
+.button.secondary{
+  background:#1c2233;
+  border:1px solid #303850;
+  box-shadow:none;
 }
 
-.hero-buttons{
-    display:flex;
-    gap:9px;
-    flex-wrap:wrap;
+.button.danger{
+  background:#32171f;
+  border:1px solid #5d2835;
+  box-shadow:none;
 }
 
-.primary-btn,
-.secondary-btn{
-    min-height:46px;
-    padding:0 18px;
-    border-radius:14px;
-    font-size:13px;
-    font-weight:700;
-    transition:.25s ease;
+.button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none;
 }
 
-.primary-btn{
-    color:white;
-    background:linear-gradient(135deg,var(--rose2),var(--rose3));
-    box-shadow:0 8px 28px rgba(228,59,114,.28);
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
 
-.secondary-btn{
-    color:#eee;
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(10px);
+.actions .button{
+  flex:1;
+  min-width:145px;
 }
 
-.primary-btn:active,
-.secondary-btn:active{
-    transform:translateY(2px) scale(.98);
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-wrap{
-    margin:18px 14px;
-}
-
-.search{
-    height:55px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:0 16px;
-    border-radius:17px;
-    background:rgba(255,255,255,.045);
-    border:1px solid var(--line);
-    transition:.3s ease;
-}
-
-.search:focus-within{
-    border-color:rgba(228,59,114,.45);
-    box-shadow:0 0 0 4px rgba(228,59,114,.06);
-}
-
-.search-icon{
-    font-size:19px;
-    opacity:.7;
-}
-
-.search input{
-    flex:1;
-    background:none;
-    border:0;
-    outline:0;
-    color:white;
-    font-size:13px;
-}
-
-.search input::placeholder{
-    color:#777783;
-}
-
-/* =========================
-   CATEGORIES
-========================= */
-
-.categories{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding:2px 14px 8px;
-    scrollbar-width:none;
-}
-
-.categories::-webkit-scrollbar{
-    display:none;
-}
-
-.category{
-    flex:0 0 auto;
-    padding:9px 15px;
-    border-radius:999px;
-    background:rgba(255,255,255,.045);
-    border:1px solid var(--line);
-    color:#a9a9b5;
-    font-size:11px;
-    transition:.25s ease;
-}
-
-.category.active{
-    color:#fff;
-    background:rgba(228,59,114,.14);
-    border-color:rgba(228,59,114,.38);
-    box-shadow:0 0 20px rgba(228,59,114,.08);
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section{
-    padding:22px 14px 0;
-}
-
-.section-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-}
-
-.section-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:17px;
-    font-weight:800;
-}
-
-.section-title::before{
-    content:"";
-    width:4px;
-    height:19px;
-    border-radius:10px;
-    background:linear-gradient(#ff719b,#a9164d);
-    box-shadow:0 0 12px rgba(228,59,114,.45);
-}
-
-.section-link{
-    color:#a6a6b2;
-    font-size:11px;
-}
-
-/* =========================
-   TRENDING
-========================= */
-
-.trending{
-    display:flex;
-    gap:12px;
-    overflow-x:auto;
-    scrollbar-width:none;
-    padding-bottom:5px;
-}
-
-.trending::-webkit-scrollbar{
-    display:none;
-}
-
-.trend-card{
-    position:relative;
-    flex:0 0 145px;
-    height:205px;
-    overflow:hidden;
-    border-radius:17px;
-    border:1px solid var(--line);
-    background:#111118;
-}
-
-.trend-card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:.5s ease;
-}
-
-.trend-card::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        transparent 30%,
-        rgba(5,5,8,.25) 55%,
-        rgba(5,5,8,.95) 100%
-    );
-}
-
-.trend-card:hover img{
-    transform:scale(1.06);
-}
-
-.rank{
-    position:absolute;
-    z-index:2;
-    top:9px;
-    right:9px;
-    width:31px;
-    height:31px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(8,8,12,.75);
-    border:1px solid rgba(255,255,255,.13);
-    font-size:12px;
-    font-weight:800;
-}
-
-.trend-info{
-    position:absolute;
-    z-index:3;
-    bottom:11px;
-    right:11px;
-    left:11px;
-}
-
-.trend-info h3{
-    font-size:12px;
-    margin-bottom:4px;
-}
-
-.trend-info small{
-    color:#aaaab6;
-    font-size:9px;
-}
-
-/* =========================
-   MANGA GRID
-========================= */
-
-.manga-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.manga-card{
-    position:relative;
-    min-width:0;
-    border-radius:18px;
-    overflow:hidden;
-    background:linear-gradient(145deg,#14141c,#0f0f15);
-    border:1px solid var(--line);
-    box-shadow:0 10px 35px rgba(0,0,0,.22);
-    transition:.3s ease;
-}
-
-.manga-card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(228,59,114,.25);
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
-}
-
-.cover{
-    position:relative;
-    aspect-ratio:3/4;
-    overflow:hidden;
-}
-
-.cover img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:.5s ease;
-}
-
-.manga-card:hover .cover img{
-    transform:scale(1.045);
-}
-
-.badge{
-    position:absolute;
-    top:9px;
-    right:9px;
-    z-index:3;
-    padding:5px 8px;
-    border-radius:8px;
-    background:rgba(8,8,12,.78);
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,.1);
-    font-size:8px;
-}
-
-.badge.free{
-    color:#72e8a0;
-}
-
-.badge.paid{
-    color:#ff8caf;
-}
-
-.card-info{
-    padding:12px;
-}
-
-.card-info h3{
-    font-size:13px;
-    font-weight:700;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    margin-bottom:7px;
-}
-
-.meta{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:#858592;
-    font-size:9px;
-}
-
-.rating{
-    color:var(--gold);
-}
-
-.price{
-    color:#ff80a2;
-}
-
-/* =========================
-   CONTINUE READING
-========================= */
-
-.continue{
-    display:flex;
-    gap:12px;
-    padding:14px;
-    border-radius:18px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(228,59,114,.10),
-            rgba(255,255,255,.025)
-        );
-    border:1px solid rgba(228,59,114,.14);
-}
-
-.continue-cover{
-    width:68px;
-    height:86px;
-    flex:none;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.continue-cover img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.continue-info{
-    min-width:0;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.continue-info h3{
-    font-size:13px;
-    margin-bottom:7px;
-}
-
-.continue-info p{
-    color:#858591;
-    font-size:9px;
-    margin-bottom:11px;
+.progress-header{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:9px;
 }
 
 .progress{
-    height:4px;
-    border-radius:10px;
-    background:rgba(255,255,255,.08);
-    overflow:hidden;
+  height:12px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#20263a;
 }
 
-.progress span{
-    display:block;
-    width:64%;
-    height:100%;
-    background:linear-gradient(90deg,var(--rose),var(--rose2));
-    border-radius:inherit;
+.progress-fill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--pink));
+  transition:width .2s;
 }
 
-/* =========================
-   FEATURE STRIP
-========================= */
-
-.feature-strip{
-    margin:22px 14px 0;
-    padding:20px;
-    border-radius:20px;
-    background:
-        radial-gradient(circle at 10% 20%,rgba(228,59,114,.18),transparent 35%),
-        linear-gradient(135deg,#15151e,#0d0d13);
-    border:1px solid var(--line);
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
 }
 
-.feature-strip h3{
-    font-size:15px;
-    margin-bottom:7px;
+.pill{
+  padding:7px 11px;
+  border-radius:999px;
+  background:#111625;
+  border:1px solid var(--line);
+  color:#cbd2e3;
+  font-size:12px;
 }
 
-.feature-strip p{
-    color:#888894;
-    font-size:10px;
-    line-height:2;
+.page{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:15px;
+  background:#0b0f19;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:12px;
+  margin-bottom:14px;
 }
 
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.bottom-nav{
-    position:fixed;
-    z-index:1000;
-    left:10px;
-    right:10px;
-    bottom:10px;
-    height:67px;
-    padding:7px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    background:rgba(14,14,20,.84);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:21px;
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-    box-shadow:0 20px 50px rgba(0,0,0,.55);
+.preview{
+  width:100%;
+  height:290px;
+  object-fit:contain;
+  border-radius:13px;
+  background:#05070c;
 }
 
-.nav-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    border-radius:15px;
-    color:#777784;
-    font-size:9px;
-    transition:.25s ease;
+.page-title{
+  font-size:15px;
+  font-weight:800;
+  margin:4px 0 10px;
 }
 
-.nav-item span:first-child{
-    font-size:19px;
+textarea{
+  width:100%;
+  min-height:290px;
+  resize:vertical;
+  border-radius:13px;
+  border:1px solid #30384f;
+  outline:none;
+  padding:13px;
+  color:#f1f4fb;
+  background:#151a28;
+  font:15px/1.85 Tahoma,Arial,sans-serif;
 }
 
-.nav-item.active{
-    color:#ff7fa3;
-    background:rgba(228,59,114,.09);
+textarea:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px #8b5cf615;
 }
 
-.nav-item:active{
-    transform:scale(.93);
+.page-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:9px;
 }
 
-/* =========================
-   ANIMATION
-========================= */
-
-.reveal{
-    opacity:0;
-    transform:translateY(18px);
-    animation:reveal .7s ease forwards;
+.small-button{
+  padding:8px 11px;
+  font-size:12px;
+  border-radius:10px;
 }
 
-@keyframes reveal{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.empty{
+  text-align:center;
+  padding:40px 10px;
+  color:var(--muted);
 }
 
-.hero{
-    animation:heroIn .8s ease both;
+.info{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.9;
+  margin-top:15px;
 }
 
-@keyframes heroIn{
-    from{
-        opacity:0;
-        transform:scale(.98);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+.hidden{
+  display:none!important;
 }
 
-/* =========================
-   DESKTOP
-========================= */
+@media(max-width:700px){
+  .page{
+    grid-template-columns:1fr;
+  }
 
-@media(min-width:800px){
+  .preview{
+    height:230px;
+  }
 
-    .header{
-        padding:0 max(30px,calc((100vw - 1200px)/2));
-    }
+  textarea{
+    min-height:240px;
+  }
 
-    .hero,
-    .search-wrap,
-    .section,
-    .feature-strip{
-        max-width:1200px;
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    .hero{
-        min-height:520px;
-    }
-
-    .hero-content{
-        min-height:520px;
-        padding-right:55px;
-    }
-
-    .manga-grid{
-        grid-template-columns:repeat(5,1fr);
-    }
-
-    .trending{
-        display:grid;
-        grid-template-columns:repeat(5,1fr);
-        overflow:visible;
-    }
-
-    .trend-card{
-        width:auto;
-    }
-
-    .bottom-nav{
-        width:500px;
-        left:50%;
-        right:auto;
-        transform:translateX(-50%);
-    }
-}
-
-/* =========================
-   EXTRA SMALL
-========================= */
-
-@media(max-width:360px){
-    .hero{
-        min-height:400px;
-    }
-
-    .hero-content{
-        min-height:400px;
-        padding:35px 19px;
-    }
-
-    .hero h1{
-        font-size:27px;
-    }
-
-    .manga-grid{
-        gap:9px;
-    }
-
-    .card-info{
-        padding:10px;
-    }
-}
-
-/* =========================
-   REDUCED MOTION
-========================= */
-
-@media(prefers-reduced-motion:reduce){
-    *,
-    *::before,
-    *::after{
-        animation:none!important;
-        transition:none!important;
-        scroll-behavior:auto!important;
-    }
+  .container{
+    width:95%;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg-orb orb1"></div>
-<div class="bg-orb orb2"></div>
+<div class="container">
 
-<!-- HEADER -->
-<header class="header">
-
-    <div class="logo">
-        <div class="logo-mark">🌹</div>
-
-        <div class="logo-text">
-            MANHWA ROSE
-            <span>READ • DISCOVER • ENJOY</span>
-        </div>
-    </div>
-
-    <div class="header-actions">
-        <button class="icon-btn" aria-label="اعلان‌ها">♢</button>
-        <button class="icon-btn" aria-label="حساب کاربری">◉</button>
-    </div>
-
+<header>
+  <div class="logo">🌹</div>
+  <h1>Rose OCR</h1>
+  <p class="subtitle">استخراج و اصلاح متن انگلیسی چپتر مانهوا</p>
 </header>
 
+<section class="card">
 
-<main>
+  <div id="dropZone" class="drop-zone">
 
-    <!-- HERO -->
-    <section class="hero">
+    <div class="drop-icon">📦</div>
 
-        <div class="hero-content">
-
-            <div class="hero-tag">
-                ✦ داستان بعدی تو اینجاست
-            </div>
-
-            <h1>
-                دنیای خودت را<br>
-                با <span>Manhwa Rose</span> پیدا کن
-            </h1>
-
-            <p>
-                جدیدترین مانهواها، داستان‌های محبوب و فصل‌های تازه
-                را در یک تجربه سریع و زیبا دنبال کن.
-            </p>
-
-            <div class="hero-buttons">
-                <button class="primary-btn" onclick="scrollToSection('latest')">
-                    شروع مطالعه
-                </button>
-
-                <button class="secondary-btn" onclick="scrollToSection('trending')">
-                    مشاهده ترندها
-                </button>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- SEARCH -->
-    <div class="search-wrap">
-
-        <div class="search">
-
-            <span class="search-icon">⌕</span>
-
-            <input
-                id="searchInput"
-                type="search"
-                placeholder="نام مانهوا را جستجو کن..."
-                autocomplete="off"
-            >
-
-        </div>
-
+    <div class="drop-title">
+      فایل چپتر را وارد کن
     </div>
 
-
-    <!-- CATEGORIES -->
-    <div class="categories">
-
-        <button class="category active" data-filter="all">
-            همه
-        </button>
-
-        <button class="category" data-filter="action">
-            اکشن
-        </button>
-
-        <button class="category" data-filter="romance">
-            عاشقانه
-        </button>
-
-        <button class="category" data-filter="fantasy">
-            فانتزی
-        </button>
-
-        <button class="category" data-filter="drama">
-            درام
-        </button>
-
-        <button class="category" data-filter="comedy">
-            کمدی
-        </button>
-
-        <button class="category" data-filter="adventure">
-            ماجراجویی
-        </button>
-
+    <div class="drop-description">
+      فایل ZIP یا PDF را انتخاب کن.<br>
+      صفحات به‌صورت خودکار استخراج و برای OCR آماده می‌شوند.
     </div>
 
+    <label for="fileInput" class="button">
+      📂 انتخاب فایل
+    </label>
 
-    <!-- TRENDING -->
-    <section class="section reveal" id="trending">
+    <input
+      id="fileInput"
+      type="file"
+      accept=".zip,.pdf,application/zip,application/pdf"
+    >
 
-        <div class="section-head">
+  </div>
 
-            <h2 class="section-title">
-                ترند این هفته
-            </h2>
+  <div class="actions">
 
-            <span class="section-link">
-                مشاهده همه
-            </span>
+    <button
+      id="startOCR"
+      class="button"
+      disabled
+    >
+      🔍 شروع OCR
+    </button>
 
+    <button
+      id="copyAll"
+      class="button secondary"
+      disabled
+    >
+      📋 کپی همه متن
+    </button>
+
+    <button
+      id="downloadTxt"
+      class="button secondary"
+      disabled
+    >
+      💾 دانلود TXT
+    </button>
+
+    <button
+      id="clearAll"
+      class="button danger"
+    >
+      🗑️ پاک کردن
+    </button>
+
+  </div>
+
+  <div class="info">
+    ⚠️ OCR کاملاً آفلاین و روی خود مرورگر انجام می‌شود (نیازی به اینترنت ندارد).<br>
+    فقط پوشه <b>libs</b> را کنار فایل HTML نگه دارید.<br>
+    نتیجه OCR به کیفیت، اندازه و فونت نوشته‌های داخل تصاویر بستگی دارد.
+  </div>
+
+</section>
+
+<section id="progressCard" class="card hidden">
+
+  <div class="progress-header">
+    <span id="status">آماده</span>
+    <span id="percent">0%</span>
+  </div>
+
+  <div class="progress">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+
+  <div id="stats" class="stats"></div>
+
+</section>
+
+<section class="card">
+
+  <div id="pages">
+
+    <div class="empty">
+      هنوز فایلی وارد نشده است.
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- Offline libraries (no internet needed after download) -->
+<script src="libs/jszip.min.js"></script>
+<script src="libs/tesseract.min.js"></script>
+
+<!-- PDF.js -->
+<script type="module">
+
+let pdfjsLib = null;
+
+(async function(){
+
+  try{
+
+    pdfjsLib = await import("./libs/pdf.min.mjs");
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "./libs/pdf.worker.min.mjs";
+
+    window.pdfjsLib = pdfjsLib;
+    window.pdfReady = true;
+
+  }catch(error){
+
+    console.error("PDF.js Error:",error);
+    window.pdfReady = false;
+
+  }
+
+})();
+
+</script>
+
+
+<script>
+
+const $ = id => document.getElementById(id);
+
+let pages = [];
+let currentFile = null;
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+function escapeHTML(text){
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function setProgress(percent,message){
+  $("progressCard").classList.remove("hidden");
+  percent = Math.max(0,Math.min(100,percent));
+  $("progressFill").style.width = percent + "%";
+  $("percent").textContent = Math.round(percent) + "%";
+  $("status").textContent = message;
+}
+
+
+function isImage(filename){
+  return /\.(jpg|jpeg|png|webp|bmp|gif)$/i.test(filename);
+}
+
+
+function sortFiles(a,b){
+  const aa = a.match(/\d+/g);
+  const bb = b.match(/\d+/g);
+
+  if(aa && bb){
+    const x = parseInt(aa[aa.length-1],10);
+    const y = parseInt(bb[bb.length-1],10);
+    if(x !== y){
+      return x - y;
+    }
+  }
+
+  return a.localeCompare(b, undefined, {numeric:true});
+}
+
+
+function filenameWithoutExtension(name){
+  return name.split("/").pop().replace(/\.[^.]+$/,"");
+}
+
+
+/* =========================
+   CLEAR / RESET
+========================= */
+
+function clearAll(showEmpty = true){
+  // revoke old object URLs to free memory
+  pages.forEach(p => {
+    if(p.url) URL.revokeObjectURL(p.url);
+  });
+
+  pages = [];
+  currentFile = null;
+
+  $("startOCR").disabled = true;
+  $("copyAll").disabled = true;
+  $("downloadTxt").disabled = true;
+
+  $("fileInput").value = "";
+
+  if(showEmpty){
+    $("pages").innerHTML = `<div class="empty">هنوز فایلی وارد نشده است.</div>`;
+    $("progressCard").classList.add("hidden");
+    $("stats").innerHTML = "";
+    setProgress(0,"آماده");
+  }
+}
+
+
+function updateOutputButtons(){
+  const hasText = pages.some(p => (p.text || "").trim().length > 0);
+  $("copyAll").disabled = !hasText;
+  $("downloadTxt").disabled = !hasText;
+}
+
+
+/* =========================
+   FILE INPUT
+========================= */
+
+$("fileInput").addEventListener("change", function(){
+  const file = this.files[0];
+  if(file){
+    processInputFile(file);
+  }
+});
+
+
+/* =========================
+   DRAG & DROP
+========================= */
+
+const dropZone = $("dropZone");
+
+["dragenter","dragover"].forEach(eventName => {
+  dropZone.addEventListener(eventName, event => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropZone.classList.add("drag");
+  });
+});
+
+["dragleave","drop"].forEach(eventName => {
+  dropZone.addEventListener(eventName, event => {
+    event.preventDefault();
+    event.stopPropagation();
+    dropZone.classList.remove("drag");
+  });
+});
+
+dropZone.addEventListener("drop", event => {
+  const file = event.dataTransfer.files[0];
+  if(file){
+    processInputFile(file);
+  }
+});
+
+// make whole drop zone clickable
+dropZone.addEventListener("click", (e) => {
+  if(e.target.closest("label") || e.target.tagName === "INPUT") return;
+  $("fileInput").click();
+});
+
+
+/* =========================
+   PROCESS FILE
+========================= */
+
+async function processInputFile(file){
+  clearAll(false);
+
+  currentFile = file;
+
+  setProgress(2, "در حال خواندن فایل...");
+
+  try{
+    const isZIP =
+      /\.zip$/i.test(file.name) ||
+      file.type === "application/zip" ||
+      file.type === "application/x-zip-compressed";
+
+    const isPDF =
+      /\.pdf$/i.test(file.name) ||
+      file.type === "application/pdf";
+
+    if(isZIP){
+      await processZIP(file);
+    }
+    else if(isPDF){
+      await processPDF(file);
+    }
+    else{
+      throw new Error("فرمت فایل پشتیبانی نمی‌شود. فقط ZIP یا PDF.");
+    }
+
+    if(pages.length === 0){
+      throw new Error("هیچ صفحه تصویری پیدا نشد.");
+    }
+
+    renderPages();
+
+    $("startOCR").disabled = false;
+
+    $("stats").innerHTML =
+      `<span class="pill">📄 ${pages.length} صفحه</span>
+       <span class="pill">✏️ قابل ویرایش</span>
+       <span class="pill">🔍 آماده OCR</span>`;
+
+    setProgress(100, "فایل آماده است — شروع OCR را بزن");
+
+  }catch(error){
+    console.error(error);
+    alert("خطا:\n" + error.message);
+    setProgress(0, "خطا در خواندن فایل");
+    clearAll(true);
+  }
+}
+
+
+/* =========================
+   ZIP
+========================= */
+
+async function processZIP(file){
+  if(!window.JSZip){
+    throw new Error("کتابخانه ZIP بارگذاری نشده است. فایل libs/jszip.min.js را بررسی کن.");
+  }
+
+  const zip = await JSZip.loadAsync(file);
+
+  const names = Object.keys(zip.files)
+    .filter(name => {
+      return !zip.files[name].dir && isImage(name);
+    })
+    .sort(sortFiles);
+
+  if(names.length === 0){
+    throw new Error("هیچ تصویر معتبری داخل ZIP پیدا نشد.");
+  }
+
+  for(let i = 0; i < names.length; i++){
+    const name = names[i];
+    const blob = await zip.files[name].async("blob");
+
+    pages.push({
+      name: name,
+      blob: blob,
+      url: URL.createObjectURL(blob),
+      text: ""
+    });
+
+    const progress = 5 + ((i + 1) / names.length) * 90;
+    setProgress(progress, `در حال استخراج صفحه ${i + 1} از ${names.length}...`);
+  }
+}
+
+
+/* =========================
+   PDF
+========================= */
+
+async function processPDF(file){
+  let tries = 0;
+  while(!window.pdfReady && tries < 50){
+    await new Promise(resolve => setTimeout(resolve, 200));
+    tries++;
+  }
+
+  const lib = window.pdfjsLib || pdfjsLib;
+
+  if(!window.pdfReady || !lib){
+    throw new Error("PDF.js آماده نیست. چند ثانیه صبر کن و دوباره فایل را انتخاب کن.");
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await lib.getDocument({ data: arrayBuffer }).promise;
+
+  for(let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++){
+    const pdfPage = await pdf.getPage(pageNumber);
+
+    const viewport = pdfPage.getViewport({ scale: 2 });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+
+    const context = canvas.getContext("2d");
+
+    await pdfPage.render({
+      canvasContext: context,
+      viewport: viewport
+    }).promise;
+
+    const blob = await new Promise(resolve => {
+      canvas.toBlob(resolve, "image/jpeg", 0.95);
+    });
+
+    pages.push({
+      name: "page-" + String(pageNumber).padStart(4, "0") + ".jpg",
+      blob: blob,
+      url: URL.createObjectURL(blob),
+      text: ""
+    });
+
+    const progress = 5 + (pageNumber / pdf.numPages) * 90;
+    setProgress(progress, `در حال آماده‌سازی صفحه ${pageNumber} از ${pdf.numPages}...`);
+  }
+}
+
+
+/* =========================
+   RENDER PAGES
+========================= */
+
+function renderPages(){
+  const container = $("pages");
+  container.innerHTML = "";
+
+  pages.forEach((page, index) => {
+    const article = document.createElement("article");
+    article.className = "page";
+
+    article.innerHTML = `
+      <div>
+        <img
+          class="preview"
+          src="${page.url}"
+          alt="صفحه ${index + 1}"
+        >
+      </div>
+
+      <div>
+        <div class="page-title">
+          📄 صفحه ${index + 1}
+          — ${escapeHTML(page.name)}
         </div>
 
-        <div class="trending">
+        <textarea
+          class="ocr-text"
+          data-index="${index}"
+          placeholder="متن استخراج‌شده این صفحه اینجا نمایش داده می‌شود..."
+        >${escapeHTML(page.text)}</textarea>
 
-            <article class="trend-card">
+        <div class="page-actions">
+          <button
+            class="button secondary small-button redo-button"
+            data-index="${index}"
+          >
+            🔄 OCR دوباره
+          </button>
 
-                <img
-                    src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=85"
-                    alt="مانهوا"
-                >
-
-                <div class="rank">01</div>
-
-                <div class="trend-info">
-                    <h3>پادشاه سایه</h3>
-                    <small>فانتزی • 4.9 ★</small>
-                </div>
-
-            </article>
-
-
-            <article class="trend-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=500&q=85"
-                    alt="مانهوا"
-                >
-
-                <div class="rank">02</div>
-
-                <div class="trend-info">
-                    <h3>آخرین قهرمان</h3>
-                    <small>اکشن • 4.8 ★</small>
-                </div>
-
-            </article>
-
-
-            <article class="trend-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1577083552431-6e5fd01988b5?auto=format&fit=crop&w=500&q=85"
-                    alt="مانهوا"
-                >
-
-                <div class="rank">03</div>
-
-                <div class="trend-info">
-                    <h3>آخرین گل</h3>
-                    <small>عاشقانه • 4.7 ★</small>
-                </div>
-
-            </article>
-
-
-            <article class="trend-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=500&q=85"
-                    alt="مانهوا"
-                >
-
-                <div class="rank">04</div>
-
-                <div class="trend-info">
-                    <h3>رز خاموش</h3>
-                    <small>درام • 4.6 ★</small>
-                </div>
-
-            </article>
-
-
-            <article class="trend-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=500&q=85"
-                    alt="مانهوا"
-                >
-
-                <div class="rank">05</div>
-
-                <div class="trend-info">
-                    <h3>سایه ماه</h3>
-                    <small>فانتزی • 4.5 ★</small>
-                </div>
-
-            </article>
-
+          <button
+            class="button secondary small-button copy-button"
+            data-index="${index}"
+          >
+            📋 کپی صفحه
+          </button>
         </div>
+      </div>
+    `;
 
-    </section>
+    container.appendChild(article);
+  });
+
+  // text change listeners
+  document.querySelectorAll(".ocr-text").forEach(textarea => {
+    textarea.addEventListener("input", function(){
+      const index = Number(this.dataset.index);
+      pages[index].text = this.value;
+      updateOutputButtons();
+    });
+  });
+
+  // redo OCR
+  document.querySelectorAll(".redo-button").forEach(button => {
+    button.addEventListener("click", () => {
+      ocrSinglePage(Number(button.dataset.index));
+    });
+  });
+
+  // copy single page
+  document.querySelectorAll(".copy-button").forEach(button => {
+    button.addEventListener("click", async () => {
+      const index = Number(button.dataset.index);
+      await copyText(pages[index].text || "");
+      button.textContent = "✅ کپی شد";
+      setTimeout(() => {
+        button.textContent = "📋 کپی صفحه";
+      }, 1200);
+    });
+  });
+}
 
 
-    <!-- CONTINUE -->
-    <section class="section reveal">
+/* =========================
+   OCR WORKER
+========================= */
 
-        <div class="section-head">
+async function createOCRWorker(){
+  if(!window.Tesseract){
+    throw new Error("Tesseract بارگذاری نشده است. فایل‌های libs را بررسی کن.");
+  }
 
-            <h2 class="section-title">
-                ادامه مطالعه
-            </h2>
+  // مسیرهای محلی برای کار کاملاً آفلاین
+  const base = new URL("./libs/", window.location.href).href;
 
-            <span class="section-link">
-                کتابخانه
-            </span>
+  const worker = await Tesseract.createWorker("eng", 1, {
+    workerPath: base + "worker.min.js",
+    corePath:   base + "core/",
+    langPath:   base + "lang/",
+    logger: function(message){
+      if(message.status === "recognizing text"){
+        const p = Math.round((message.progress || 0) * 100);
+        setProgress(p, "در حال تشخیص متن...");
+      }
+    }
+  });
 
-        </div>
+  return worker;
+}
 
-        <div class="continue">
 
-            <div class="continue-cover">
+/* =========================
+   OCR ALL
+========================= */
 
-                <img
-                    src="https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=300&q=85"
-                  
+$("startOCR").addEventListener("click", async function(){
+  if(!pages.length) return;
+
+  $("startOCR").disabled = true;
+
+  try{
+    const worker = await createOCRWorker();
+
+    for(let i = 0; i < pages.length; i++){
+      const base = (i / pages.length) * 100;
+
+      setProgress(base, `در حال OCR صفحه ${i + 1} از ${pages.length}...`);
+
+      const result = await worker.recognize(pages[i].blob);
+
+      pages[i].text = (result.data.text || "").trim();
+
+      const textarea = document.querySelector(`.ocr-text[data-index="${i}"]`);
+      if(textarea){
+        textarea.value = pages[i].text;
+      }
+
+      setProgress(((i + 1) / pages.length) * 100, `صفحه ${i + 1} از ${pages.length} پردازش شد`);
+    }
+
+    await worker.terminate();
+
+    updateOutputButtons();
+
+    $("stats").innerHTML =
+      `<span class="pill">✅ OCR کامل شد</span>
+       <span class="pill">📄 ${pages.length} صفحه</span>
+       <span class="pill">✏️ متن‌ها قابل اصلاح هستند</span>`;
+
+    setProgress(100, "OCR تمام شد — متن‌ها را بررسی و اصلاح کن ✨");
+
+  }catch(error){
+    console.error(error);
+    alert("خطا هنگام OCR:\n" + error.message);
+  }
+
+  $("startOCR").disabled = false;
+});
+
+
+/* =========================
+   OCR SINGLE PAGE
+========================= */
+
+async function ocrSinglePage(index){
+  if(!pages[index]) return;
+
+  const buttons = document.querySelectorAll(".redo-button");
+  buttons.forEach(b => b.disabled = true);
+
+  try{
+    setProgress(0, `در حال OCR صفحه ${index + 1}...`);
+
+    const worker = await createOCRWorker();
+    const result = await worker.recognize(pages[index].blob);
+
+    pages[index].text = (result.data.text || "").trim();
+
+    await worker.terminate();
+
+    const textarea = document.querySelector(`.ocr-text[data-index="${index}"]`);
+    if(textarea){
+      textarea.value = pages[index].text;
+    }
+
+    setProgress(100, `OCR صفحه ${index + 1} انجام شد`);
+    updateOutputButtons();
+
+  }catch(error){
+    console.error(error);
+    alert("OCR صفحه انجام نشد:\n" + error.message);
+  }
+
+  buttons.forEach(b => b.disabled = false);
+}
+
+
+/* =========================
+   TEXT OUTPUT
+========================= */
+
+function getAllText(){
+  return pages
+    .map((page, index) => {
+      return (
+        "===== PAGE " +
+        (index + 1) +
+        " =====\n\n" +
+        (page.text || "").trim()
+      );
+    })
+    .join("\n\n\n");
+}
+
+
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(error){
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+}
+
+
+$("copyAll").addEventListener("click", async function(){
+  const text = getAllText();
+
+  if(!text.trim()){
+    alert("هنوز متنی استخراج نشده است.");
+    return;
+  }
+
+  await copyText(text);
+
+  const old = this.textContent;
+  this.textContent = "✅ همه متن کپی شد";
+  setTimeout(() => {
+    this.textContent = old;
+  }, 1500);
+});
+
+
+/* =========================
+   DOWNLOAD TXT
+========================= */
+
+$("downloadTxt").addEventListener("click", function(){
+  const text = getAllText();
+
+  if(!text.trim()){
+    alert("هنوز متنی برای خروجی وجود ندارد.");
+    return;
+  }
+
+  const blob = new Blob([text], {
+    type: "text/plain;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = (currentFile ? filenameWithoutExtension(currentFile.name) : "rose-ocr") + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+
+/* =========================
+   CLEAR BUTTON
+========================= */
+
+$("clearAll").addEventListener("click", function(){
+  if(pages.length === 0) return;
+  if(confirm("همه صفحات و متن‌ها پاک شوند؟")){
+    clearAll(true);
+  }
+});
+
+</script>
+
+</body>
+</html>
